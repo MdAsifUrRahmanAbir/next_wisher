@@ -1,0 +1,48 @@
+name: next_wisher
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  get: 4.6.6
+  flutter_screenutil: 5.9.3
+  logger: 2.4.0
+  get_storage:
+  http: 1.2.2
+  intl:
+  image_picker: 1.1.2
+  flutter_spinkit: ^5.2.1
+  dropdown_button2: ^2.3.9
+  lottie: ^3.1.2
+  connectivity_plus: 6.0.5
+  fluttertoast: ^8.2.6
+  google_fonts:
+  cached_network_image:
+  flutter_animate:
+  flutter_svg:
+  flutter_inappwebview: ^6.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints:
+
+flutter:
+
+  uses-material-design: true
+
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/logo.png
+    - assets/splash_screen.png
