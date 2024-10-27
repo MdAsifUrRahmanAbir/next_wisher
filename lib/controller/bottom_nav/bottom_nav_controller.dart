@@ -1,5 +1,9 @@
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
+import '../../view/nav_pages/dashboard/dashboard_page.dart';
+import '../../view/nav_pages/message/messages_page.dart';
+import '../../view/nav_pages/profile/profile_page.dart';
+
 class BottomNavController extends GetxController{
   RxInt selectedIndex = 0.obs;
   RxBool isDark = false.obs;
@@ -9,20 +13,11 @@ class BottomNavController extends GetxController{
   }
 
   List body = [
-    Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          verticalSpace(10),
-          PrimaryTextInputWidget(controller: TextEditingController(), labelText: "Search"),
-          // const Center(child: Text("Inbox")),
-        ],
-      ),
-    ),
-    const Center(child: Text("Home")),
+    MessagePage(),
+    DashboardPage(),
     const Center(child: Text("Menu")),
     const Center(child: Text("Language")),
-    const Center(child: Text("Profile")),
+    const ProfilePage()
   ];
 
   // List bodyTitle = [

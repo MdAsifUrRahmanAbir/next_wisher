@@ -1,7 +1,5 @@
 import '../../controller/bottom_nav/bottom_nav_controller.dart';
 import '../../utils/basic_screen_imports.dart';
-import '../../widgets/appbar/dashboard_appbar.dart';
-import '../../widgets/drawer/drawer_widget.dart';
 import 'custom_bottom_nav_bar.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -33,7 +31,7 @@ class BottomNavScreen extends StatelessWidget {
       //         )..animate()
       //         .fadeIn(duration: 900.ms, delay: 300.ms)
       //         .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad))),
-      drawer: DrawerWidget(),
+      // drawer: DrawerWidget(),
       body: _body(context),
       bottomNavigationBar: Obx(() => CustomBottomNavBar(
             selectedIndex: controller.selectedIndex.value,

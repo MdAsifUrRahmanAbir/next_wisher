@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         theme: Themes.light,
         darkTheme: Themes.dark,
         themeMode: Themes().theme,
-        initialRoute: Routes.splashScreen,
+        initialRoute: Routes.btmScreen,
         initialBinding: BindingsBuilder(
               () {
             /// if need

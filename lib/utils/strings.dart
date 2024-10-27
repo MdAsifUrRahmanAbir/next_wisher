@@ -115,4 +115,24 @@ class Strings {
 
   static String delete  = "Delete";
   static String areYouSure  = "Are you sure you want to delete it?";
+
+
+
+  /// new added
+  static String inbox  = "Inbox";
+  static String sent  = "Sent";
+
+
+  static String gender  = "Gender";
+  static String book  = "Book";
+  static String pay  = "Pay";
+  static String sendTip  = "Send Tip";
+
+  static String continueToPayment  = "Continue To Payment";
+  static String moneyBackGuarantee  = "Money Back Guarantee";
+
+  static String moneyBackGuaranteeDetails  = ''' 
+If your request for a personalized video could not be completed or expires, we will refund
+your money within 3-10 working days. Refunds can only be sent back to the original payment method used in a charge.  
+  ''';
 }

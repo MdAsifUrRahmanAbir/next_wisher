@@ -1,7 +1,9 @@
 import '../../utils/basic_widget_imports.dart';
+import '../profiles_screen/guidline_screen.dart';
 import 'bottom_nav_item.dart';
+import 'language_selection_bottom_sheet.dart';
 
-class CustomBottomNavBar extends StatelessWidget {
+class CustomBottomNavBar extends StatefulWidget {
   final int selectedIndex;
   final Function(int) onItemTapped;
 
@@ -9,6 +11,31 @@ class CustomBottomNavBar extends StatelessWidget {
     required this.selectedIndex,
     required this.onItemTapped,
   });
+
+  @override
+  State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
+}
+
+class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
+
+  String _selectedLanguage = "English"; // Default language
+
+  void _showLanguageBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return LanguageSelectionBottomSheet(
+          selectedLanguage: _selectedLanguage,
+          onLanguageSelected: (String language) {
+            setState(() {
+              _selectedLanguage = language;
+            });
+            Navigator.pop(context); // Close the bottom sheet
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,28 +60,30 @@ class CustomBottomNavBar extends StatelessWidget {
               children: <Widget>[
                 BottomNavItem(
                   icon: Icons.mail_outline,
-                  isSelected: selectedIndex == 0,
-                  onTap: () => onItemTapped(0),
+                  isSelected: widget.selectedIndex == 0,
+                  onTap: () => widget.onItemTapped(0),
                 ),
                 BottomNavItem(
                   icon: Icons.dashboard_outlined,
-                  isSelected: selectedIndex == 1,
-                  onTap: () => onItemTapped(1),
+                  isSelected: widget.selectedIndex == 1,
+                  onTap: () => widget.onItemTapped(1),
                 ),
                 BottomNavItem(
                   icon: Icons.menu,
-                  isSelected: selectedIndex == 2,
-                  onTap: () => onItemTapped(2),
+                  isSelected: widget.selectedIndex == 2,
+                  onTap: (){
+                    Get.to(const GuidelineScreen());
+                  },
                 ),
                 BottomNavItem(
                   icon: Icons.energy_savings_leaf_outlined,
-                  isSelected: selectedIndex == 3,
-                  onTap: () => onItemTapped(3),
+                  isSelected: widget.selectedIndex == 3,
+                  onTap: _showLanguageBottomSheet,
                 ),
                 BottomNavItem(
                   icon: Icons.person,
-                  isSelected: selectedIndex == 4,
-                  onTap: () => onItemTapped(4),
+                  isSelected: widget.selectedIndex == 4,
+                  onTap: () => widget.onItemTapped(4),
                 ),
               ],
             ),
