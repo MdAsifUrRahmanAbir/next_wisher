@@ -1,5 +1,4 @@
 import '../../routes/routes.dart';
-import '../../utils/assets.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
@@ -10,7 +9,9 @@ class UserTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PrimaryAppBar(),
+      appBar: PrimaryAppBar(
+        title: Strings.createAccountAsA,
+      ),
       body: _body(context),
     );
   }
@@ -24,12 +25,12 @@ class UserTypeScreen extends StatelessWidget {
         ),
         child: ListView(
           children: [
-            Image.asset(Assets.appBasicLogo),
-            verticalSpace(Dimensions.marginSizeVertical),
-            TitleHeading3Widget(
-              text: Strings.createAccountAsA,
-              color: Theme.of(context).primaryColor,
-            ),
+            // Image.asset(Assets.appBasicLogo),
+            // verticalSpace(Dimensions.marginSizeVertical),
+            // TitleHeading3Widget(
+            //   text: Strings.createAccountAsA,
+            //   color: Theme.of(context).primaryColor,
+            // ),
             verticalSpace(Dimensions.marginBetweenInputTitleAndBox),
             TitleHeading5Widget(
               text: Strings.aUserCanPlace,

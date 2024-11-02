@@ -1,6 +1,7 @@
 import '../../../utils/basic_screen_imports.dart';
 import '../../profiles_screen/account_screen.dart';
 import '../../profiles_screen/guidline_screen.dart';
+import '../../profiles_screen/profle_setup_screen.dart';
 import '../../profiles_screen/tips_screen.dart';
 import '../../profiles_screen/wish_request_screen.dart';
 import 'menu_button_widget.dart';
@@ -11,12 +12,12 @@ class ProfilePage extends StatelessWidget {
   void onAccountTap() {
     debugPrint("Account tapped");
     Get.to(const AccountScreen());
-
     // Add your navigation or other logic here
   }
 
   void onProfileSetupTap() {
     debugPrint("Profile Setup tapped");
+    Get.to(const ProfileSetupScreen());
     // Add your navigation or other logic here
   }
 

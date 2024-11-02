@@ -12,9 +12,9 @@ class ForgotPasswordDialog {
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text(Strings.forgotPasswordSubTitle),
-              verticalSpace(
-                  Dimensions.heightSize * 1.8), // Dimensions.marginSizeVertical
+              // Text(Strings.forgotPasswordSubTitle),
+              // verticalSpace(
+              //     Dimensions.heightSize * 1.8), // Dimensions.marginSizeVertical
               PrimaryTextInputWidget(
                 controller: Get.find<LoginController>().resetEmailController,
                 labelText: Strings.email,

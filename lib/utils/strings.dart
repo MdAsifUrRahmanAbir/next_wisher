@@ -76,6 +76,8 @@ class Strings {
   static String phone = "Phone";
   static String enterPhone = "Enter Phone";
 
+  static String forText = "For";
+  static String from = "From";
   static String name = "Name";
   static String enterName = "Enter Name";
 

@@ -17,35 +17,27 @@ class CategoriesWidget extends StatelessWidget {
       gridDelegate:
       const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 140,
-          childAspectRatio: 1,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10),
+          childAspectRatio: .9,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 12),
       itemBuilder: (context, index) {
-        return Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius:
-              BorderRadius.circular(Dimensions.radius * 2)),
-          child: Column(
-            mainAxisAlignment: mainCenter,
-            children: [
-              Icon(controller.category[index]["icon"],
-                  shadows: const [
-                    Shadow(
-                        blurRadius: 2,
-                        offset: Offset(1, 1),
-                        color: CustomColor.whiteColor)
-                  ],
-                  size: 28,
-                  color: CustomColor.whiteColor),
-              verticalSpace(2),
-              TitleHeading4Widget(
-                  text: controller.category[index]["name"],
-                  fontWeight: FontWeight.bold,
-                  color: CustomColor.whiteColor)
-            ],
-          ),
+        return Column(
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    image: const DecorationImage(fit: BoxFit.fill, image: NetworkImage("https://www.shutterstock.com/image-photo/full-body-little-small-fun-600nw-2110549943.jpg")),
+                    borderRadius:
+                    BorderRadius.circular(Dimensions.radius * 2)),
+              ),
+            ),
+            verticalSpace(2),
+            TitleHeading4Widget(
+                text: controller.category[index]["name"],
+                fontWeight: FontWeight.bold)
+          ],
         );
       },
       itemCount: controller.category.length,

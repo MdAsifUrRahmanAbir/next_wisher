@@ -20,40 +20,47 @@ class WelcomeScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Column(
-              mainAxisAlignment: mainEnd,
-              crossAxisAlignment: crossStart,
               children: [
-                Image.asset(Assets.appBasicLogo),
-                verticalSpace(5),
-                TitleHeading2Widget(
-                  text: Strings.welcomeText,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.paddingSizeHorizontal * .5),
-                ),
+                Spacer(),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.paddingSizeHorizontal,
-                      vertical: Dimensions.paddingSizeVertical),
+                  color: Colors.black.withOpacity(.6),
                   child: Column(
+                    mainAxisAlignment: mainEnd,
+                    crossAxisAlignment: crossStart,
                     children: [
-                      PrimaryButton(
-                          title: Strings.signIn,
-                          backgroundColor: Theme.of(context).primaryColor,
-                          onPressed: () {
-                            Get.toNamed(Routes.loginScreen);
-                          }),
-                      verticalSpace(Dimensions.paddingSizeVertical * .5),
-                      PrimaryButton(
-                          title: Strings.register,
-                          backgroundColor: Get.isDarkMode
-                              ? CustomColor.secondaryDarkColor
-                              : CustomColor.secondaryLightColor,
-                          onPressed: () {
-                            Get.toNamed(Routes.userTypeScreen);
-                          }),
+                      Image.asset(Assets.appBasicLogo),
+                      verticalSpace(5),
+                      TitleHeading2Widget(
+                        text: Strings.welcomeText,
+                        color: Colors.white,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.paddingSizeHorizontal * .5),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.paddingSizeHorizontal,
+                            vertical: Dimensions.paddingSizeVertical),
+                        child: Column(
+                          children: [
+                            PrimaryButton(
+                                title: Strings.signIn,
+                                backgroundColor: Theme.of(context).primaryColor,
+                                onPressed: () {
+                                  Get.toNamed(Routes.loginScreen);
+                                }),
+                            verticalSpace(Dimensions.paddingSizeVertical * .5),
+                            PrimaryButton(
+                                title: Strings.register,
+                                backgroundColor: CustomColor.redColor,
+                                onPressed: () {
+                                  Get.toNamed(Routes.userTypeScreen);
+                                }),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                )
+                ),
               ],
             ),
           )),

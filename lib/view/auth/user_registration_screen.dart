@@ -14,7 +14,9 @@ class UserRegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PrimaryAppBar(),
+      appBar: PrimaryAppBar(
+        title: Strings.createUserAccount,
+      ),
       body: _body(context),
     );
   }
@@ -31,12 +33,12 @@ class UserRegistrationScreen extends StatelessWidget {
           key: controller.formKey,
           child: ListView(
             children: [
-              Image.asset(Assets.appBasicLogo),
-              verticalSpace(Dimensions.marginSizeVertical),
-              TitleHeading3Widget(
-                text: Strings.createUserAccount,
-                color: Theme.of(context).primaryColor,
-              ),
+              // Image.asset(Assets.appBasicLogo),
+              // verticalSpace(Dimensions.marginSizeVertical),
+              // TitleHeading3Widget(
+              //   text: Strings.createUserAccount,
+              //   color: Theme.of(context).primaryColor,
+              // ),
               verticalSpace(Dimensions.marginSizeVertical),
               PrimaryTextInputWidget(
                 controller: controller.nameController,

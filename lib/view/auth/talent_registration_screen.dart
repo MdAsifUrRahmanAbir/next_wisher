@@ -15,7 +15,9 @@ class TalentRegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PrimaryAppBar(),
+      appBar: PrimaryAppBar(
+        title: Strings.createTalentAccount,
+      ),
       body: _body(context),
     );
   }
@@ -32,12 +34,12 @@ class TalentRegistrationScreen extends StatelessWidget {
           key: controller.formKey,
           child: ListView(
             children: [
-              Image.asset(Assets.appBasicLogo),
-              verticalSpace(Dimensions.marginSizeVertical),
-              TitleHeading3Widget(
-                text: Strings.createTalentAccount,
-                color: Theme.of(context).primaryColor,
-              ),
+              // Image.asset(Assets.appBasicLogo),
+              // verticalSpace(Dimensions.marginSizeVertical),
+              // TitleHeading3Widget(
+              //   text: Strings.createTalentAccount,
+              //   color: Theme.of(context).primaryColor,
+              // ),
               verticalSpace(Dimensions.marginSizeVertical),
               PrimaryTextInputWidget(
                 controller: controller.nameController,

@@ -1,14 +1,17 @@
 import '../../utils/basic_widget_imports.dart';
 
 class BottomNavItem extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final String? text;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const BottomNavItem({super.key,
-    required this.icon,
+  const BottomNavItem({
+    super.key,
+    this.icon,
     required this.isSelected,
     required this.onTap,
+    this.text,
   });
 
   @override
@@ -21,10 +24,27 @@ class BottomNavItem extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(
-                icon,
-                color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).textTheme.bodySmall!.color!.withOpacity(.5),
-              ),
+              icon == null
+                  ? TitleHeading3Widget(
+                      text: text ?? "",
+                      color: isSelected
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .color!
+                              .withOpacity(.5),
+                    )
+                  : Icon(
+                      icon,
+                      color: isSelected
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .color!
+                              .withOpacity(.5),
+                    ),
               if (isSelected)
                 Container(
                   margin: const EdgeInsets.only(top: 4.0),

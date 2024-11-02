@@ -13,10 +13,10 @@ class BottomNavController extends GetxController{
   }
 
   List body = [
-    MessagePage(),
     DashboardPage(),
-    const Center(child: Text("Menu")),
     const Center(child: Text("Language")),
+    const Center(child: Text("Menu")),
+    MessagePage(),
     const ProfilePage()
   ];
 

@@ -11,10 +11,12 @@ class BookNowScreen extends StatefulWidget {
 }
 
 class _BookNowScreenState extends State<BookNowScreen> {
-  String? _selectedOption;
+  String _selectedOption = "myself";
   String? _selectedGender;
 
   final nameController = TextEditingController();
+  final fromController = TextEditingController();
+  final forController = TextEditingController();
   final occasionController = TextEditingController();
   final instructionsController = TextEditingController();
 
@@ -41,11 +43,12 @@ class _BookNowScreenState extends State<BookNowScreen> {
                 Row(
                   children: [
                     Radio<String>(
-                      value: "Myself",
+                      value: "myself",
+
                       groupValue: _selectedOption,
                       onChanged: (String? value) {
                         setState(() {
-                          _selectedOption = value;
+                          _selectedOption = value!;
                         });
                       },
                     ),
@@ -57,11 +60,11 @@ class _BookNowScreenState extends State<BookNowScreen> {
                 Row(
                   children: [
                     Radio<String>(
-                      value: "Someone Else",
+                      value: "else",
                       groupValue: _selectedOption,
                       onChanged: (String? value) {
                         setState(() {
-                          _selectedOption = value;
+                          _selectedOption = value!;
                         });
                       },
                     ),
@@ -71,10 +74,22 @@ class _BookNowScreenState extends State<BookNowScreen> {
               ],
             ),
 
-
             verticalSpace(Dimensions.paddingSizeVertical * .5),
 
-            PrimaryTextInputWidget(controller: nameController, labelText: Strings.name, hint: Strings.enterName),
+            Visibility(
+              visible: _selectedOption == "else",
+              child: Column(
+                children: [
+                  PrimaryTextInputWidget(controller: fromController, labelText: Strings.from, hint: Strings.enterName),
+                  verticalSpace(Dimensions.paddingSizeVertical * .5),
+                  PrimaryTextInputWidget(controller: forController, labelText: Strings.forText, hint: Strings.enterName),
+                ],
+              ),
+            ),
+
+            Visibility(
+                visible: _selectedOption == "myself",
+                child: PrimaryTextInputWidget(controller: nameController, labelText: Strings.name, hint: Strings.enterName)),
 
             verticalSpace(Dimensions.paddingSizeVertical * .5),
 
@@ -128,7 +143,7 @@ class _BookNowScreenState extends State<BookNowScreen> {
             verticalSpace(Dimensions.paddingSizeVertical * 1.5),
             PrimaryButton(
                 title: Strings.continueToPayment,
-                backgroundColor: CustomColor.secondaryLightColor,
+                backgroundColor: CustomColor.redColor    ,
                 onPressed: () {
                   Get.to(const PayScreen(isBook: true));
                 }),

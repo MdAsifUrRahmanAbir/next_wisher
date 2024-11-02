@@ -45,6 +45,8 @@ class TalentProfile extends StatelessWidget {
               fit: BoxFit.fill,
             ),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
+            const TitleHeading4Widget(text: "Spoken language(s): English, Français"),
+            verticalSpace(Dimensions.paddingSizeVertical * .3),
             const TitleHeading3Widget(text: "Personalized video"),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
             Container(

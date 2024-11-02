@@ -58,15 +58,16 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+
                 BottomNavItem(
-                  icon: Icons.mail_outline,
+                  icon: Icons.dashboard_outlined,
                   isSelected: widget.selectedIndex == 0,
                   onTap: () => widget.onItemTapped(0),
                 ),
                 BottomNavItem(
-                  icon: Icons.dashboard_outlined,
+                  text: "EN",
                   isSelected: widget.selectedIndex == 1,
-                  onTap: () => widget.onItemTapped(1),
+                  onTap: _showLanguageBottomSheet,
                 ),
                 BottomNavItem(
                   icon: Icons.menu,
@@ -76,9 +77,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   },
                 ),
                 BottomNavItem(
-                  icon: Icons.energy_savings_leaf_outlined,
+                  icon: Icons.mail_outline,
                   isSelected: widget.selectedIndex == 3,
-                  onTap: _showLanguageBottomSheet,
+                  onTap: () => widget.onItemTapped(3),
                 ),
                 BottomNavItem(
                   icon: Icons.person,

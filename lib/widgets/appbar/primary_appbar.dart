@@ -21,6 +21,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       scrolledUnderElevation: 0,
       title: TitleHeading2Widget(
         text: title,

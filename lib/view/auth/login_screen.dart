@@ -17,6 +17,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PrimaryAppBar(
+        title: Strings.login,
+      ),
       body: _body(context),
     );
   }
@@ -33,12 +36,12 @@ class LoginScreen extends StatelessWidget {
           child: ListView(
             // crossAxisAlignment: crossStart,
             children: [
-              Image.asset(Assets.appBasicLogo),
-              verticalSpace(Dimensions.marginSizeVertical),
-              TitleHeading3Widget(
-                text: Strings.login,
-                color: Theme.of(context).primaryColor,
-              ),
+              // Image.asset(Assets.appBasicLogo),
+              // verticalSpace(Dimensions.marginSizeVertical),
+              // TitleHeading3Widget(
+              //   text: Strings.login,
+              //   color: Theme.of(context).primaryColor,
+              // ),
               verticalSpace(Dimensions.marginBetweenInputTitleAndBox),
               TitleHeading5Widget(
                 text: Strings.loginTitle,
