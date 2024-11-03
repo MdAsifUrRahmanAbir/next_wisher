@@ -1,5 +1,6 @@
 import '../../../utils/basic_screen_imports.dart';
 import '../../profiles_screen/account_screen.dart';
+import '../../profiles_screen/earnings_screen.dart';
 import '../../profiles_screen/guidline_screen.dart';
 import '../../profiles_screen/profle_setup_screen.dart';
 import '../../profiles_screen/tips_screen.dart';
@@ -35,6 +36,7 @@ class ProfilePage extends StatelessWidget {
 
   void onEarningsTap() {
     debugPrint("Earnings tapped");
+    Get.to(const EarningScreen());
     // Add your navigation or other logic here
   }
 
