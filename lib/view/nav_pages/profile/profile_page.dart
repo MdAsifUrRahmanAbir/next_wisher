@@ -1,4 +1,8 @@
+import 'package:next_wisher/backend/local_storage/local_storage.dart';
+import 'package:next_wisher/widgets/dialog_helper.dart';
+
 import '../../../utils/basic_screen_imports.dart';
+import '../../../utils/strings.dart';
 import '../../profiles_screen/account_screen.dart';
 import '../../profiles_screen/earnings_screen.dart';
 import '../../profiles_screen/guidline_screen.dart';
@@ -51,37 +55,46 @@ class ProfilePage extends StatelessWidget {
             verticalSpace(Dimensions.buttonHeight),
             MenuButton(
               title: "Guideline",
-              onTap: (){
+              onTap: () {
                 Get.to(const GuidelineScreen());
               },
             ),
-            const Divider(height: 1,thickness: 1),
+            const Divider(height: 1, thickness: 1),
             MenuButton(
               title: "Account",
               onTap: onAccountTap,
             ),
-            const Divider(height: 1,thickness: 1),
+            const Divider(height: 1, thickness: 1),
             MenuButton(
               title: "Profile Setup",
               onTap: onProfileSetupTap,
             ),
-            const Divider(height: 1,thickness: 1),
-
+            const Divider(height: 1, thickness: 1),
             MenuButton(
               title: "Wish Request",
               onTap: onWishRequestTap,
             ),
-            const Divider(height: 1,thickness: 1),
-
+            const Divider(height: 1, thickness: 1),
             MenuButton(
               title: "Tips",
               onTap: onTipsTap,
             ),
-            const Divider(height: 1,thickness: 1),
-
+            const Divider(height: 1, thickness: 1),
             MenuButton(
               title: "Earnings",
               onTap: onEarningsTap,
+            ),
+            const Divider(height: 1, thickness: 1),
+            MenuButton(
+              title: Strings.logout,
+              onTap: () {
+                DialogHelper.showAlertDialog(context,
+                    title: Strings.logout,
+                    content: Strings.logOutContent,
+                    onTap: () {
+                  LocalStorage.logout();
+                    });
+              },
             ),
           ],
         ),

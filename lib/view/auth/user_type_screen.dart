@@ -25,12 +25,6 @@ class UserTypeScreen extends StatelessWidget {
         ),
         child: ListView(
           children: [
-            // Image.asset(Assets.appBasicLogo),
-            // verticalSpace(Dimensions.marginSizeVertical),
-            // TitleHeading3Widget(
-            //   text: Strings.createAccountAsA,
-            //   color: Theme.of(context).primaryColor,
-            // ),
             verticalSpace(Dimensions.marginBetweenInputTitleAndBox),
             TitleHeading5Widget(
               text: Strings.aUserCanPlace,

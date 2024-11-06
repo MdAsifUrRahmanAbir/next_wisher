@@ -4,7 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DashboardController extends GetxController{
+import '../../backend/services/dashboard/dashboard_service.dart';
+import '../../backend/services/dashboard/home_model.dart';
+
+class DashboardController extends GetxController with DashboardService{
 
   final List category = [
     {
@@ -32,4 +35,33 @@ class DashboardController extends GetxController{
       "icon": Icons.radio_outlined
     },
   ];
+
+
+
+
+  /// ------------------------------------- >>
+  final _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
+
+
+  late HomeModel _homeModel;
+  HomeModel get homeModel => _homeModel;
+
+
+  ///* Get Home in process
+  Future<HomeModel> homeProcess() async {
+    _isLoading.value = true;
+    update();
+    await homeProcessApi().then((value) {
+      _homeModel = value!;
+      _isLoading.value = false;
+      update();
+    }).catchError((onError) {
+      log.e(onError);
+    });
+    _isLoading.value = false;
+    update();
+    return _homeModel;
+  }
+
 }

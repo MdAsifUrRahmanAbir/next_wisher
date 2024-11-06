@@ -1,10 +1,12 @@
+import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/widgets/inputs/password_input_widget.dart';
 
+import '../../backend/services/auth/register_info_model.dart';
 import '../../controller/auth/talent_registration_controller.dart';
-import '../../utils/assets.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
-import '../../widgets/others/rich_text_widget.dart';
+import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
+import '../../widgets/others/custom_video_picker_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 
 class TalentRegistrationScreen extends StatelessWidget {
@@ -18,7 +20,7 @@ class TalentRegistrationScreen extends StatelessWidget {
       appBar: PrimaryAppBar(
         title: Strings.createTalentAccount,
       ),
-      body: _body(context),
+      body: Obx(() => controller.isLoading ? const CustomLoadingAPI(): _body(context)),
     );
   }
 
@@ -34,12 +36,6 @@ class TalentRegistrationScreen extends StatelessWidget {
           key: controller.formKey,
           child: ListView(
             children: [
-              // Image.asset(Assets.appBasicLogo),
-              // verticalSpace(Dimensions.marginSizeVertical),
-              // TitleHeading3Widget(
-              //   text: Strings.createTalentAccount,
-              //   color: Theme.of(context).primaryColor,
-              // ),
               verticalSpace(Dimensions.marginSizeVertical),
               PrimaryTextInputWidget(
                 controller: controller.nameController,
@@ -55,27 +51,52 @@ class TalentRegistrationScreen extends StatelessWidget {
               ),
 
               verticalSpace(Dimensions.marginBetweenInputBox),
-              PrimaryTextInputWidget(
-                controller: controller.tempController,
-                hint: "",
-                labelText: "Select Country",
-              ),
 
+              CustomDropDown<Country>(
+                items: controller.signupInfoModel.data.country,
+                onChanged: (value) {
+                  controller.selectedCountry.value = value!;
+                },
+                hint: controller.selectedCountry.value.name,
+                title: Strings.selectCountry,
+              ),
+              verticalSpace(Dimensions.marginBetweenInputBox),
+
+              CustomDropDown<Category>(
+                items: controller.categoryList,
+                onChanged: (value) {
+                  controller.selectedCategory.value = value!;
+                  controller.subCategoryList.value = controller.selectedCategory.value.child;
+                  controller.selectedSubCategory.value = controller.selectedCategory.value.child.first;
+                },
+                hint: controller.selectedCategory.value.name,
+                title: Strings.selectCategory,
+              ),
+              verticalSpace(Dimensions.marginBetweenInputBox),
+
+              Obx(() => CustomDropDown<Child>(
+                items: controller.subCategoryList,
+                onChanged: (value) {
+                  controller.selectedSubCategory.value = value!;
+                },
+                hint: controller.selectedSubCategory.value.name,
+                title: Strings.selectCategory,
+              )),
 
               verticalSpace(Dimensions.marginBetweenInputBox),
               PrimaryTextInputWidget(
-                controller: controller.tempController,
-                hint: "",
-                labelText: "Select Category",
+                controller: controller.linkController,
+                hint: Strings.enterSocialLink,
+                labelText: Strings.socialLink,
               ),
+              TitleHeading5Widget(text: Strings.enterSocialLinkHint, color: CustomColor.redColor),
+
 
               verticalSpace(Dimensions.marginBetweenInputBox),
-              PrimaryTextInputWidget(
-                controller: controller.tempController,
-                hint: "",
-                labelText: "Select Sub Category",
-              ),
-      
+              CustomVideoPicketWidget(onPicked: (value) {
+                controller.filePath = value;
+              },),
+
               verticalSpace(Dimensions.marginBetweenInputBox),
               PasswordInputWidget(
                 controller: controller.passwordController,
@@ -93,17 +114,8 @@ class TalentRegistrationScreen extends StatelessWidget {
               _checkBoxWidget(context),
       
               verticalSpace(Dimensions.marginSizeVertical),
-              PrimaryButton(title: Strings.go, onPressed: controller.register),
+              Obx(() => controller.isRegisterLoading ? const CustomLoadingAPI(): PrimaryButton(title: Strings.go, onPressed: controller.register)),
               verticalSpace(Dimensions.marginSizeVertical),
-      
-              // Row(
-              //   mainAxisAlignment: mainCenter,
-              //   children: [
-              //     RichTextWidget(
-              //       textAlign: TextAlign.center,
-              //       preText: Strings.alreadyHaveAnAccount, postText: Strings.loginNow, onPressed: controller.clickOnRichText),
-              //   ],
-              // )
             ],
           ),
         ),

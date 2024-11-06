@@ -23,6 +23,10 @@ class Strings {
   static String email = "Email";
   static String enterEmail = "Enter Email";
 
+  static String socialLink = "Social Link";
+  static String enterSocialLink = "Enter Social Link";
+  static String enterSocialLinkHint = "Please enter one of your social medias link with more than 1000 followers/subscribers";
+
   static String oldPassword = "Old Password";
   static String newPassword = "New Password";
   static String password = "Password";
@@ -126,6 +130,8 @@ class Strings {
 
 
   static String gender  = "Gender";
+  static String selectCountry  = "Select Country";
+  static String selectCategory  = "Select Category";
   static String book  = "Book";
   static String pay  = "Pay";
   static String sendTip  = "Send Tip";

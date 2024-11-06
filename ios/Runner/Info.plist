@@ -45,5 +45,13 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your library to pick a video file for verification.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera for video verification.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need access to your microphone for video verification.</string>
+
 </dict>
 </plist>

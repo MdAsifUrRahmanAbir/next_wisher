@@ -59,6 +59,8 @@ class _CustomDropDownState<T extends DropdownModel>
     extends State<CustomDropDown<T>> {
   T? _selectedItem;
 
+  final textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return widget.title != ''
@@ -102,6 +104,7 @@ class _CustomDropDownState<T extends DropdownModel>
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<T>(
+
           hint: Text(
             widget.hint,
             style: CustomStyle.darkHeading3TextStyle.copyWith(
@@ -131,7 +134,7 @@ class _CustomDropDownState<T extends DropdownModel>
             ),
           ),
           dropdownStyleData: DropdownStyleData(
-            maxHeight: MediaQuery.sizeOf(context).height * .25,
+            maxHeight: MediaQuery.sizeOf(context).height * .3,
             decoration: BoxDecoration(
               color: widget.dropDownColor ?? CustomColor.whiteColor,
               borderRadius: BorderRadius.circular(Dimensions.radius),

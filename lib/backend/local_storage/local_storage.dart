@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../routes/routes.dart';
+
 const String idKey = "idKey";
 
 const String nameKey = "nameKey";
@@ -15,6 +17,8 @@ const String imageKey = "imageKey";
 const String showAdKey = "showAdKey";
 
 const String isLoggedInKey = "isLoggedInKey";
+
+const String isUserKey = "isUserKey";
 
 const String isDataLoadedKey = "isDataLoadedKey";
 
@@ -97,12 +101,11 @@ class LocalStorage {
     await box.write(isLoggedInKey, isLoggedIn);
   }
 
-  static Future<void> loggedIn({required bool isLoggedIn}) async {
+  static Future<void> isUserSave({required bool isUser}) async {
     final box = GetStorage();
 
-    await box.write(isLoggedInKey, isLoggedIn);
+    await box.write(isUserKey, isUser);
   }
-
 
 
   static Future<void> dataLoaded({required bool isDataLoad}) async {
@@ -158,6 +161,10 @@ class LocalStorage {
     return GetStorage().read(isLoggedInKey) ?? false;
   }
 
+  static bool isUser() {
+    return GetStorage().read(isUserKey) ?? false;
+  }
+
   static bool isDataloaded() {
     return GetStorage().read(isDataLoadedKey) ?? false;
   }
@@ -188,6 +195,10 @@ class LocalStorage {
     await box.remove(imageKey);
 
     await box.remove(isLoggedInKey);
+
+    await box.remove(isUserKey);
+
+    Get.offAllNamed(Routes.welcomeScreen);
   }
 
   static Future<void> delete() async {
@@ -205,6 +216,10 @@ class LocalStorage {
 
     await box.remove(isLoggedInKey);
 
+    await box.remove(isUserKey);
+
     await box.remove(isOnBoardDoneKey);
+
+    Get.offAllNamed(Routes.welcomeScreen);
   }
 }
