@@ -167,6 +167,7 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String mobilePayment = "Mobile Payment";
   static String tip  = "Tip";
   static String serviceFee  = "Service Fee";
+  static String successfullyPaymentDone  = "Payment Successfully Done";
   static String gui  = "";
 
 

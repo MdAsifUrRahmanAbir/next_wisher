@@ -13,7 +13,7 @@ class PaymentInfoModel {
 }
 
 class Data {
-  final int commission;
+  final double commission;
   final String orderCode;
   final Talent talent;
   final Earning earning;
@@ -30,7 +30,7 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    commission: json["commission"],
+    commission: json["commission"].toDouble(),
     orderCode: json["order_code"],
     talent: Talent.fromJson(json["talent"]),
     earning: Earning.fromJson(json["earning"]),
@@ -43,7 +43,7 @@ class Earning {
   final int id;
   final int userId;
   final String type;
-  final int amount;
+  final double amount;
   final int status;
 
   Earning({
@@ -58,7 +58,7 @@ class Earning {
     id: json["id"],
     userId: json["user_id"],
     type: json["type"],
-    amount: json["amount"],
+    amount: json["amount"].toDouble(),
     status: json["status"],
   );
 }
@@ -88,7 +88,7 @@ class Ocasion extends DropdownModel{
   String get title => name;
 }
 
-class PawapayCountry {
+class PawapayCountry extends DropdownModel{
   final String name;
   final String flag;
   final double rate;
@@ -107,6 +107,10 @@ class PawapayCountry {
     rate: json["rate"].toDouble(),
     sim: List<Sim>.from(json["sim"].map((x) => Sim.fromJson(x))),
   );
+
+  @override
+  // TODO: implement title
+  String get title => "${sim.first.country} (${sim.first.currency})";
 }
 
 class Sim {

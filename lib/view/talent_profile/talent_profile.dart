@@ -108,6 +108,7 @@ class TalentProfile extends StatelessWidget {
               title: Strings.sendTip,
               backgroundColor: CustomColor.secondaryLightColor,
               onPressed: () {
+                bookNowController.paymentInfoProcess(data.talent.id);
                 Get.to(PayScreen(isBook: false));
               }),
           verticalSpace(Dimensions.paddingSizeVertical * .5),

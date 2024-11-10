@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import '../../../backend/utils/custom_loading_api.dart';
+import '../routes/routes.dart';
 import '../utils/basic_screen_imports.dart';
 
 class WebViewScreen extends StatefulWidget {
@@ -23,6 +24,11 @@ class _WebViewScreenState extends State<WebViewScreen> {
     return Scaffold(
         appBar: PrimaryAppBar(
           title: widget.appTitle,
+          actions: [
+            IconButton(onPressed: (){
+              Get.offAllNamed(Routes.btmScreen);
+            }, icon: Icon(Icons.home_filled, color: Theme.of(context).primaryColor,))
+          ],
         ),
         body: Stack(
           children: [
