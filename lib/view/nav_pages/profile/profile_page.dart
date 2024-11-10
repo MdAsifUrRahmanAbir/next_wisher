@@ -1,22 +1,26 @@
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
+import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/widgets/dialog_helper.dart';
 
+import '../../../controller/bottom_nav/bottom_nav_controller.dart';
+import '../../../controller/profile/profile_controller.dart';
+import '../../../routes/routes.dart';
 import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
-import '../../profiles_screen/account_screen.dart';
-import '../../profiles_screen/earnings_screen.dart';
-import '../../profiles_screen/guidline_screen.dart';
+ import '../../profiles_screen/earnings_screen.dart';
 import '../../profiles_screen/profle_setup_screen.dart';
 import '../../profiles_screen/tips_screen.dart';
 import '../../profiles_screen/wish_request_screen.dart';
 import 'menu_button_widget.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
+
+  final controller = Get.put(ProfileController());
 
   void onAccountTap() {
     debugPrint("Account tapped");
-    Get.to(const AccountScreen());
+    Get.toNamed(Routes.accountScreen);
     // Add your navigation or other logic here
   }
 
@@ -49,56 +53,67 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: ListView(
           // mainAxisAlignment: mainCenter,
           children: [
             verticalSpace(Dimensions.buttonHeight),
             MenuButton(
-              title: "Guideline",
+              title: Strings.guideline,
               onTap: () {
-                Get.to(const GuidelineScreen());
+                Get.toNamed(Routes.guidelineScreen);
               },
             ),
             const Divider(height: 1, thickness: 1),
             MenuButton(
-              title: "Account",
+              title: Strings.account,
               onTap: onAccountTap,
             ),
+            _talentSitesWidget(),
             const Divider(height: 1, thickness: 1),
-            MenuButton(
-              title: "Profile Setup",
-              onTap: onProfileSetupTap,
-            ),
-            const Divider(height: 1, thickness: 1),
-            MenuButton(
-              title: "Wish Request",
-              onTap: onWishRequestTap,
-            ),
-            const Divider(height: 1, thickness: 1),
-            MenuButton(
-              title: "Tips",
-              onTap: onTipsTap,
-            ),
-            const Divider(height: 1, thickness: 1),
-            MenuButton(
-              title: "Earnings",
-              onTap: onEarningsTap,
-            ),
-            const Divider(height: 1, thickness: 1),
-            MenuButton(
-              title: Strings.logout,
-              onTap: () {
-                DialogHelper.showAlertDialog(context,
+            Obx(() => Get.find<BottomNavController>().isLogoutLoading
+                ? const CustomLoadingAPI()
+                : MenuButton(
                     title: Strings.logout,
-                    content: Strings.logOutContent,
                     onTap: () {
-                  LocalStorage.logout();
-                    });
-              },
-            ),
+                      DialogHelper.showAlertDialog(context,
+                          title: Strings.logout,
+                          content: Strings.logOutContent, onTap: () {
+                        Get.find<BottomNavController>().logoutProcess();
+                      });
+                    },
+                  )),
           ],
         ),
       ),
     );
+  }
+
+  _talentSitesWidget() {
+    return LocalStorage.isUser()
+        ? const SizedBox.shrink()
+        : Column(
+            children: [
+              const Divider(height: 1, thickness: 1),
+              MenuButton(
+                title: "Profile Setup",
+                onTap: onProfileSetupTap,
+              ),
+              const Divider(height: 1, thickness: 1),
+              MenuButton(
+                title: "Wish Request",
+                onTap: onWishRequestTap,
+              ),
+              const Divider(height: 1, thickness: 1),
+              MenuButton(
+                title: "Tips",
+                onTap: onTipsTap,
+              ),
+              const Divider(height: 1, thickness: 1),
+              MenuButton(
+                title: "Earnings",
+                onTap: onEarningsTap,
+              ),
+            ],
+          );
   }
 }

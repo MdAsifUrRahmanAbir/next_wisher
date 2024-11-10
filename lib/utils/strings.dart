@@ -119,7 +119,7 @@ class Strings {
 
   static String selectedDate  = "Selected Date";
 
-  static String delete  = "Delete";
+  static String delete  = "Delete Account";
   static String areYouSure  = "Are you sure you want to delete it?";
 
 
@@ -143,4 +143,31 @@ class Strings {
 If your request for a personalized video could not be completed or expires, we will refund
 your money within 3-10 working days. Refunds can only be sent back to the original payment method used in a charge.  
   ''';
+
+  static String search  = "Search";
+  static String featuredCelebrities  = "Featured Celebrities";
+  static String featuredVideos  = "Featured Videos";
+  static String seeAll  = "See All";
+  static String guideline  = "Guideline";
+  static String personalInformation  = "Personal Information";
+
+  static String account  = "Account";
+  static String instruction  = "Instruction";
+  static String occasion  = "Occasion";
+  static String male  = "Male";
+  static String female  = "Female";
+  static String someoneElse  = "Someone Else";
+  static String mySelf  = "My Self";
+  static String videoHint  = "Book me for a personalized video for any occasion and let's make it memorable.";
+  static String personalizedVideo  = "Personalized video";
+  static String spokenLanguage  = "Spoken language(s): English, Français";
+  static String biography  = "Biography";
+  static String selectPaymentMethod  = "Select Payment Method";
+  static String creditCard = "Credit Card";
+  static String mobilePayment = "Mobile Payment";
+  static String tip  = "Tip";
+  static String serviceFee  = "Service Fee";
+  static String gui  = "";
+
+
 }

@@ -35,12 +35,12 @@ class CategoriesWidget extends StatelessWidget {
             ),
             verticalSpace(2),
             TitleHeading4Widget(
-                text: controller.category[index]["name"],
+                text: controller.homeModel.data.categoriesWithChild[index].name,
                 fontWeight: FontWeight.bold)
           ],
         );
       },
-      itemCount: controller.category.length,
+      itemCount: controller.homeModel.data.categoriesWithChild.length,
     );
   }
 }

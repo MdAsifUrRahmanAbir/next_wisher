@@ -60,8 +60,8 @@ class Country {
   final String phoneCode;
   final String countryCode;
   final int status;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  // final DateTime createdAt;
+  // final DateTime updatedAt;
 
   Country({
     required this.id,
@@ -70,19 +70,19 @@ class Country {
     required this.phoneCode,
     required this.countryCode,
     required this.status,
-    required this.createdAt,
-    required this.updatedAt,
+    // required this.createdAt,
+    // required this.updatedAt,
   });
 
   factory Country.fromJson(Map<String, dynamic> json) => Country(
     id: json["id"],
     name: json["name"],
     slug: json["slug"],
-    phoneCode: json["phone_code"],
-    countryCode: json["country_code"],
+    phoneCode: json["phone_code"] ?? "",
+    countryCode: json["country_code"] ?? "",
     status: json["status"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
+    // createdAt: DateTime.parse(json["created_at"]),
+    // updatedAt: DateTime.parse(json["updated_at"]),
   );
 }
 
@@ -138,29 +138,23 @@ class Amount {
   final int id;
   final int userId;
   final String type;
-  final int amount;
+  final double amount;
   final int status;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
   Amount({
     required this.id,
     required this.userId,
     required this.type,
     required this.amount,
-    required this.status,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.status
   });
 
   factory Amount.fromJson(Map<String, dynamic> json) => Amount(
     id: json["id"],
     userId: json["user_id"],
     type: json["type"],
-    amount: json["amount"],
-    status: json["status"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
+    amount: json["amount"].toDouble(),
+    status: json["status"]
   );
 
 }

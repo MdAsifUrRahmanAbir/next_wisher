@@ -8,8 +8,11 @@ import '../view/auth/reset_password_screen.dart';
 import '../view/auth/user_type_screen.dart';
 import '../view/befor_auth/splash_screen.dart';
 import '../view/befor_auth/welcome_screen.dart';
+import '../view/book_now/book_now_screen.dart';
 import '../view/bottom_nav/bottom_nav_screen.dart';
 import '../view/drawer_screens/change_password_screen.dart';
+import '../view/profiles_screen/account_screen.dart';
+import '../view/profiles_screen/guidline_screen.dart';
 import 'routes.dart';
 
 class Pages{
@@ -52,6 +55,19 @@ class Pages{
     GetPage(
       name: Routes.resetPasswordScreen,
       page: () => ResetPasswordScreen(),
+    ),
+
+    GetPage(
+      name: Routes.guidelineScreen,
+      page: () => GuidelineScreen(),
+    ),
+    GetPage(
+      name: Routes.accountScreen,
+      page: () =>  AccountScreen(),
+    ),
+    GetPage(
+      name: Routes.bookNowScreen,
+      page: () =>  BookNowScreen(),
     ),
   ];
 }

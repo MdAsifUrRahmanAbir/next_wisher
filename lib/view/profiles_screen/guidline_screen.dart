@@ -1,23 +1,31 @@
-import '../../../controller/bottom_nav/message_controller.dart';
+import 'package:next_wisher/backend/utils/custom_loading_api.dart';
+
 import '../../../utils/basic_screen_imports.dart';
 
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
+import '../../controller/profile/guidline_controller.dart';
+
 
 class GuidelineScreen extends StatelessWidget {
-  const GuidelineScreen({super.key});
+  GuidelineScreen({super.key});
+
+  final controller = Get.put(GuidelineController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        scrolledUnderElevation: 0,
-      ),
-      body: ListView(
+      appBar: const PrimaryAppBar(),
+      body:Obx(() => controller.isLoading ? const CustomLoadingAPI(): _bodyWidget()),
+    );
+  }
+
+  _bodyWidget() {
+    return SafeArea(
+      child: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          HtmlWidget(guideText)
+          HtmlWidget(controller.guidDataModel.data.guideData.description)
         ],
       ),
     );

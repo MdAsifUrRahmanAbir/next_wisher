@@ -1,3 +1,4 @@
+import '../../routes/routes.dart';
 import '../../utils/basic_widget_imports.dart';
 import '../profiles_screen/guidline_screen.dart';
 import 'bottom_nav_item.dart';
@@ -73,7 +74,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   icon: Icons.menu,
                   isSelected: widget.selectedIndex == 2,
                   onTap: (){
-                    Get.to(const GuidelineScreen());
+                    Get.toNamed(Routes.guidelineScreen);
                   },
                 ),
                 BottomNavItem(

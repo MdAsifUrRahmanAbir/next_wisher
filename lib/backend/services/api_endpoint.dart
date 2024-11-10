@@ -19,8 +19,19 @@ class ApiEndpoint {
   static String userDashboardURL = '/user/dashboard'.addBaseURl();
   static String userProfileURL = '/user/profile'.addBaseURl();
   static String userProfileUpdateURL = '/user/profile-update'.addBaseURl();
-  static String userProfileDeleteURL = '/user/profile-delete'.addBaseURl();
+  static String userProfileDeleteURL = '/user/profile-delete'.addBaseURl(); /// for both user and talent
   static String userChangePasswordURL = '/user/change-password'.addBaseURl();
+
+  static String wishPaymentInfoURL = '/user/wish-payment-info'.addBaseURl();
+  static String mobilePayURL = '/user/mobile-pay/pay'.addBaseURl();
+  static String stripePayURL = '/user/payment/pay'.addBaseURl();
+
+  ///-> Talent
+  static String talentDashboardURL = '/talent/dashboard'.addBaseURl();
+  static String talentProfileURL = '/talent/profile'.addBaseURl();
+  static String talentProfileUpdateURL = '/talent/profile-update'.addBaseURl();
+  // static String talentProfileDeleteURL = '/talent/profile-delete'.addBaseURl();
+  static String talentChangePasswordURL = '/talent/change-password'.addBaseURl();
 
 
 }
