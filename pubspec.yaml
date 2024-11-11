@@ -36,6 +36,7 @@ dependencies:
   permission_handler: ^11.3.1
   video_player: ^2.9.2
   chewie: ^1.8.5
+  badges: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -50,5 +51,5 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   assets:
-    - assets/logo.png
-    - assets/splash_screen.png
+    - assets/
+    - assets/empty_animation.json

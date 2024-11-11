@@ -154,6 +154,7 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String account  = "Account";
   static String instruction  = "Instruction";
   static String occasion  = "Occasion";
+  static String message  = "Message";
   static String male  = "Male";
   static String female  = "Female";
   static String someoneElse  = "Someone Else";
@@ -168,6 +169,7 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String tip  = "Tip";
   static String serviceFee  = "Service Fee";
   static String successfullyPaymentDone  = "Payment Successfully Done";
+  static String somethingWentWrong  = "Something Went Wrong";
   static String gui  = "";
 
 

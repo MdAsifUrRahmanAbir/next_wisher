@@ -9,11 +9,18 @@ class ApiEndpoint {
   static String registerURL = '/register'.addBaseURl();
   static String logoutURL = '/logout'.addBaseURl();
   static String signupInfoURL = '/signup-info'.addBaseURl();
-  /// auth-check
 
   ///-> Common
   static String homeURL = '/index'.addBaseURl();
   static String talentsDetailsURL = '/talents'.addBaseURl();
+
+  static String mailIndexURL = '/user/mail-index'.addBaseURl();
+  static String mailCountURL = '/user/mail-count'.addBaseURl();
+  static String mailSeenURL = '/user/mail-seen'.addBaseURl();
+  static String downloadURL = '/user/mail-media-api'.addBaseURl();
+  static String ratingSubmitURL = '/user/rating-submit'.addBaseURl();
+  static String mailReplyURL = '/talent/mail-replay'.addBaseURl();
+
 
   ///-> User
   static String userDashboardURL = '/user/dashboard'.addBaseURl();

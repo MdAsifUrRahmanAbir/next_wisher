@@ -3,8 +3,7 @@ import '../../../controller/bottom_nav/dashboard_controller.dart';
 import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/text_labels/title_heading5_widget.dart';
-import '../../talent_profile/talent_profile.dart';
-import 'featured_celebrities_screen.dart';
+import '../video_show_screen.dart';
 import 'featured_videos_screen.dart';
 
 class FeaturedVideosWidget extends StatelessWidget {
@@ -39,7 +38,7 @@ class FeaturedVideosWidget extends StatelessWidget {
               FeaturedVideo data = controller.homeModel.data.featuredVideos[index];
               return GestureDetector(
                 onTap: () {
-                  // Get.to(const TalentProfile());
+                  Get.to(VideoShowScreen(url: data.path));
                 },
                 child: Container(
                   width: MediaQuery.sizeOf(context).height * .2,

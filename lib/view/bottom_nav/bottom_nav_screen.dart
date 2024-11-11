@@ -36,6 +36,7 @@ class BottomNavScreen extends StatelessWidget {
       bottomNavigationBar: Obx(() => CustomBottomNavBar(
             selectedIndex: controller.selectedIndex.value,
             onItemTapped: controller.onItemTapped,
+            controller: controller,
           )),
     );
   }

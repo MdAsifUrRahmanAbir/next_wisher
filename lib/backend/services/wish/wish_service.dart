@@ -1,9 +1,12 @@
 import 'package:next_wisher/backend/services/wish/stripe_payment_model.dart';
 
+import '../../model/common/common_success_model.dart';
 import '../../utils/api_method.dart';
 import '../../utils/custom_snackbar.dart';
 import '../../utils/logger.dart';
 import '../api_endpoint.dart';
+import 'mail_count_model.dart';
+import 'mail_index_model.dart';
 import 'mobile_payment_model.dart';
 import 'payment_info_model.dart';
 
@@ -76,4 +79,116 @@ mixin WishService {
     }
     return null;
   }
+
+
+  ///* Get MailIndex api services
+  Future<MailIndexModel?> mailIndexProcessApi() async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).get(
+        ApiEndpoint.mailIndexURL,
+      );
+      if (mapResponse != null) {
+        MailIndexModel result = MailIndexModel.fromJson(mapResponse);
+        // CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from MailIndex api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
+
+  ///* Get MailCount api services
+  Future<MailCountModel?> mailCountProcessApi() async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).get(
+        ApiEndpoint.mailCountURL,
+      );
+      if (mapResponse != null) {
+        MailCountModel result = MailCountModel.fromJson(mapResponse);
+        // CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from MailCount api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
+
+  ///* Get MailSeen api services
+  Future<CommonSuccessModel?> mailSeenProcessApi(String id) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).get(
+        "${ApiEndpoint.mailSeenURL}/$id",
+      );
+      if (mapResponse != null) {
+        CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
+        // CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from MailSeen api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
+
+  ///* MailReply api services
+  Future<CommonSuccessModel?> mailReplyProcessApi(
+      {required Map<String, dynamic> body}) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).post(
+        ApiEndpoint.mailReplyURL,
+        body,
+      );
+      if (mapResponse != null) {
+        CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
+        CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from MailReply api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
+
+  ///* RatingSubmit api services
+  Future<CommonSuccessModel?> ratingSubmitProcessApi(
+      {required Map<String, dynamic> body}) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).post(
+        ApiEndpoint.ratingSubmitURL,
+        body,
+      );
+      if (mapResponse != null) {
+        CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
+        CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from RatingSubmit api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
+
+
 }

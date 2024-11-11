@@ -1,16 +1,22 @@
+import '../../backend/services/wish/mail_count_model.dart';
+import '../../controller/bottom_nav/bottom_nav_controller.dart';
 import '../../routes/routes.dart';
 import '../../utils/basic_widget_imports.dart';
-import '../profiles_screen/guidline_screen.dart';
+import '../../utils/strings.dart';
 import 'bottom_nav_item.dart';
 import 'language_selection_bottom_sheet.dart';
+
+import 'package:badges/badges.dart' as badges;
+
 
 class CustomBottomNavBar extends StatefulWidget {
   final int selectedIndex;
   final Function(int) onItemTapped;
+  final BottomNavController controller;
 
   const CustomBottomNavBar({super.key,
     required this.selectedIndex,
-    required this.onItemTapped,
+    required this.onItemTapped, required this.controller,
   });
 
   @override
@@ -40,58 +46,125 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      height: 60,
-      elevation: 10,
-      color: CustomColor.whiteColor,
-      padding: EdgeInsets.zero,
-      child: Column(
-        children: [
-          const Divider(height: 1),
-          verticalSpace(5),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(Dimensions.radius),
-              )
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
+    return   StreamBuilder<MailCountModel>(
+        stream: widget.controller.getDashboardDataStream(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return  Center(child: Text(Strings.somethingWentWrong));
+        }
+        if (snapshot.hasData) {
+          return BottomAppBar(
+            height: 60,
+            elevation: 10,
+            color: CustomColor.whiteColor,
+            padding: EdgeInsets.zero,
+            child: Column(
+              children: [
+                const Divider(height: 1),
+                verticalSpace(5),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(Dimensions.radius),
+                      )
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
 
-                BottomNavItem(
-                  icon: Icons.dashboard_outlined,
-                  isSelected: widget.selectedIndex == 0,
-                  onTap: () => widget.onItemTapped(0),
-                ),
-                BottomNavItem(
-                  text: "EN",
-                  isSelected: widget.selectedIndex == 1,
-                  onTap: _showLanguageBottomSheet,
-                ),
-                BottomNavItem(
-                  icon: Icons.menu,
-                  isSelected: widget.selectedIndex == 2,
-                  onTap: (){
-                    Get.toNamed(Routes.guidelineScreen);
-                  },
-                ),
-                BottomNavItem(
-                  icon: Icons.mail_outline,
-                  isSelected: widget.selectedIndex == 3,
-                  onTap: () => widget.onItemTapped(3),
-                ),
-                BottomNavItem(
-                  icon: Icons.person,
-                  isSelected: widget.selectedIndex == 4,
-                  onTap: () => widget.onItemTapped(4),
+                      BottomNavItem(
+                        icon: Icons.dashboard_outlined,
+                        isSelected: widget.selectedIndex == 0,
+                        onTap: () => widget.onItemTapped(0),
+                      ),
+                      BottomNavItem(
+                        text: "EN",
+                        isSelected: widget.selectedIndex == 1,
+                        onTap: _showLanguageBottomSheet,
+                      ),
+                      BottomNavItem(
+                        icon: Icons.menu,
+                        isSelected: widget.selectedIndex == 2,
+                        onTap: (){
+                          Get.toNamed(Routes.guidelineScreen);
+                        },
+                      ),
+                      badges.Badge(
+                        position: badges.BadgePosition.topEnd(top: -12, end: 1),
+                        badgeContent: TitleHeading4Widget(text: widget.controller.mailCountModel.data.mailCount.toString(), color: CustomColor.whiteColor,),
+                        child: BottomNavItem(
+                          icon: Icons.mail_outline,
+                          isSelected: widget.selectedIndex == 3,
+                          onTap: () => widget.onItemTapped(3),
+                        ),
+                      ),
+                      BottomNavItem(
+                        icon: Icons.person,
+                        isSelected: widget.selectedIndex == 4,
+                        onTap: () => widget.onItemTapped(4),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
+          );
+        }
+        return BottomAppBar(
+          height: 60,
+          elevation: 10,
+          color: CustomColor.whiteColor,
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              const Divider(height: 1),
+              verticalSpace(5),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(Dimensions.radius),
+                  )
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+
+                    BottomNavItem(
+                      icon: Icons.dashboard_outlined,
+                      isSelected: widget.selectedIndex == 0,
+                      onTap: () => widget.onItemTapped(0),
+                    ),
+                    BottomNavItem(
+                      text: "EN",
+                      isSelected: widget.selectedIndex == 1,
+                      onTap: _showLanguageBottomSheet,
+                    ),
+                    BottomNavItem(
+                      icon: Icons.menu,
+                      isSelected: widget.selectedIndex == 2,
+                      onTap: (){
+                        Get.toNamed(Routes.guidelineScreen);
+                      },
+                    ),
+                    BottomNavItem(
+                      icon: Icons.mail_outline,
+                      isSelected: widget.selectedIndex == 3,
+                      onTap: () => widget.onItemTapped(3),
+                    ),
+                    BottomNavItem(
+                      icon: Icons.person,
+                      isSelected: widget.selectedIndex == 4,
+                      onTap: () => widget.onItemTapped(4),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      }
     );
   }
 }

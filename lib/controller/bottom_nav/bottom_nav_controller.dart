@@ -3,11 +3,13 @@ import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../backend/local_storage/local_storage.dart';
 import '../../backend/services/auth/auth_service.dart';
+import '../../backend/services/wish/mail_count_model.dart';
+import '../../backend/services/wish/wish_service.dart' as wish;
 import '../../view/nav_pages/dashboard/dashboard_page.dart';
 import '../../view/nav_pages/message/messages_page.dart';
 import '../../view/nav_pages/profile/profile_page.dart';
 
-class BottomNavController extends GetxController with AuthService{
+class BottomNavController extends GetxController with AuthService, wish.WishService{
   RxInt selectedIndex = 0.obs;
   RxBool isDark = false.obs;
 
@@ -19,7 +21,7 @@ class BottomNavController extends GetxController with AuthService{
     DashboardPage(),
     const Center(child: Text("Language")),
     const Center(child: Text("Menu")),
-    MessagePage(),
+    LocalStorage.isUser() ? MessagePage() : MessagePage(),
     ProfilePage()
   ];
 
@@ -29,6 +31,47 @@ class BottomNavController extends GetxController with AuthService{
   //   "Shopping Cart",
   //   "Profile"
   // ];
+
+
+
+
+
+  RxBool isFirst = true.obs;
+  Stream<MailCountModel> getDashboardDataStream() async* {
+    while (true) {
+      await Future.delayed(Duration(seconds: isFirst.value ? 1 : 4));
+      MailCountModel data = await mailCountProcess();
+      isFirst.value = false;
+      yield data;
+    }
+  }
+
+  /// ------------------------------------- >>
+  final _isCountLoading = false.obs;
+  bool get isCountLoading => _isCountLoading.value;
+
+
+  late MailCountModel _mailCountModel;
+  MailCountModel get mailCountModel => _mailCountModel;
+
+
+  ///* Get MailCount in process
+  Future<MailCountModel> mailCountProcess() async {
+    _isCountLoading.value = true;
+    update();
+    await mailCountProcessApi().then((value) {
+      _mailCountModel = value!;
+      _isCountLoading.value = false;
+      update();
+    }).catchError((onError) {
+      wish.log.e(onError);
+    });
+    _isCountLoading.value = false;
+    update();
+    return _mailCountModel;
+  }
+
+
 
 
   /// ------------------------------------- >>

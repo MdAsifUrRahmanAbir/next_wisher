@@ -1,6 +1,7 @@
 import '../../../backend/services/dashboard/home_model.dart';
 import '../../../controller/bottom_nav/dashboard_controller.dart';
 import '../../../utils/basic_screen_imports.dart';
+import '../video_show_screen.dart';
 
 class FeaturedVideosScreen extends StatelessWidget {
    FeaturedVideosScreen({super.key});
@@ -26,7 +27,7 @@ class FeaturedVideosScreen extends StatelessWidget {
             FeaturedVideo data = controller.homeModel.data.featuredVideos[index];
             return GestureDetector(
               onTap: () {
-                // Get.to(const TalentProfile());
+                Get.to(VideoShowScreen(url: data.path));
               },
               child: Container(
                 padding: const EdgeInsets.all(8),

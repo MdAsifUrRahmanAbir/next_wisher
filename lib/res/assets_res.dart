@@ -8,6 +8,5 @@ class AssetsRes {
 
   static const String PLUGIN_NAME = 'next_wisher';
   static const String PLUGIN_VERSION = '1.0.0+1';
-  static const String LOGO = 'assets/logo.png';
-  static const String SPLASH_SCREEN = 'assets/splash_screen.png';
+  static const String EMPTY_ANIMATION = 'assets/empty_animation.json';
 }
