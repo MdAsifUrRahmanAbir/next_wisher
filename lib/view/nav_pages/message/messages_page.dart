@@ -1,11 +1,12 @@
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/backend/utils/no_data_widget.dart';
 
+import '../../../backend/local_storage/local_storage.dart';
 import '../../../backend/services/wish/mail_index_model.dart';
 import '../../../controller/bottom_nav/message_controller.dart';
 import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
-import '../../../widgets/text_labels/title_heading5_widget.dart';
+import 'message_tile_widget.dart';
 import 'user_inbox_screen.dart';
 import 'user_sent_screen.dart';
 
@@ -64,25 +65,15 @@ class MessagePage extends StatelessWidget {
                 itemCount: controller.inbox.length,
                 itemBuilder: (context, index) {
                   Email data = controller.inbox[index];
-                  return ListTile(
-                    tileColor: data.seen == 0 ? Colors.red.withOpacity(.1) : Colors.transparent,
-                    leading: CircleAvatar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child: TitleHeading2Widget(text: getInitials(data.name), color: Colors.white,),
-                    ),
-                    onTap: (){
-                      if(data.seen == 0) {
+                  return MessageTileWidget(
+                    onTap: () {
+                      if (data.seen == 0) {
                         debugPrint(data.seen.toString());
                         controller.mailSeenProcess(data.id.toString());
                       }
-                      Get.to(UserInboxScreen(data: data));
+                      LocalStorage.isUser() ? Get.to(UserInboxScreen(data: data)) : Get.to(UserSentScreen(data: data));
                     },
-                    dense: true,
-                    title: TitleHeading4Widget(
-                      text: data.name,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    subtitle: TitleHeading5Widget(text: data.instructions),
+                    data: data,
                   );
                 },
                 separatorBuilder: (_, i) =>
@@ -92,52 +83,22 @@ class MessagePage extends StatelessWidget {
             ? const NoDataWidget()
             : ListView.separated(
                 padding: const EdgeInsets.all(16.0),
+                shrinkWrap: true,
                 itemCount: controller.sent.length,
                 itemBuilder: (context, index) {
                   Email data = controller.sent[index];
-                  return ListTile(
-                    tileColor: data.seen == 0 ? Colors.red.withOpacity(.1) : Colors.transparent,
-                    leading: CircleAvatar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child: TitleHeading2Widget(text: getInitials(data.name), color: Colors.white,),
-                    ),
-                    onTap: (){
-                      if(data.seen == 0) {
-                        debugPrint(data.seen.toString());
-                        controller.mailSeenProcess(data.id.toString());
-                      }
-                      Get.to(UserSentScreen(data: data));
-                    },
-                    dense: true,
-                    title: TitleHeading4Widget(
-                      text: data.name,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    subtitle: TitleHeading5Widget(text: data.instructions),
-                  );
+                  return MessageTileWidget(
+                      onTap: () {
+                        if (data.seen == 0) {
+                          debugPrint(data.seen.toString());
+                          controller.mailSeenProcess(data.id.toString());
+                        }
+                        !LocalStorage.isUser() ? Get.to(UserInboxScreen(data: data)) : Get.to(UserSentScreen(data: data));
+                      },
+                      data: data);
                 },
                 separatorBuilder: (_, i) =>
                     verticalSpace(Dimensions.paddingSizeVertical * .3),
               ));
-  }
-
-
-  String getInitials(String name) {
-    List<String> nameParts = name.split(' '); // Split the name by spaces
-    String initials = '';
-
-    if (nameParts.length == 1) {
-      // If there's only one word, take the first two letters
-      initials = nameParts[0].substring(0, nameParts[0].length < 2 ? nameParts[0].length : 2);
-    } else {
-      // Take initials of the first two words only, if available
-      for (int i = 0; i < nameParts.length && i < 2; i++) {
-        if (nameParts[i].isNotEmpty) {
-          initials += nameParts[i][0]; // Take the first letter of each part
-        }
-      }
-    }
-
-    return initials.toUpperCase();
   }
 }

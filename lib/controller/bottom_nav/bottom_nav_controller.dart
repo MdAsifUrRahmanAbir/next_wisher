@@ -36,16 +36,22 @@ class BottomNavController extends GetxController with AuthService, wish.WishServ
 
 
 
-  RxBool isFirst = true.obs;
-  Stream<MailCountModel> getDashboardDataStream() async* {
-    while (true) {
-      await Future.delayed(Duration(seconds: isFirst.value ? 1 : 4));
-      MailCountModel data = await mailCountProcess();
-      isFirst.value = false;
-      yield data;
-    }
-  }
+  // RxBool isFirst = true.obs;
+  // Stream<MailCountModel> getDashboardDataStream() async* {
+  //   while (true) {
+  //     await Future.delayed(Duration(seconds: isFirst.value ? 1 : 4));
+  //     MailCountModel data = await mailCountProcess();
+  //     isFirst.value = false;
+  //     yield data;
+  //   }
+  // }
 
+
+  @override
+  void onInit() {
+    mailCountProcess();
+    super.onInit();
+  }
   /// ------------------------------------- >>
   final _isCountLoading = false.obs;
   bool get isCountLoading => _isCountLoading.value;

@@ -170,6 +170,12 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String serviceFee  = "Service Fee";
   static String successfullyPaymentDone  = "Payment Successfully Done";
   static String somethingWentWrong  = "Something Went Wrong";
+  static String download  = "Download";
+
+  static String writeYourMessage  = "Write Your Message";
+  static String send  = "Send";
+
+  static String selectVideoFile  = "Select Video File";
   static String gui  = "";
 
 

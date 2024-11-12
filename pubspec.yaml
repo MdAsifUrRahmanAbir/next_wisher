@@ -37,6 +37,8 @@ dependencies:
   video_player: ^2.9.2
   chewie: ^1.8.5
   badges: ^3.1.2
+  path_provider: ^2.1.5
+  device_info_plus: ^11.1.1
 
 dev_dependencies:
   flutter_test:

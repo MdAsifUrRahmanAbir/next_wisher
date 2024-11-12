@@ -146,12 +146,14 @@ mixin WishService {
 
   ///* MailReply api services
   Future<CommonSuccessModel?> mailReplyProcessApi(
-      {required Map<String, dynamic> body}) async {
+      {required Map<String, String> body, required String filePath}) async {
     Map<String, dynamic>? mapResponse;
     try {
-      mapResponse = await ApiMethod(isBasic: false).post(
+      mapResponse = await ApiMethod(isBasic: false).multipart(
         ApiEndpoint.mailReplyURL,
         body,
+        filePath,
+        "attachment"
       );
       if (mapResponse != null) {
         CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
@@ -183,6 +185,27 @@ mixin WishService {
       }
     } catch (e) {
       log.e(':ladybug::ladybug::ladybug: err from RatingSubmit api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
+
+  ///* Get DownloadFile api services
+  Future<CommonSuccessModel?> downloadFileProcessApi(String suffix) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).get(
+        "${ApiEndpoint.downloadURL}/$suffix",
+      );
+      if (mapResponse != null) {
+        CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
+        // CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from DownloadFile api service ==> $e :ladybug::ladybug::ladybug:');
       CustomSnackBar.error('Something went Wrong!');
       return null;
     }

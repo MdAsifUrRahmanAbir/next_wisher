@@ -1,12 +1,16 @@
 import 'package:chewie/chewie.dart';
+import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../backend/download_file.dart';
+import '../../../backend/local_storage/local_storage.dart';
 import '../../../backend/services/wish/mail_index_model.dart';
+import '../../../controller/bottom_nav/message_controller.dart';
 import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/text_labels/title_heading5_widget.dart';
 
-class UserInboxScreen extends StatefulWidget {
+class UserInboxScreen extends StatefulWidget with DownloadFile {
   const UserInboxScreen({super.key, required this.data});
 
   final Email data;
@@ -16,7 +20,6 @@ class UserInboxScreen extends StatefulWidget {
 }
 
 class _UserInboxScreenState extends State<UserInboxScreen> {
-
   late VideoPlayerController videoPlayerController;
   late ChewieController chewieController;
 
@@ -32,54 +35,101 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
         appBar: const PrimaryAppBar(),
         body: SafeArea(
             child: ListView(
-              padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           children: [
-            TitleHeading3Widget(text: widget.data.userName, color: Theme.of(context).primaryColor),
+            TitleHeading3Widget(
+                text: widget.data.userName,
+                color: Theme.of(context).primaryColor),
             verticalSpace(Dimensions.paddingSizeVertical * .4),
-
-
             Container(
               height: MediaQuery.sizeOf(context).height * .3,
-              color: Theme.of(context).primaryColor.withOpacity(.6),
-              child: Chewie(
-                controller: chewieController,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor.withOpacity(.6),
+                borderRadius: BorderRadius.circular(Dimensions.radius * .5),
               ),
+              child: !widget.data.downloadStatus && LocalStorage.isUser()
+                  ? Column(
+                      mainAxisAlignment: mainCenter,
+                      children: [
+                        Icon(Icons.video_library_outlined,
+                            size: Dimensions.iconSizeLarge * 2),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.paddingSizeHorizontal * .6,
+                              vertical: Dimensions.paddingSizeVertical * .4),
+                          child: Obx(() => Get.find<MessageController>().isDownloadLoading
+                              ? const CustomLoadingAPI()
+                              : PrimaryButton(
+                                  title: Strings.download,
+                                  onPressed: () {
+                                    widget.downloadFile(
+                                        url: widget.data.attachment,
+                                        name: widget.data.attachment
+                                            .split("/")
+                                            .last,
+                                        onSuccess: () {
+                                          Get.find<MessageController>()
+                                              .downloadFileProcess(
+                                                  widget.data.attachment,
+                                                  widget.data.id.toString());
+                                        });
+                                  })),
+                        )
+                      ],
+                    )
+                  : Chewie(
+                      controller: chewieController,
+                    ),
             ),
-
-
             widget.data.name.isNotEmpty
                 ? Column(
-              children: [
-                _row(Strings.name, widget.data.name),
-                verticalSpace(Dimensions.paddingSizeVertical * .2),
-              ],
-            )
+                    children: [
+                      _row(Strings.name, widget.data.name),
+                      verticalSpace(Dimensions.paddingSizeVertical * .2),
+                    ],
+                  )
                 : Column(
-              children: [
-                _row(Strings.forText, widget.data.emailFor),
-                verticalSpace(Dimensions.paddingSizeVertical * .2),
-                _row(Strings.from, widget.data.from),
-                verticalSpace(Dimensions.paddingSizeVertical * .2),
-              ],
-            ),
-
+                    children: [
+                      _row(Strings.forText, widget.data.emailFor),
+                      verticalSpace(Dimensions.paddingSizeVertical * .2),
+                      _row(Strings.from, widget.data.from),
+                      verticalSpace(Dimensions.paddingSizeVertical * .2),
+                    ],
+                  ),
             _row(Strings.gender, widget.data.genders),
             verticalSpace(Dimensions.paddingSizeVertical * .2),
-
             _row(Strings.occasion, widget.data.occasion),
             verticalSpace(Dimensions.paddingSizeVertical * .2),
-
             _row(Strings.message, widget.data.instructions),
+            Visibility(
+              visible: widget.data.downloadStatus,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.paddingSizeHorizontal * .6,
+                    vertical: Dimensions.paddingSizeVertical * .4),
+                child: PrimaryButton(
+                    title: Strings.download,
+                    onPressed: () {
+                      widget.downloadFile(
+                          url: widget.data.attachment,
+                          name: widget.data.attachment.split("/").last, onSuccess: () {  });
+                    }),
+              ),
+            )
           ],
         )));
   }
 
-  _row(String title, String value){
+  _row(String title, String value) {
     return Row(
       children: [
         TitleHeading4Widget(text: "$title: ", fontWeight: FontWeight.bold),
         horizontalSpace(Dimensions.paddingSizeHorizontal * .2),
-        Expanded(child: TitleHeading5Widget(text: value, opacity: .7,)),
+        Expanded(
+            child: TitleHeading5Widget(
+          text: value,
+          opacity: .7,
+        )),
       ],
     );
   }
@@ -87,8 +137,8 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
   void _initVideo() {
     videoPlayerController = VideoPlayerController.networkUrl(
         Uri.parse(widget.data.attachment)
-      // Uri.parse("https://next-wisher.skyflightbd.com/public/uploads/1730566102.mp4"),
-    )
+        // Uri.parse("https://next-wisher.skyflightbd.com/public/uploads/1730566102.mp4"),
+        )
       ..initialize();
 
     chewieController = ChewieController(
@@ -98,8 +148,6 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
       looping: true,
     );
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 }
