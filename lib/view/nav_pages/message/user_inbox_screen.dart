@@ -1,4 +1,5 @@
 import 'package:chewie/chewie.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:video_player/video_player.dart';
 
@@ -57,7 +58,8 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.paddingSizeHorizontal * .6,
                               vertical: Dimensions.paddingSizeVertical * .4),
-                          child: Obx(() => Get.find<MessageController>().isDownloadLoading
+                          child: Obx(() => Get.find<MessageController>()
+                                  .isDownloadLoading
                               ? const CustomLoadingAPI()
                               : PrimaryButton(
                                   title: Strings.download,
@@ -112,10 +114,74 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
                     onPressed: () {
                       widget.downloadFile(
                           url: widget.data.attachment,
-                          name: widget.data.attachment.split("/").last, onSuccess: () {  });
+                          name: widget.data.attachment.split("/").last,
+                          onSuccess: () {});
                     }),
               ),
-            )
+            ),
+            LocalStorage.isUser()
+                ? Obx(() => Get.find<MessageController>().isRattingCheckLoading
+                    ? const SizedBox.shrink()
+                    : Get.find<MessageController>()
+                            .ratingCheckModelModel
+                            .data
+                            .ratingStatus
+                        ? const SizedBox.shrink()
+                        : Column(
+                            crossAxisAlignment: crossStart,
+                            children: [
+                              verticalSpace(
+                                  Dimensions.paddingSizeVertical * .3),
+                              TitleHeading3Widget(text: Strings.yourRatting),
+                              verticalSpace(
+                                  Dimensions.paddingSizeVertical * .2),
+                              Obx(() => StarRating(
+                                mainAxisAlignment: mainStart,
+                                rating: Get.find<MessageController>().ratting.value,
+                                allowHalfRating: false,
+                                onRatingChanged: (double rating) {
+                                  Get.find<MessageController>().ratting.value = rating;
+                                },
+                              )),
+                              verticalSpace(
+                                  Dimensions.paddingSizeVertical * .5),
+                              PrimaryTextInputWidget(
+                                controller: Get.find<MessageController>()
+                                    .feedbackController,
+                                labelText: Strings.feedback,
+                                hint: Strings.writeYourFeedback,
+                                maxLine: 5,
+                              ),
+                              verticalSpace(
+                                  Dimensions.paddingSizeVertical * .3),
+                              Row(
+                                mainAxisAlignment: mainEnd,
+                                children: [
+                                  Obx(() => Get.find<MessageController>()
+                                          .isSubmitLoading
+                                      ? const CustomLoadingAPI()
+                                      : OutlinedButton(
+                                          onPressed: () {
+                                            Get.find<MessageController>()
+                                                .ratingSubmitProcess(
+                                                    talentId: widget
+                                                        .data.talentId
+                                                        .toString(),
+                                                    userId: widget.data.userId
+                                                        .toString(),
+                                                    earningId: widget
+                                                        .data.talentEarningId
+                                                        .toString());
+                                          },
+                                          child: TitleHeading3Widget(
+                                              text: Strings.send)))
+                                ],
+                              ),
+                              verticalSpace(
+                                  Dimensions.paddingSizeVertical * .3),
+                            ],
+                          ))
+                : const SizedBox.shrink()
           ],
         )));
   }

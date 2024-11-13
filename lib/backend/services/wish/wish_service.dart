@@ -9,6 +9,7 @@ import 'mail_count_model.dart';
 import 'mail_index_model.dart';
 import 'mobile_payment_model.dart';
 import 'payment_info_model.dart';
+import 'ratting_check_model.dart';
 
 
 final log = logger(WishService);
@@ -212,6 +213,26 @@ mixin WishService {
     return null;
   }
 
+
+  ///* Get RatingCheckModel api services
+  Future<RatingCheckModel?> ratingCheckModelProcessApi({required String userId, required String earningId}) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).get(
+        "${ApiEndpoint.rattingCheckURL}/$userId/$earningId",
+      );
+      if (mapResponse != null) {
+        RatingCheckModel result = RatingCheckModel.fromJson(mapResponse);
+        // CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from RatingCheckModel api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
 
 
 }

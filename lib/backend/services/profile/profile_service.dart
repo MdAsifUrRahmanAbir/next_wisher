@@ -11,7 +11,6 @@ import 'user_profile_model.dart';
 final log = logger(ProfileService);
 
 mixin ProfileService {
-
   ///* Get UserProfile api services
   Future<UserProfileModel?> userProfileProcessApi() async {
     Map<String, dynamic>? mapResponse;
@@ -25,13 +24,13 @@ mixin ProfileService {
         return result;
       }
     } catch (e) {
-      log.e(':ladybug::ladybug::ladybug: err from UserProfile api service ==> $e :ladybug::ladybug::ladybug:');
+      log.e(
+          ':ladybug::ladybug::ladybug: err from UserProfile api service ==> $e :ladybug::ladybug::ladybug:');
       CustomSnackBar.error('Something went Wrong!');
       return null;
     }
     return null;
   }
-
 
   ///* Get TalentProfileModel api services
   Future<TalentProfileModel?> talentProfileModelProcessApi() async {
@@ -46,13 +45,13 @@ mixin ProfileService {
         return result;
       }
     } catch (e) {
-      log.e(':ladybug::ladybug::ladybug: err from TalentProfileModel api service ==> $e :ladybug::ladybug::ladybug:');
+      log.e(
+          ':ladybug::ladybug::ladybug: err from TalentProfileModel api service ==> $e :ladybug::ladybug::ladybug:');
       CustomSnackBar.error('Something went Wrong!');
       return null;
     }
     return null;
   }
-
 
   ///* ChangePassword api services
   Future<CommonSuccessModel?> changePasswordProcessApi(
@@ -61,7 +60,8 @@ mixin ProfileService {
     try {
       mapResponse = await ApiMethod(isBasic: false).post(
         LocalStorage.isUser()
-            ? ApiEndpoint.userChangePasswordURL : ApiEndpoint.talentChangePasswordURL,
+            ? ApiEndpoint.userChangePasswordURL
+            : ApiEndpoint.talentChangePasswordURL,
         body,
       );
       if (mapResponse != null) {
@@ -70,13 +70,13 @@ mixin ProfileService {
         return result;
       }
     } catch (e) {
-      log.e(':ladybug::ladybug::ladybug: err from ChangePassword api service ==> $e :ladybug::ladybug::ladybug:');
+      log.e(
+          ':ladybug::ladybug::ladybug: err from ChangePassword api service ==> $e :ladybug::ladybug::ladybug:');
       CustomSnackBar.error('Something went Wrong!');
       return null;
     }
     return null;
   }
-
 
   ///* Get DeleteAccount api services
   Future<CommonSuccessModel?> deleteAccountProcessApi() async {
@@ -91,13 +91,13 @@ mixin ProfileService {
         return result;
       }
     } catch (e) {
-      log.e(':ladybug::ladybug::ladybug: err from DeleteAccount api service ==> $e :ladybug::ladybug::ladybug:');
+      log.e(
+          ':ladybug::ladybug::ladybug: err from DeleteAccount api service ==> $e :ladybug::ladybug::ladybug:');
       CustomSnackBar.error('Something went Wrong!');
       return null;
     }
     return null;
   }
-
 
   ///* UpdateAccount api services
   Future<CommonSuccessModel?> updateAccountProcessApi(
@@ -106,7 +106,8 @@ mixin ProfileService {
     try {
       mapResponse = await ApiMethod(isBasic: false).post(
         LocalStorage.isUser()
-            ? ApiEndpoint.userProfileUpdateURL : ApiEndpoint.talentProfileUpdateURL,
+            ? ApiEndpoint.userProfileUpdateURL
+            : ApiEndpoint.talentProfileUpdateURL,
         body,
       );
       if (mapResponse != null) {
@@ -115,12 +116,58 @@ mixin ProfileService {
         return result;
       }
     } catch (e) {
-      log.e(':ladybug::ladybug::ladybug: err from UpdateAccount api service ==> $e :ladybug::ladybug::ladybug:');
+      log.e(
+          ':ladybug::ladybug::ladybug: err from UpdateAccount api service ==> $e :ladybug::ladybug::ladybug:');
       CustomSnackBar.error('Something went Wrong!');
       return null;
     }
     return null;
   }
 
+  ///* TalentSetup api services
+  Future<CommonSuccessModel?> talentSetupProcessApi(
+      {required Map<String, dynamic> body}) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).post(
+        ApiEndpoint.talentSetupURL,
+        body,
+      );
+      if (mapResponse != null) {
+        CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
+        CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(
+          ':ladybug::ladybug::ladybug: err from TalentSetup api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
 
+  ///* TalentImageSetup api services
+  Future<CommonSuccessModel?> talentFileSetupProcessApi({
+    required String endPoint,
+    required String filePath,
+    required String filedName,
+  }) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false)
+          .multipart(endPoint, {}, filePath, filedName);
+      if (mapResponse != null) {
+        CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
+        CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(
+          ':ladybug::ladybug::ladybug: err from TalentImageSetup api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
 }

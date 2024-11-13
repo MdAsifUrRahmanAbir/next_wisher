@@ -71,6 +71,11 @@ class MessagePage extends StatelessWidget {
                         debugPrint(data.seen.toString());
                         controller.mailSeenProcess(data.id.toString());
                       }
+                      debugPrint(LocalStorage.isUser().toString());
+                      if(LocalStorage.isUser()){
+                        debugPrint(LocalStorage.isUser().toString());
+                        controller.ratingCheckModelProcess(userId: data.userId.toString(), earningId: data.talentEarningId.toString());
+                      }
                       LocalStorage.isUser() ? Get.to(UserInboxScreen(data: data)) : Get.to(UserSentScreen(data: data));
                     },
                     data: data,

@@ -13,7 +13,7 @@ class SplashController extends GetxController {
   }
 
   _goToScreen() async {
-    Timer(const Duration(seconds: 4), () {
+    Timer(const Duration(seconds: 3), () {
       LocalStorage.isLoggedIn()
           ? Get.offAllNamed(Routes.btmScreen)
           : Get.offAllNamed(Routes.welcomeScreen);

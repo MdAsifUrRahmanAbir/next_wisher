@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:intl/intl.dart';
+import 'package:next_wisher/backend/local_storage/local_storage.dart';
 
 import '../../../backend/services/wish/mail_index_model.dart';
 import '../../../utils/basic_screen_imports.dart';
@@ -9,7 +10,8 @@ class MessageTileWidget extends StatefulWidget {
   final Email data;
   final Function()? onTap;
 
-  const MessageTileWidget({super.key,
+  const MessageTileWidget({
+    super.key,
     required this.onTap,
     required this.data,
   });
@@ -26,9 +28,12 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
   @override
   void initState() {
     super.initState();
-    targetDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(widget.data.expirationDate.toString());
+    targetDate = DateFormat("yyyy-MM-dd HH:mm:ss")
+        .parse((widget.data.createdAt.add(const Duration(days: 5))).toString());
     // _calculateRemainingTime();
-    _startTimer();
+    if(!widget.data.downloadStatus) {
+      _startTimer();
+    }
   }
 
   void _startTimer() {
@@ -50,7 +55,9 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    if(!widget.data.downloadStatus) {
+      _timer.cancel();
+    }
     super.dispose();
   }
 
@@ -66,6 +73,13 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
     String seconds = (remainingTime.inSeconds % 60).toString().padLeft(2, '0');
 
     return ListTile(
+      tileColor: !LocalStorage.isUser()
+          ? (widget.data.role == "user" && widget.data.seen == 0)
+              ? CustomColor.redColor.withOpacity(.2)
+              : null
+          : (widget.data.role == "talent" && widget.data.seen == 0)
+              ? CustomColor.redColor.withOpacity(.2)
+              : null,
       shape: Border.all(
         color: Theme.of(context).primaryColor.withOpacity(.2),
         // width: .3,
@@ -73,7 +87,10 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
       // tileColor: data.seen == 0 ? Colors.red.withOpacity(.1) : Colors.transparent,
       leading: CircleAvatar(
         backgroundColor: Theme.of(context).primaryColor,
-        child: TitleHeading2Widget(text: getInitials(widget.data.name), color: Colors.white,),
+        child: TitleHeading2Widget(
+          text: getInitials(widget.data.name),
+          color: Colors.white,
+        ),
       ),
       onTap: widget.onTap,
       dense: true,
@@ -85,15 +102,17 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
       trailing: Column(
         crossAxisAlignment: crossEnd,
         children: [
-          TitleHeading5Widget(text: DateFormat('dd-MM-yyyy').format(widget.data.createdAt)),
+          TitleHeading5Widget(
+              text: DateFormat('dd-MM-yyyy').format(widget.data.createdAt)),
           verticalSpace(Dimensions.paddingSizeVertical * .3),
-          TitleHeading5Widget(text: "$days:$hours:$minutes:$seconds", color: widget.data.fulfilledAt ? Colors.red : Colors.green),
+          TitleHeading5Widget(
+              text: widget.data.downloadStatus ? widget.data.settings: "$days:$hours:$minutes:$seconds",
+              color: widget.data.downloadStatus ? Colors.green : Colors.red),
         ],
       ),
     );
   }
 }
-
 
 /// "$days Days : $hours Hours : $minutes Minutes : $seconds Seconds"
 
@@ -103,7 +122,8 @@ String getInitials(String name) {
 
   if (nameParts.length == 1) {
     // If there's only one word, take the first two letters
-    initials = nameParts[0].substring(0, nameParts[0].length < 2 ? nameParts[0].length : 2);
+    initials = nameParts[0]
+        .substring(0, nameParts[0].length < 2 ? nameParts[0].length : 2);
   } else {
     // Take initials of the first two words only, if available
     for (int i = 0; i < nameParts.length && i < 2; i++) {

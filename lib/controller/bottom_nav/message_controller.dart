@@ -3,6 +3,7 @@ import 'package:next_wisher/backend/model/common/common_success_model.dart';
 import '../../backend/download_file.dart';
 import '../../backend/local_storage/local_storage.dart';
 import '../../backend/services/wish/mail_index_model.dart';
+import '../../backend/services/wish/ratting_check_model.dart';
 import '../../backend/services/wish/wish_service.dart';
 import '../../utils/basic_screen_imports.dart';
 import 'bottom_nav_controller.dart';
@@ -10,7 +11,9 @@ import 'bottom_nav_controller.dart';
 class MessageController extends GetxController with WishService, DownloadFile {
 
   final inboxController = TextEditingController();
+  final feedbackController = TextEditingController();
   RxInt selectedType = 1.obs;
+  RxDouble ratting = 0.0.obs;
 
   @override
   void onInit() {
@@ -128,6 +131,37 @@ class MessageController extends GetxController with WishService, DownloadFile {
     return _mailReplyModel;
   }
 
+
+
+  /// ------------------------------------- >>
+  final _isRattingCheckLoading = false.obs;
+  bool get isRattingCheckLoading => _isRattingCheckLoading.value;
+
+
+  late RatingCheckModel _ratingCheckModelModel;
+  RatingCheckModel get ratingCheckModelModel => _ratingCheckModelModel;
+
+
+  ///* Get RatingCheckModel in process
+  Future<RatingCheckModel> ratingCheckModelProcess({required String userId, required String earningId}) async {
+    _isRattingCheckLoading.value = true;
+    update();
+    debugPrint("Ratting Check >>");
+    await ratingCheckModelProcessApi(userId: userId, earningId: earningId).then((value) {
+      _ratingCheckModelModel = value!;
+
+      _isRattingCheckLoading.value = false;
+      update();
+    }).catchError((onError) {
+      log.e(onError);
+    });
+    _isRattingCheckLoading.value = false;
+    update();
+    return _ratingCheckModelModel;
+  }
+
+
+
   /// ------------------------------------- >>
   final _isSubmitLoading = false.obs;
   bool get isSubmitLoading => _isSubmitLoading.value;
@@ -136,18 +170,25 @@ class MessageController extends GetxController with WishService, DownloadFile {
   CommonSuccessModel get ratingSubmitModel => _ratingSubmitModel;
 
   ///* RatingSubmit in process
-  Future<CommonSuccessModel> ratingSubmitProcess() async {
+  Future<CommonSuccessModel> ratingSubmitProcess({required String talentId, required String userId, required String earningId}) async {
     _isSubmitLoading.value = true;
     update();
     Map<String, dynamic> inputBody = {
-      'talent_id': '',
-      'user_id': '',
-      'talent_earning_id': '',
+      'talent_id': talentId,
+      'user_id': userId,
+      'talent_earning_id': earningId,
       'rating': '',
-      'feedback': ''
+      'feedback': feedbackController.text
     };
     await ratingSubmitProcessApi(body: inputBody).then((value) {
       _ratingSubmitModel = value!;
+
+      ratting.value = 0.0;
+      feedbackController.text = "";
+
+      mailIndexProcess();
+      Get.close(1);
+
       _isSubmitLoading.value = false;
       update();
     }).catchError((onError) {

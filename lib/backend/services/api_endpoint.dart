@@ -18,6 +18,7 @@ class ApiEndpoint {
   static String mailCountURL = '/user/mail-count'.addBaseURl();
   static String mailSeenURL = '/user/mail-seen'.addBaseURl();
   static String downloadURL = '/user/mail-media-api'.addBaseURl();
+  static String rattingCheckURL = '/user/rating-check'.addBaseURl();
   static String ratingSubmitURL = '/user/rating-submit'.addBaseURl();
   static String mailReplyURL = '/talent/mail-replay'.addBaseURl();
 
@@ -37,8 +38,18 @@ class ApiEndpoint {
   static String talentDashboardURL = '/talent/dashboard'.addBaseURl();
   static String talentProfileURL = '/talent/profile'.addBaseURl();
   static String talentProfileUpdateURL = '/talent/profile-update'.addBaseURl();
-  // static String talentProfileDeleteURL = '/talent/profile-delete'.addBaseURl();
   static String talentChangePasswordURL = '/talent/change-password'.addBaseURl();
+
+  ///-> Talent Profile Set up
+  static String talentSetupImageURL = '/talent/profile-setup-image'.addBaseURl();
+  static String talentSetupVideoURL = '/talent/profile-setup-video'.addBaseURl();
+  static String talentSetupURL = '/talent/profile-setup'.addBaseURl();
+
+  ///-> Talent Wish & Tips Request Set Up
+  static String talentWishRequestURL = '/talent/wish-request'.addBaseURl();
+  static String talentSaveWishRequestURL = '/talent/save-wish-request'.addBaseURl();
+  static String talentTipsRequestURL = '/talent/tips-request'.addBaseURl();
+  static String talentSaveTipsRequestURL = '/talent/save-tips-request'.addBaseURl();
 
 
 }

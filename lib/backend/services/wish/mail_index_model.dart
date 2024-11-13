@@ -35,6 +35,7 @@ class Email {
   final String emailFor;
   final String occasion;
   final DateTime expirationDate;
+  final String settings;
   final int seen;
   final String genders;
   final String instructions;
@@ -57,6 +58,7 @@ class Email {
     required this.emailFor,
     required this.occasion,
     required this.expirationDate,
+    required this.settings,
     required this.seen,
     required this.genders,
     required this.instructions,
@@ -80,6 +82,7 @@ class Email {
     emailFor: json["for"] ?? "",
     occasion: json["occasion"] ?? "",
     expirationDate: DateTime.parse(json["expirationDate"]),
+    settings: json["settings_time"] ?? "",
     seen: json["seen"],
     genders: json["genders"] ?? "",
     instructions: json["instructions"] ?? "",
