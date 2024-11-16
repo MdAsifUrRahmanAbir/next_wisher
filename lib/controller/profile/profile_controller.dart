@@ -22,7 +22,7 @@ class ProfileController extends GetxController with ProfileService{
 
   @override
   void onInit() {
-    LocalStorage.isUser() ? userProfileProcess() : userProfileProcess();
+    LocalStorage.isUser() ? userProfileProcess() : talentProfileModelProcess();
     super.onInit();
   }
 
@@ -70,6 +70,14 @@ class ProfileController extends GetxController with ProfileService{
 
 
   /// ------------------------------------- >>
+  List<Category> categoryList = [];
+  late Rx<Category> selectedCategory;
+
+  RxList<Child> subCategoryList = <Child>[].obs;
+  late Rx<Child> selectedSubCategory;
+
+  bool subCategoryFound = false;
+
   late TalentProfileModel _talentProfileModelModel;
   TalentProfileModel get talentProfileModelModel => _talentProfileModelModel;
 
@@ -82,6 +90,36 @@ class ProfileController extends GetxController with ProfileService{
       _talentProfileModelModel = value!;
       nameController.text = _talentProfileModelModel.data.userInfo.name;
       emailController.text = _talentProfileModelModel.data.userInfo.email;
+
+      bool found = false;
+
+      for (var e in _talentProfileModelModel.data.category) {
+        if(e.child.isNotEmpty){
+          categoryList.add(e);
+          if(e.id == _talentProfileModelModel.data.userInfo.categoryId){
+            selectedCategory = e.obs;
+            subCategoryList.value = e.child;
+            found = true;
+          }
+        }
+      }
+
+      if(!found) {
+        selectedCategory = categoryList.first.obs;
+      }
+
+      // subCategoryList.value = _talentProfileModelModel.data.category.first.child;
+
+      if(subCategoryList.isNotEmpty){
+        subCategoryFound = true;
+        selectedSubCategory = subCategoryList.first.obs;
+        for (var e in subCategoryList) {
+          if(_talentProfileModelModel.data.userInfo.subCategoryId == e.id) {
+            selectedSubCategory = subCategoryList.first.obs;
+          }
+        }
+      }
+
       _isLoading.value = false;
       update();
     }).catchError((onError) {

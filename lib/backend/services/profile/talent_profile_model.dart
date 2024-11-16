@@ -1,3 +1,5 @@
+import '../../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
+
 class TalentProfileModel {
   final Data data;
 
@@ -25,14 +27,14 @@ class Data {
   );
 }
 
-class Category {
+class Category extends DropdownModel{
   final int id;
   final String name;
   final String slug;
   final int isParent;
   final int parentId;
   final int status;
-  final List<Category> child;
+  final List<Child> child;
 
   Category({
     required this.id,
@@ -49,10 +51,45 @@ class Category {
     name: json["name"],
     slug: json["slug"],
     isParent: json["is_parent"],
-    parentId: json["parent_id"],
+    parentId: json["parent_id"] ?? 0,
     status: json["status"],
-    child: List<Category>.from(json["child"].map((x) => Category.fromJson(x))),
+    child: List<Child>.from(json["child"].map((x) => Child.fromJson(x))),
   );
+
+  @override
+  // TODO: implement title
+  String get title => name;
+}
+
+class Child extends DropdownModel{
+  final int id;
+  final String name;
+  final String slug;
+  final int isParent;
+  final int parentId;
+  final int status;
+
+  Child({
+    required this.id,
+    required this.name,
+    required this.slug,
+    required this.isParent,
+    required this.parentId,
+    required this.status,
+  });
+
+  factory Child.fromJson(Map<String, dynamic> json) => Child(
+    id: json["id"],
+    name: json["name"],
+    slug: json["slug"],
+    isParent: json["is_parent"],
+    parentId: json["parent_id"] ?? 0,
+    status: json["status"]
+  );
+
+  @override
+  // TODO: implement title
+  String get title => name;
 }
 
 class UserInfo {
@@ -69,6 +106,7 @@ class UserInfo {
   final String coverImage;
   final String profileImage;
   final String verificationVideo;
+  final String bio;
 
   UserInfo({
     required this.id,
@@ -84,13 +122,14 @@ class UserInfo {
     required this.coverImage,
     required this.profileImage,
     required this.verificationVideo,
+    required this.bio,
   });
 
   factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
     id: json["id"],
     name: json["name"],
     username: json["username"],
-    country: json["country"],
+    country: json["country"] ?? "",
     categoryId: json["category_id"],
     subCategoryId: json["sub_category_id"],
     email: json["email"],
@@ -100,5 +139,6 @@ class UserInfo {
     coverImage: json["cover_image"],
     profileImage: json["profile_image"],
     verificationVideo: json["verification_video"],
+    bio: json["bio"],
   );
 }

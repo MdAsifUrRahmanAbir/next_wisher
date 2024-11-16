@@ -47,9 +47,9 @@ class ApiEndpoint {
 
   ///-> Talent Wish & Tips Request Set Up
   static String talentWishRequestURL = '/talent/wish-request'.addBaseURl();
-  static String talentSaveWishRequestURL = '/talent/save-wish-request'.addBaseURl();
+  static String saveWishRequestURL = '/talent/save-wish-request'.addBaseURl();
   static String talentTipsRequestURL = '/talent/tips-request'.addBaseURl();
-  static String talentSaveTipsRequestURL = '/talent/save-tips-request'.addBaseURl();
+  static String saveTipsRequestURL = '/talent/save-tips-request'.addBaseURl();
 
 
 }

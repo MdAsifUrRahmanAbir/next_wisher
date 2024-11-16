@@ -13,6 +13,9 @@ import '../view/bottom_nav/bottom_nav_screen.dart';
 import '../view/drawer_screens/change_password_screen.dart';
 import '../view/profiles_screen/account_screen.dart';
 import '../view/profiles_screen/guidline_screen.dart';
+import '../view/profiles_screen/profle_setup_screen.dart';
+import '../view/profiles_screen/tips_screen.dart';
+import '../view/profiles_screen/wish_request_screen.dart';
 import 'routes.dart';
 
 class Pages{
@@ -68,6 +71,18 @@ class Pages{
     GetPage(
       name: Routes.bookNowScreen,
       page: () =>  BookNowScreen(),
+    ),
+    GetPage(
+      name: Routes.profileSetupScreen,
+      page: () =>  const ProfileSetupScreen(),
+    ),
+    GetPage(
+      name: Routes.wishRequest,
+      page: () =>  const WishRequest(),
+    ),
+    GetPage(
+      name: Routes.tipsScreen,
+      page: () =>  const TipsScreen(),
     ),
   ];
 }

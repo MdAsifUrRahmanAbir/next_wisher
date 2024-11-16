@@ -1,10 +1,16 @@
-import 'package:next_wisher/backend/local_storage/local_storage.dart';
 import 'package:next_wisher/backend/model/common/common_success_model.dart';
 
 import '../../backend/services/profile/profile_service.dart';
 import '../../utils/basic_screen_imports.dart';
+import 'profile_controller.dart';
 
 class ProfileSetupController extends GetxController with ProfileService {
+
+
+  final bioController = TextEditingController();
+  final profileController = Get.find<ProfileController>();
+
+
   /// ------------------------------------- >>
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
@@ -17,7 +23,9 @@ class ProfileSetupController extends GetxController with ProfileService {
     _isLoading.value = true;
     update();
     Map<String, dynamic> inputBody = {
-      'key': 'value',
+      'bio': bioController.text,
+      'category_id': profileController.selectedCategory.value.id,
+      'sub_category_id': profileController.selectedSubCategory.value.id,
     };
     await talentSetupProcessApi(body: inputBody).then((value) {
       _talentSetupModel = value!;
@@ -32,6 +40,11 @@ class ProfileSetupController extends GetxController with ProfileService {
   }
 
   /// ------------------------------------- >>
+
+  RxString imageFile = "".obs;
+  RxString videoFile = "".obs;
+  RxBool uploadImage = false.obs;
+  RxBool uploadVideo = false.obs;
 
   late CommonSuccessModel _talentImageSetupModel;
   CommonSuccessModel get talentImageSetupModel => _talentImageSetupModel;
@@ -49,6 +62,14 @@ class ProfileSetupController extends GetxController with ProfileService {
             endPoint: endPoint, filePath: filePath, filedName: filedName)
         .then((value) {
       _talentImageSetupModel = value!;
+
+      if(filedName == "image") {
+        uploadImage.value = true;
+      }else{
+        uploadVideo.value = true;
+      }
+      debugPrint(uploadImage.value.toString());
+      debugPrint(uploadVideo.value.toString());
       _isLoading.value = false;
       update();
     }).catchError((onError) {

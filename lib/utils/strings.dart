@@ -180,6 +180,14 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String yourRatting  = "Your Ratting";
   static String writeYourFeedback  = "Write Your Feedback";
 
+  static String selectProfilePicture  = "Select Profile Picture";
+  static String selectProfileVideo  = "Select Profile Video";
+
+  static String uploaded  = "Uploaded";
+  static String enterYourBiography  = "Enter Your Biography";
+
+  static String enterAmount = "Enter Amount";
+
   static String gui  = "";
 
 

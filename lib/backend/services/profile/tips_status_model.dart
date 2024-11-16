@@ -1,41 +1,41 @@
-class WishStatusModel {
+class TipsStatusModel {
   final Data data;
 
-  WishStatusModel({
+  TipsStatusModel({
     required this.data,
   });
 
-  factory WishStatusModel.fromJson(Map<String, dynamic> json) => WishStatusModel(
+  factory TipsStatusModel.fromJson(Map<String, dynamic> json) => TipsStatusModel(
     data: Data.fromJson(json["data"]),
   );
 }
 
 class Data {
-  final Wish wish;
+  final Tips tips;
 
   Data({
-    required this.wish,
+    required this.tips,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    wish: Wish.fromJson(json["wish"]),
+    tips: Tips.fromJson(json["tips"]),
   );
 }
 
-class Wish {
+class Tips {
   final String type;
-  final double amount;
+  final int amount;
   final int status;
 
-  Wish({
+  Tips({
     required this.type,
     required this.amount,
     required this.status,
   });
 
-  factory Wish.fromJson(Map<String, dynamic> json) => Wish(
+  factory Tips.fromJson(Map<String, dynamic> json) => Tips(
     type: json["type"],
-    amount: json["amount"].toDouble(),
+    amount: json["amount"],
     status: json["status"],
   );
 }

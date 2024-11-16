@@ -8,9 +8,6 @@ import '../../../routes/routes.dart';
 import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
  import '../../profiles_screen/earnings_screen.dart';
-import '../../profiles_screen/profle_setup_screen.dart';
-import '../../profiles_screen/tips_screen.dart';
-import '../../profiles_screen/wish_request_screen.dart';
 import 'menu_button_widget.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -26,19 +23,19 @@ class ProfilePage extends StatelessWidget {
 
   void onProfileSetupTap() {
     debugPrint("Profile Setup tapped");
-    Get.to(const ProfileSetupScreen());
+    Get.toNamed(Routes.profileSetupScreen);
     // Add your navigation or other logic here
   }
 
   void onWishRequestTap() {
     debugPrint("Wish Request tapped");
-    Get.to(const WishRequest());
+    Get.toNamed(Routes.wishRequest);
     // Add your navigation or other logic here
   }
 
   void onTipsTap() {
     debugPrint("Tips tapped");
-    Get.to(const TipsScreen());
+    Get.toNamed(Routes.tipsScreen);
     // Add your navigation or other logic here
   }
 
