@@ -12,7 +12,7 @@ class FeaturedCelebritiesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Obx(() => Column(
       crossAxisAlignment: crossStart,
       children: [
         Row(
@@ -20,11 +20,15 @@ class FeaturedCelebritiesWidget extends StatelessWidget {
           children: [
             TitleHeading3Widget(
                 text: Strings.featuredCelebrities, padding: const EdgeInsets.all(2)),
-            TextButton(
-              onPressed: () {
-                Get.to(FeaturedCelebritiesScreen());
-              },
-              child: TitleHeading5Widget(text: Strings.seeAll),
+            Visibility(
+              visible: controller.homeModel.data.homeTalents.length.isGreaterThan(4),
+              child: TextButton(
+                onPressed: () {
+                  controller.talentList.value  = controller.homeModel.data.homeTalents;
+                  Get.to(FeaturedCelebritiesScreen());
+                },
+                child: TitleHeading5Widget(text: Strings.seeAll),
+              ),
             )
           ],
         ),
@@ -39,7 +43,7 @@ class FeaturedCelebritiesWidget extends StatelessWidget {
               mainAxisSpacing: 15,
               crossAxisSpacing: 15),
           itemBuilder: (context, index) {
-            HomeTalent data = controller.homeModel.data.homeTalents[index];
+            HomeTalent data = controller.talentList[index];
             return GestureDetector(
               onTap: () {
                 controller.talentsProcess(data.userId.toString());
@@ -77,11 +81,11 @@ class FeaturedCelebritiesWidget extends StatelessWidget {
             );
           },
           itemCount:
-              controller.homeModel.data.homeTalents.length.isGreaterThan(4)
+              controller.talentList.length.isGreaterThan(4)
                   ? 4
-                  : controller.homeModel.data.homeTalents.length,
+                  : controller.talentList.length,
         ),
       ],
-    );
+    ));
   }
 }

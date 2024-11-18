@@ -8,32 +8,26 @@ import '../../backend/services/dashboard/home_model.dart';
 import '../../backend/services/dashboard/talents_model.dart';
 
 class DashboardController extends GetxController with DashboardService {
-  // final List category = [
-  //   {
-  //     "name": "Music",
-  //     "icon": Icons.music_note_outlined
-  //   },
-  //   {
-  //     "name": "Sports",
-  //     "icon": Icons.sports_basketball_outlined
-  //   },
-  //   {
-  //     "name": "Actors",
-  //     "icon": Icons.people_alt_outlined
-  //   },
-  //   {
-  //     "name": "People",
-  //     "icon": Icons.accessibility_outlined
-  //   },
-  //   {
-  //     "name": "Models",
-  //     "icon": Icons.model_training_outlined
-  //   },
-  //   {
-  //     "name": "TV/Radio",
-  //     "icon": Icons.radio_outlined
-  //   },
-  // ];
+  final List category = [
+    {
+      "icon": "assets/categories/actor.jpg"
+    },
+    {
+      "icon": "assets/categories/model.jpg"
+    },
+    {
+      "icon": "assets/categories/music.jpg"
+    },
+    {
+      "icon": "assets/categories/people.jpg"
+    },
+    {
+      "icon": "assets/categories/radio.jpg"
+    },
+    {
+      "icon": "assets/categories/sport.jpg"
+    },
+  ];
 
   @override
   void onInit() {
@@ -45,6 +39,9 @@ class DashboardController extends GetxController with DashboardService {
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
+  RxList<HomeTalent> talentList = <HomeTalent>[].obs;
+  final searchController = TextEditingController();
+
   late HomeModel _homeModel;
   HomeModel get homeModel => _homeModel;
 
@@ -54,6 +51,7 @@ class DashboardController extends GetxController with DashboardService {
     update();
     await homeProcessApi().then((value) {
       _homeModel = value!;
+      talentList.value = _homeModel.data.homeTalents;
       _isLoading.value = false;
       update();
     }).catchError((onError) {

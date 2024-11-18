@@ -18,5 +18,7 @@ class Routes {
   static const String profileSetupScreen = '/ProfileSetupScreen';
   static const String wishRequest = '/WishRequest';
   static const String tipsScreen = '/TipsScreen';
+  static const String paymentScreen = '/PaymentScreen';
+  static const String historyScreen = '/HistoryScreen';
 
 }

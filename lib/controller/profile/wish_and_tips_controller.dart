@@ -35,8 +35,13 @@ class WishAnTipsController extends GetxController with WishAndTipsService{
     await wishStatusProcessApi().then((value) {
       _wishStatusModel = value!;
 
-      tipsIsActivated.value = _wishStatusModel.data.wish.status == 1;
+      wishIsActivated.value = _wishStatusModel.data.wish.status == 1 ? true: false;
       amountController.text = _wishStatusModel.data.wish.amount.toStringAsFixed(2);
+
+      debugPrint("WISH");
+      debugPrint(_wishStatusModel.data.wish.status.toString());
+      debugPrint(wishIsActivated.value.toString());
+
       _isLoading.value = false;
       update();
     }).catchError((onError) {
@@ -59,7 +64,12 @@ class WishAnTipsController extends GetxController with WishAndTipsService{
     update();
     await tipsStatusProcessApi().then((value) {
       _tipsStatusModel = value!;
-      tipsIsActivated.value = _tipsStatusModel.data.tips.status == 1;
+
+      debugPrint("TIPS");
+      tipsIsActivated.value = _tipsStatusModel.data.tips.status == 1 ? true: false;
+      debugPrint(_tipsStatusModel.data.tips.status.toString());
+      debugPrint(tipsIsActivated.value.toString());
+
       _isLoading.value = false;
       update();
     }).catchError((onError) {

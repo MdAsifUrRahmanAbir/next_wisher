@@ -67,12 +67,15 @@ class TalentRegistrationController extends GetxController with AuthService{
   bool get isLoading => _isLoading.value;
 
   late Rx<Country> selectedCountry;
+  RxBool firstCountry = true.obs;
   String filePath = "";
 
   List<Category> categoryList = [];
+  RxBool firstCategory = true.obs;
   late Rx<Category> selectedCategory;
 
   RxList<Child> subCategoryList = <Child>[].obs;
+  RxBool firstSubcategory = true.obs;
   late Rx<Child> selectedSubCategory;
 
   bool subCategoryFound = false;

@@ -54,4 +54,4 @@ flutter:
   #   - images/a_dot_burr.jpeg
   assets:
     - assets/
-    - assets/empty_animation.json
+    - assets/categories/

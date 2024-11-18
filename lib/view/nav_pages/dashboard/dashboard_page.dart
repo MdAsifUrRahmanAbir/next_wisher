@@ -26,7 +26,25 @@ class DashboardPage extends StatelessWidget {
       child: Column(
         children: [
           PrimaryTextInputWidget(
-              controller: TextEditingController(), labelText: Strings.search),
+            controller: controller.searchController,
+            labelText: Strings.search,
+            onChanged: (value) {
+              if(value.length.isGreaterThan(2)){
+                controller.talentList.value  = controller.homeModel.data.homeTalents.where((item) => item.name.toLowerCase().contains(value.toLowerCase())).toList();
+              }else{
+                controller.talentList.value  = controller.homeModel.data.homeTalents;
+              }
+            },
+            suffixIcon: controller.talentList.length ==
+                controller.homeModel.data.homeTalents.length
+                ? null
+                : IconButton(
+                onPressed: () {
+                  controller.searchController.clear();
+                  controller.talentList.value =
+                      controller.homeModel.data.homeTalents;
+                }, icon: const Icon(Icons.close)),
+          ),
           Expanded(
             child: ListView(
               shrinkWrap: true,

@@ -1,5 +1,9 @@
+import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
+import '../../controller/profile/earning_controller.dart';
+import '../../routes/routes.dart';
+import '../../utils/strings.dart';
 import 'history_screen.dart';
 
 class EarningScreen extends StatefulWidget {
@@ -10,61 +14,79 @@ class EarningScreen extends StatefulWidget {
 }
 
 class EarningScreenState extends State<EarningScreen> {
+  final controller = Get.put(EarningController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PrimaryAppBar(
-        title: "Earnings",
-        actions: [IconButton(onPressed: () {
-          Get.to(const HistoryScreen());
-        }, icon: const Icon(Icons.history))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.toNamed(Routes.historyScreen);
+              },
+              icon: const Icon(Icons.history))
+        ],
       ),
-      body: _bodyWidget(),
+      body: Obx(() =>
+          controller.isLoading ? const CustomLoadingAPI() : _bodyWidget()),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: Dimensions.paddingSizeHorizontal,
+          vertical: Dimensions.paddingSizeVertical * .2
+        ),
         child: PrimaryButton(
-            title: "Request Payment",
-            onPressed: () {},
+            title: Strings.requestPayment,
+            onPressed: () {
+              Get.toNamed(Routes.paymentScreen);
+            },
             backgroundColor: CustomColor.redColor),
       ),
     );
   }
 
   _bodyWidget() {
+    var data = controller.earningModel.data;
     return SafeArea(
       child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.only(
+            top: Dimensions.paddingSizeVertical * .5,
+            left: Dimensions.paddingSizeHorizontal * .5,
+            right: Dimensions.paddingSizeHorizontal * .5,
+            bottom: Dimensions.paddingSizeVertical * .1,
+          ),
           child: ListView(
             children: [
               EarningCardWidget(
-                  revenueAmount: 67.5,
+                  revenueAmount: data.revenue,
                   title: "Revenue",
                   color: Colors.green[400]!),
               verticalSpace(Dimensions.paddingSizeVertical * .4),
               EarningCardWidget(
-                  revenueAmount: 0,
+                  revenueAmount: data.pending,
                   title: "Pending",
                   color: Colors.orange[400]!),
               verticalSpace(Dimensions.paddingSizeVertical * .4),
               EarningCardWidget(
-                  revenueAmount: 0, title: "Paid", color: Colors.purple[400]!),
-              verticalSpace(Dimensions.paddingSizeVertical * .4),
-              const EarningCardWidget(
-                  revenueAmount: 67.5, title: "Balance", color: Colors.black),
+                  revenueAmount: data.paid,
+                  title: "Paid",
+                  color: Colors.purple[400]!),
               verticalSpace(Dimensions.paddingSizeVertical * .4),
               EarningCardWidget(
-                  revenueAmount: 37.5,
+                  revenueAmount: data.balance, title: "Balance", color: Colors.black),
+              verticalSpace(Dimensions.paddingSizeVertical * .4),
+              EarningCardWidget(
+                  revenueAmount: data.wishAmount,
                   title: "Wishes",
-                  value: "1",
+                  value: data.wishCount.toString(),
                   color: Colors.red[400]!),
               verticalSpace(Dimensions.paddingSizeVertical * .4),
               EarningCardWidget(
-                  value: "2",
-                  revenueAmount: 30,
+                  value: data.tipsCount.toString(),
+                  revenueAmount: data.tipsAmount,
                   title: "Tips",
                   color: Colors.blue[400]!),
               verticalSpace(Dimensions.paddingSizeVertical * .8),
-
             ],
           )),
     );

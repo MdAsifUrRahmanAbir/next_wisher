@@ -22,6 +22,7 @@ class Strings {
 
   static String email = "Email";
   static String enterEmail = "Enter Email";
+  static String enterConfirmEmail = "Enter Confirm Email";
 
   static String socialLink = "Social Link";
   static String enterSocialLink = "Enter Social Link";
@@ -132,6 +133,7 @@ class Strings {
   static String gender  = "Gender";
   static String selectCountry  = "Select Country";
   static String selectCategory  = "Select Category";
+  static String selectSubcategory  = "Select Subcategory";
   static String book  = "Book";
   static String pay  = "Pay";
   static String sendTip  = "Send Tip";
@@ -187,6 +189,11 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String enterYourBiography  = "Enter Your Biography";
 
   static String enterAmount = "Enter Amount";
+
+  static String requestPayment  = "Request Payment";
+
+  static String phoneNumber = "Phone Number";
+
 
   static String gui  = "";
 

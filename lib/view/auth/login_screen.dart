@@ -52,12 +52,12 @@ class LoginScreen extends StatelessWidget {
               PrimaryTextInputWidget(
                 controller: controller.emailController,
                 labelText: Strings.email,
-                hint: Strings.enterEmail,
+                hint: "",
               ),
               verticalSpace(Dimensions.marginBetweenInputBox),
               PasswordInputWidget(
                 controller: controller.passwordController,
-                hint: Strings.enterPassword,
+                hint: "",
                 labelText: Strings.password,
               ),
               _rememberMeWidget(context),

@@ -28,7 +28,7 @@ class WelcomeScreen extends StatelessWidget {
                     mainAxisAlignment: mainEnd,
                     crossAxisAlignment: crossStart,
                     children: [
-                      Image.asset(Assets.appBasicLogo),
+                      Image.asset(Assets.appDarkLogo),
                       verticalSpace(5),
                       TitleHeading2Widget(
                         text: Strings.welcomeText,

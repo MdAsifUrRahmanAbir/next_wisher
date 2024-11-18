@@ -51,5 +51,13 @@ class ApiEndpoint {
   static String talentTipsRequestURL = '/talent/tips-request'.addBaseURl();
   static String saveTipsRequestURL = '/talent/save-tips-request'.addBaseURl();
 
+  ///-> earning and payout
+  static String earningURL = '/talent/earnings'.addBaseURl();
 
+  static String talentPayoutRequestURL = '/talent/payout-request'.addBaseURl();
+  static String mobilePayoutRequestURL = '/talent/mobile-payout-request'.addBaseURl();
+
+  static String bankPayoutCanadaURL = '/talent/bank-payout-canada'.addBaseURl();
+  static String bankPayoutEuropeURL = '/talent/bank-payout-europe'.addBaseURl();
+  static String bankPayoutOutsideURL = '/talent/bank-payout-outside'.addBaseURl();
 }

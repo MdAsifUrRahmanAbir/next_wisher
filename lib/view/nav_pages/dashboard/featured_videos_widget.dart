@@ -20,12 +20,7 @@ class FeaturedVideosWidget extends StatelessWidget {
           children: [
             TitleHeading3Widget(
                 text: Strings.featuredVideos, padding: const EdgeInsets.all(2)),
-            TextButton(
-              onPressed: () {
-                Get.to(FeaturedVideosScreen());
-              },
-              child: TitleHeading5Widget(text: Strings.seeAll),
-            )
+
           ],
         ),
         SizedBox(
@@ -53,10 +48,7 @@ class FeaturedVideosWidget extends StatelessWidget {
                 ),
               );
             },
-            itemCount:
-                controller.homeModel.data.featuredVideos.length.isGreaterThan(3)
-                    ? 3
-                    : controller.homeModel.data.featuredVideos.length,
+            itemCount: controller.homeModel.data.featuredVideos.length,
             separatorBuilder: (BuildContext context, int index) {
               return horizontalSpace(5);
             },

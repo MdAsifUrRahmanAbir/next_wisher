@@ -63,7 +63,7 @@ class _CustomDropDownState<T extends DropdownModel>
 
   @override
   Widget build(BuildContext context) {
-    return widget.title != ''
+    return widget.title == ''
         ? Visibility(
             visible: widget.title != '',
             child: Column(
@@ -104,9 +104,8 @@ class _CustomDropDownState<T extends DropdownModel>
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<T>(
-
           hint: Text(
-            widget.hint,
+            widget.hint.isEmpty ? widget.title : widget.hint,
             style: CustomStyle.darkHeading3TextStyle.copyWith(
               fontSize: Dimensions.headingTextSize3,
               fontWeight: FontWeight.w500,

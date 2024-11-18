@@ -13,6 +13,8 @@ import '../view/bottom_nav/bottom_nav_screen.dart';
 import '../view/drawer_screens/change_password_screen.dart';
 import '../view/profiles_screen/account_screen.dart';
 import '../view/profiles_screen/guidline_screen.dart';
+import '../view/profiles_screen/history_screen.dart';
+import '../view/profiles_screen/payment_screen.dart';
 import '../view/profiles_screen/profle_setup_screen.dart';
 import '../view/profiles_screen/tips_screen.dart';
 import '../view/profiles_screen/wish_request_screen.dart';
@@ -83,6 +85,14 @@ class Pages{
     GetPage(
       name: Routes.tipsScreen,
       page: () =>  const TipsScreen(),
+    ),
+    GetPage(
+      name: Routes.paymentScreen,
+      page: () =>  const PaymentScreen(),
+    ),
+    GetPage(
+      name: Routes.historyScreen,
+      page: () =>  const HistoryScreen(),
     ),
   ];
 }

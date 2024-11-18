@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter_rating/flutter_rating.dart';
+import 'package:next_wisher/backend/local_storage/local_storage.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
@@ -97,21 +98,28 @@ class TalentProfile extends StatelessWidget {
             ),
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
-          PrimaryButton(
-              title: Strings.book,
-              onPressed: () {
-                bookNowController.paymentInfoProcess(data.talent.id);
-                Get.toNamed(Routes.bookNowScreen);
-              }),
-          verticalSpace(Dimensions.paddingSizeVertical * .5),
-          PrimaryButton(
-              title: Strings.sendTip,
-              backgroundColor: CustomColor.secondaryLightColor,
-              onPressed: () {
-                bookNowController.paymentInfoProcess(data.talent.id);
-                Get.to(PayScreen(isBook: false));
-              }),
-          verticalSpace(Dimensions.paddingSizeVertical * .5),
+          Visibility(
+            visible: LocalStorage.isUser(),
+            child: Column(
+              children: [
+                PrimaryButton(
+                    title: Strings.book,
+                    onPressed: () {
+                      bookNowController.paymentInfoProcess(data.talent.id);
+                      Get.toNamed(Routes.bookNowScreen);
+                    }),
+                verticalSpace(Dimensions.paddingSizeVertical * .5),
+                PrimaryButton(
+                    title: Strings.sendTip,
+                    backgroundColor: CustomColor.secondaryLightColor,
+                    onPressed: () {
+                      bookNowController.paymentInfoProcess(data.talent.id);
+                      Get.to(PayScreen(isBook: false));
+                    }),
+                verticalSpace(Dimensions.paddingSizeVertical * .5),
+              ],
+            ),
+          ),
           Card(
             color: CustomColor.whiteColor,
             child: Padding(

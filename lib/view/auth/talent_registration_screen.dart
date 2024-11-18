@@ -20,7 +20,8 @@ class TalentRegistrationScreen extends StatelessWidget {
       appBar: PrimaryAppBar(
         title: Strings.createTalentAccount,
       ),
-      body: Obx(() => controller.isLoading ? const CustomLoadingAPI(): _body(context)),
+      body: Obx(() =>
+          controller.isLoading ? const CustomLoadingAPI() : _body(context)),
     );
   }
 
@@ -40,81 +41,96 @@ class TalentRegistrationScreen extends StatelessWidget {
               PrimaryTextInputWidget(
                 controller: controller.nameController,
                 labelText: Strings.name,
-                hint: Strings.enterName,
+                hint: "",
+                // hint: Strings.enterName,
               ),
-      
               verticalSpace(Dimensions.marginBetweenInputBox),
               PrimaryTextInputWidget(
                 controller: controller.emailController,
-                hint: Strings.enterEmail,
+                // hint: Strings.enterEmail,
+                hint: "",
                 labelText: Strings.email,
               ),
-
               verticalSpace(Dimensions.marginBetweenInputBox),
-
               CustomDropDown<Country>(
                 items: controller.signupInfoModel.data.country,
                 onChanged: (value) {
+                  controller.firstCountry.value = false;
                   controller.selectedCountry.value = value!;
                 },
-                hint: controller.selectedCountry.value.name,
+                hint: controller.firstCountry.value
+                    ? ""
+                    : controller.selectedCountry.value.name,
                 title: Strings.selectCountry,
               ),
               verticalSpace(Dimensions.marginBetweenInputBox),
-
               CustomDropDown<Category>(
                 items: controller.categoryList,
                 onChanged: (value) {
+                  controller.firstCategory.value = false;
                   controller.selectedCategory.value = value!;
-                  controller.subCategoryList.value = controller.selectedCategory.value.child;
-                  controller.selectedSubCategory.value = controller.selectedCategory.value.child.first;
+                  controller.subCategoryList.value =
+                      controller.selectedCategory.value.child;
+                  debugPrint(controller.subCategoryList.isNotEmpty.toString());
+                  if (controller.subCategoryList.isNotEmpty) {
+                    controller.selectedSubCategory.value =
+                        controller.selectedCategory.value.child.first;
+                  }
                 },
-                hint: controller.selectedCategory.value.name,
+                hint: controller.firstCategory.value
+                    ? ""
+                    : controller.selectedCategory.value.name,
                 title: Strings.selectCategory,
               ),
               verticalSpace(Dimensions.marginBetweenInputBox),
-
-              Obx(() => CustomDropDown<Child>(
-                items: controller.subCategoryList,
-                onChanged: (value) {
-                  controller.selectedSubCategory.value = value!;
-                },
-                hint: controller.selectedSubCategory.value.name,
-                title: Strings.selectCategory,
-              )),
-
+              Obx(() => controller.subCategoryList.isEmpty
+                  ? const SizedBox.shrink()
+                  : CustomDropDown<Child>(
+                      items: controller.subCategoryList,
+                      onChanged: (value) {
+                        controller.firstSubcategory.value = false;
+                        controller.selectedSubCategory.value = value!;
+                      },
+                      hint: controller.firstSubcategory.value
+                          ? ""
+                          : controller.selectedSubCategory.value.name,
+                      title: Strings.selectSubcategory,
+                    )),
               verticalSpace(Dimensions.marginBetweenInputBox),
               PrimaryTextInputWidget(
                 controller: controller.linkController,
-                hint: Strings.enterSocialLink,
+                // hint: Strings.enterSocialLink,
+                hint: "",
+
                 labelText: Strings.socialLink,
               ),
-              TitleHeading5Widget(text: Strings.enterSocialLinkHint, color: CustomColor.redColor),
-
-
+              TitleHeading5Widget(
+                  text: Strings.enterSocialLinkHint,
+                  color: CustomColor.redColor),
               verticalSpace(Dimensions.marginBetweenInputBox),
-              CustomVideoPicketWidget(onPicked: (value) {
-                controller.filePath = value;
-              },),
-
+              CustomVideoPicketWidget(
+                onPicked: (value) {
+                  controller.filePath = value;
+                },
+              ),
               verticalSpace(Dimensions.marginBetweenInputBox),
               PasswordInputWidget(
                 controller: controller.passwordController,
-                hint: Strings.enterPassword,
+                hint: "",
                 labelText: Strings.password,
               ),
-
               verticalSpace(Dimensions.marginBetweenInputBox),
               PasswordInputWidget(
                 controller: controller.confirmPasswordController,
-                hint: Strings.enterPassword,
+                hint: "",
                 labelText: Strings.confirmPassword,
               ),
-
               _checkBoxWidget(context),
-      
               verticalSpace(Dimensions.marginSizeVertical),
-              Obx(() => controller.isRegisterLoading ? const CustomLoadingAPI(): PrimaryButton(title: Strings.go, onPressed: controller.register)),
+              Obx(() => controller.isRegisterLoading
+                  ? const CustomLoadingAPI()
+                  : PrimaryButton(
+                      title: Strings.go, onPressed: controller.register)),
               verticalSpace(Dimensions.marginSizeVertical),
             ],
           ),
@@ -125,25 +141,22 @@ class TalentRegistrationScreen extends StatelessWidget {
 
   _checkBoxWidget(BuildContext context) {
     return Obx(() => Row(
-      crossAxisAlignment: crossStart,
-      children: [
-        Checkbox(
-            activeColor: Theme.of(context).primaryColor,
-            value: controller.isChecked.value,
-            onChanged: controller.onChangedInRememberMe)
-            .paddingZero,
-        Expanded(
-          child: TitleHeading5Widget(
-            padding: const EdgeInsets.only(
-              top: 10
+          crossAxisAlignment: crossStart,
+          children: [
+            Checkbox(
+                    activeColor: Theme.of(context).primaryColor,
+                    value: controller.isChecked.value,
+                    onChanged: controller.onChangedInRememberMe)
+                .paddingZero,
+            Expanded(
+              child: TitleHeading5Widget(
+                padding: const EdgeInsets.only(top: 10),
+                text: Strings.talentRichText,
+                opacity: .8,
+                // fontWeight: FontWeight.bold,
+              ),
             ),
-            text: Strings.talentRichText,
-            opacity: .8,
-            // fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    ));
+          ],
+        ));
   }
-
 }

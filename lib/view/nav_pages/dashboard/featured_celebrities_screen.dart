@@ -5,9 +5,8 @@ import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
 import '../../talent_profile/talent_profile.dart';
 
-
 class FeaturedCelebritiesScreen extends StatelessWidget {
-   FeaturedCelebritiesScreen({super.key});
+  FeaturedCelebritiesScreen({super.key});
   final controller = Get.find<DashboardController>();
 
   @override
@@ -16,64 +15,88 @@ class FeaturedCelebritiesScreen extends StatelessWidget {
       appBar: const PrimaryAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            PrimaryTextInputWidget(
-                controller: TextEditingController(), labelText: Strings.search),
-            Expanded(
-              child: GridView.builder(
-                // physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(8),
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: .65,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15),
-                itemBuilder: (context, index) {
-                  HomeTalent data = controller.homeModel.data.homeTalents[index];
-                  return GestureDetector(
-                    onTap: () {
-                      controller.talentsProcess(data.userId.toString());
-                      Get.to(TalentProfile());
+        child: Obx(() => Column(
+              children: [
+                PrimaryTextInputWidget(
+                    controller: controller.searchController,
+                    onChanged: (value) {
+                      if (value.length.isGreaterThan(2)) {
+                        controller.talentList.value = controller
+                            .homeModel.data.homeTalents
+                            .where((item) => item.name
+                                .toLowerCase()
+                                .contains(value.toLowerCase()))
+                            .toList();
+                      } else {
+                        controller.talentList.value =
+                            controller.homeModel.data.homeTalents;
+                      }
                     },
-                    child: Column(
-                      crossAxisAlignment: crossStart,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(data.profileImage),
-                                    fit: BoxFit.cover),
-                                color: Theme.of(context).primaryColor,
-                                borderRadius:
-                                BorderRadius.circular(Dimensions.radius * .4)),
-                          ),
+                    suffixIcon: controller.talentList.length ==
+                            controller.homeModel.data.homeTalents.length
+                        ? null
+                        : IconButton(
+                            onPressed: () {
+                              controller.searchController.clear();
+                              controller.talentList.value =
+                                  controller.homeModel.data.homeTalents;
+                            }, icon: const Icon(Icons.close)),
+                    labelText: Strings.search),
+                Expanded(
+                  child: GridView.builder(
+                    // physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(8),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 200,
+                            childAspectRatio: .65,
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 15),
+                    itemBuilder: (context, index) {
+                      HomeTalent data = controller.talentList[index];
+                      return GestureDetector(
+                        onTap: () {
+                          controller.talentsProcess(data.userId.toString());
+                          Get.to(TalentProfile());
+                        },
+                        child: Column(
+                          crossAxisAlignment: crossStart,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(data.profileImage),
+                                        fit: BoxFit.cover),
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius * .4)),
+                              ),
+                            ),
+                            TitleHeading3Widget(
+                                text: data.name,
+                                maxLines: 1,
+                                textOverflow: TextOverflow.ellipsis),
+                            data.amount.isEmpty
+                                ? const SizedBox(
+                                    height: 25,
+                                  )
+                                : TitleHeading3Widget(
+                                    text:
+                                        "\$${data.amount.first.amount.toStringAsFixed(2)}",
+                                    fontWeight: FontWeight.bold),
+                          ],
                         ),
-                        TitleHeading3Widget(
-                            text: data.name,
-                            maxLines: 1,
-                            textOverflow: TextOverflow.ellipsis),
-                        data.amount.isEmpty
-                            ? const SizedBox(
-                          height: 25,
-                        )
-                            : TitleHeading3Widget(
-                            text:
-                            "\$${data.amount.first.amount.toStringAsFixed(2)}",
-                            fontWeight: FontWeight.bold),
-                      ],
-                    ),
-                  );
-                },
-                itemCount: controller.homeModel.data.homeTalents.length,
-              ),
-            ),
-          ],
-        ),
+                      );
+                    },
+                    itemCount: controller.talentList.length,
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }
