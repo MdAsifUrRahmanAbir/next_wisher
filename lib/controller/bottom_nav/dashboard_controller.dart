@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../backend/services/dashboard/category_model.dart';
 import '../../backend/services/dashboard/dashboard_service.dart';
 import '../../backend/services/dashboard/home_model.dart';
 import '../../backend/services/dashboard/talents_model.dart';
+import '../../view/nav_pages/dashboard/featured_celebrities_screen.dart';
 
 class DashboardController extends GetxController with DashboardService {
   final List category = [
@@ -61,6 +63,39 @@ class DashboardController extends GetxController with DashboardService {
     update();
     return _homeModel;
   }
+
+
+
+  /// ------------------------------------- >>
+  final _isCategoryLoading = false.obs;
+  bool get isCategoryLoading => _isCategoryLoading.value;
+
+
+  late CategoryModel _categoryModel;
+  CategoryModel get categoryModel => _categoryModel;
+
+
+  ///* Get CategoryModel in process
+  Future<CategoryModel> categoryModelProcess(String tag) async {
+    _isCategoryLoading.value = true;
+    update();
+    await categoryModelProcessApi(tag: tag).then((value) {
+      _categoryModel = value!;
+      searchController.text = tag;
+      talentList.value = _categoryModel.data.talents;
+      Get.to(FeaturedCelebritiesScreen());
+      _isCategoryLoading.value = false;
+      update();
+    }).catchError((onError) {
+      log.e(onError);
+    });
+    _isCategoryLoading.value = false;
+    update();
+    return _categoryModel;
+  }
+
+
+
 
   late VideoPlayerController videoPlayerController;
   late ChewieController chewieController;

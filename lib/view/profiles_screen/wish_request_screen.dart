@@ -1,8 +1,11 @@
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
+import '../../backend/local_storage/local_storage.dart';
+import '../../controller/bottom_nav/dashboard_controller.dart';
 import '../../controller/profile/wish_and_tips_controller.dart';
 import '../../utils/strings.dart';
+import '../talent_profile/talent_profile.dart';
 
 class WishRequest extends StatefulWidget {
   const WishRequest({super.key});
@@ -135,6 +138,8 @@ class WishRequestState extends State<WishRequest> {
             child: PrimaryButton(
               onPressed: () {
                 // Handle Preview Profile action
+                Get.find<DashboardController>().talentsProcess(LocalStorage.getId()!);
+                Get.to(TalentProfile());
                 debugPrint("Preview Profile clicked");
               },
               title: 'Preview Profile',

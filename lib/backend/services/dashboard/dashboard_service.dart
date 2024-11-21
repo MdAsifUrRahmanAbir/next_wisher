@@ -4,6 +4,7 @@ import '../../utils/api_method.dart';
 import '../../utils/custom_snackbar.dart';
 import '../../utils/logger.dart';
 import '../api_endpoint.dart';
+import 'category_model.dart';
 import 'guid_data_model.dart';
 import 'home_model.dart';
 import 'talents_model.dart';
@@ -75,4 +76,25 @@ mixin DashboardService {
     }
     return null;
   }
+
+  ///* Get CategoryModel api services
+  Future<CategoryModel?> categoryModelProcessApi({required String tag}) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).get(
+        "${ApiEndpoint.categoryURL}/$tag",
+      );
+      if (mapResponse != null) {
+        CategoryModel result = CategoryModel.fromJson(mapResponse);
+        // CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from CategoryModel api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
 }

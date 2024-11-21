@@ -63,7 +63,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 BottomNavItem(
-                  icon: Icons.dashboard_outlined,
+                  icon: Icons.home_filled,
                   isSelected: widget.selectedIndex == 0,
                   onTap: () => widget.onItemTapped(0),
                 ),

@@ -103,7 +103,7 @@ class FeaturedVideo {
 
 class HomeTalent {
   final int userId;
-  final int boxIndex;
+  // final int boxIndex;
   final String name;
   final String role;
   final int status;
@@ -113,7 +113,7 @@ class HomeTalent {
 
   HomeTalent({
     required this.userId,
-    required this.boxIndex,
+    // required this.boxIndex,
     required this.name,
     required this.role,
     required this.status,
@@ -124,7 +124,7 @@ class HomeTalent {
 
   factory HomeTalent.fromJson(Map<String, dynamic> json) => HomeTalent(
     userId: json["user_id"],
-    boxIndex: json["box_index"],
+    // boxIndex: json["box_index"],
     name: json["name"],
     role: json["role"],
     status: json["status"],

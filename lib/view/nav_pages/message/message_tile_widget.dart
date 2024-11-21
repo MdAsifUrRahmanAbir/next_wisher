@@ -43,12 +43,13 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
       }
     });
   }
-
+  bool isNegative = false;
   void _calculateRemainingTime() {
     setState(() {
       remainingTime = targetDate.difference(DateTime.now());
       if (remainingTime.isNegative) {
         _timer.cancel();
+        isNegative = true;
       }
     });
   }
@@ -106,7 +107,7 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
               text: DateFormat('dd-MM-yyyy').format(widget.data.createdAt)),
           verticalSpace(Dimensions.paddingSizeVertical * .3),
           TitleHeading5Widget(
-              text: widget.data.downloadStatus ? widget.data.settings: "$days:$hours:$minutes:$seconds",
+              text: widget.data.downloadStatus ? widget.data.settings: isNegative ? "00:00:00:00": "$days:$hours:$minutes:$seconds",
               color: widget.data.downloadStatus ? Colors.green : Colors.red),
         ],
       ),

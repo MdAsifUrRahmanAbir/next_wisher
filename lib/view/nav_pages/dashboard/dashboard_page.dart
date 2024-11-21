@@ -16,7 +16,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() =>
-          controller.isLoading ? const CustomLoadingAPI() : _bodyWidget()),
+          (controller.isLoading || controller.isCategoryLoading) ? const CustomLoadingAPI() : _bodyWidget()),
     );
   }
 

@@ -21,23 +21,28 @@ class CategoriesWidget extends StatelessWidget {
           mainAxisSpacing: 5,
           crossAxisSpacing: 12),
       itemBuilder: (context, index) {
-        return Column(
-          children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    image: DecorationImage(fit: BoxFit.cover, image: AssetImage(controller.category[index]["icon"])),
-                    borderRadius:
-                    BorderRadius.circular(Dimensions.radius * 2)),
+        return GestureDetector(
+          onTap: (){
+            controller.categoryModelProcess(controller.homeModel.data.categoriesWithChild[index].slug);
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      image: DecorationImage(fit: BoxFit.cover, image: AssetImage(controller.category[index]["icon"])),
+                      borderRadius:
+                      BorderRadius.circular(Dimensions.radius * 2)),
+                ),
               ),
-            ),
-            verticalSpace(2),
-            TitleHeading4Widget(
-                text: controller.homeModel.data.categoriesWithChild[index].name,
-                fontWeight: FontWeight.bold)
-          ],
+              verticalSpace(2),
+              TitleHeading4Widget(
+                  text: controller.homeModel.data.categoriesWithChild[index].name,
+                  fontWeight: FontWeight.bold)
+            ],
+          ),
         );
       },
       itemCount: controller.homeModel.data.categoriesWithChild.length,

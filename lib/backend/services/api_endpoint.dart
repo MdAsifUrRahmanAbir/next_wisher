@@ -13,6 +13,7 @@ class ApiEndpoint {
   ///-> Common
   static String homeURL = '/index'.addBaseURl();
   static String talentsDetailsURL = '/talents'.addBaseURl();
+  static String categoryURL = '/category'.addBaseURl();
 
   static String mailIndexURL = '/user/mail-index'.addBaseURl();
   static String mailCountURL = '/user/mail-count'.addBaseURl();

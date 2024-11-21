@@ -57,8 +57,9 @@ class TalentProfile extends StatelessWidget {
           verticalSpace(Dimensions.paddingSizeVertical * .5),
 
           Container(
-            height: MediaQuery.sizeOf(context).height * .3,
-            color: Theme.of(context).primaryColor.withOpacity(.6),
+            height: 500,
+            width: 300,
+            color: Colors.black,
             child: Chewie(
               controller: controller.chewieController,
             ),

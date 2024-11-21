@@ -1,7 +1,10 @@
+import 'package:next_wisher/backend/local_storage/local_storage.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
+import '../../controller/bottom_nav/dashboard_controller.dart';
 import '../../controller/profile/wish_and_tips_controller.dart';
+import '../talent_profile/talent_profile.dart';
 
 class TipsScreen extends StatefulWidget {
   const TipsScreen({super.key});
@@ -114,7 +117,8 @@ class TipsScreenState extends State<TipsScreen> {
           Center(
             child: PrimaryButton(
               onPressed: () {
-                // Handle Preview Profile action
+                Get.find<DashboardController>().talentsProcess(LocalStorage.getId()!);
+                Get.to(TalentProfile());
                 debugPrint("Preview Profile clicked");
               },
               title: 'Preview Profile',
