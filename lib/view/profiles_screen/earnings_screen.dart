@@ -1,10 +1,10 @@
+import 'package:intl/intl.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../controller/profile/earning_controller.dart';
 import '../../routes/routes.dart';
 import '../../utils/strings.dart';
-import 'history_screen.dart';
 
 class EarningScreen extends StatefulWidget {
   const EarningScreen({super.key});
@@ -28,13 +28,13 @@ class EarningScreenState extends State<EarningScreen> {
               icon: const Icon(Icons.history))
         ],
       ),
-      body: Obx(() =>
-          controller.isLoading ? const CustomLoadingAPI() : _bodyWidget()),
+      body: Obx(() => (controller.isLoading || controller.isFilterLoading)
+          ? const CustomLoadingAPI()
+          : _bodyWidget()),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: Dimensions.paddingSizeHorizontal,
-          vertical: Dimensions.paddingSizeVertical * .2
-        ),
+            horizontal: Dimensions.paddingSizeHorizontal,
+            vertical: Dimensions.paddingSizeVertical * .2),
         child: PrimaryButton(
             title: Strings.requestPayment,
             onPressed: () {
@@ -47,6 +47,7 @@ class EarningScreenState extends State<EarningScreen> {
 
   _bodyWidget() {
     var data = controller.earningModel.data;
+    var filterData = controller.earningFilterModel.data;
     return SafeArea(
       child: Padding(
           padding: EdgeInsets.only(
@@ -73,19 +74,21 @@ class EarningScreenState extends State<EarningScreen> {
                   color: Colors.purple[400]!),
               verticalSpace(Dimensions.paddingSizeVertical * .4),
               EarningCardWidget(
-                  revenueAmount: data.balance, title: "Balance", color: Colors.black),
+                  revenueAmount: data.balance,
+                  title: "Balance",
+                  color: Colors.black),
               verticalSpace(Dimensions.paddingSizeVertical * .4),
               _filterWidget(context),
               verticalSpace(Dimensions.paddingSizeVertical * .4),
               EarningCardWidget(
-                  revenueAmount: data.wishAmount,
+                  revenueAmount: filterData.wish.amount,
                   title: "Wishes",
-                  value: data.wishCount.toString(),
+                  value: filterData.wish.count.toString(),
                   color: Colors.red[400]!),
               verticalSpace(Dimensions.paddingSizeVertical * .4),
               EarningCardWidget(
-                  value: data.tipsCount.toString(),
-                  revenueAmount: data.tipsAmount,
+                  value: filterData.tips.count.toString(),
+                  revenueAmount: filterData.tips.amount,
                   title: "Tips",
                   color: Colors.blue[400]!),
               verticalSpace(Dimensions.paddingSizeVertical * .8),
@@ -94,86 +97,153 @@ class EarningScreenState extends State<EarningScreen> {
     );
   }
 
-
-
   _filterWidget(BuildContext context) {
     return Obx(() => Column(
-      crossAxisAlignment: crossStart,
-      children: [
-        const Text('Start Date'),
-        const SizedBox(height: 8),
-        GestureDetector(
-          onTap: () => controller.selectDate(context, true),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  controller.startDateSelect.value
-                      ? controller.formatDate(controller.startDate.value)
-                      : 'Select start date',
-                  style: const TextStyle(color: Colors.black),
+          crossAxisAlignment: crossStart,
+          children: [
+            const Text('Start Date'),
+            const SizedBox(height: 8),
+            GestureDetector(
+              onTap: () => controller.selectDate(context, true),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                const Icon(Icons.calendar_today),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        const Text('End Date'),
-        const SizedBox(height: 8),
-        GestureDetector(
-          onTap: () => controller.selectDate(context, false),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  controller.endDateSelect.value ? controller.formatDate(controller.endDate.value) : 'Select end date',
-                  style: const TextStyle(color: Colors.black),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      controller.startDateSelect.value
+                          ? controller.formatDate(controller.startDate.value)
+                          : 'Select start date',
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                    const Icon(Icons.calendar_today),
+                  ],
                 ),
-                const Icon(Icons.calendar_today),
-              ],
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        const Text('Filter'),
-        const SizedBox(height: 8),
-        DropdownButtonFormField<String>(
-          value: controller.selectedFilter.value,
-          onChanged: (String? newValue) {
-            setState(() {
-              controller.selectedFilter.value = newValue!;
-            });
-          },
-          items: controller.filterOptions.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          decoration: InputDecoration(
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.grey),
+            const SizedBox(height: 16),
+            const Text('End Date'),
+            const SizedBox(height: 8),
+            GestureDetector(
+              onTap: () => controller.selectDate(context, false),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      controller.endDateSelect.value
+                          ? controller.formatDate(controller.endDate.value)
+                          : 'Select end date',
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                    const Icon(Icons.calendar_today),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-      ],
-    ));
+            const SizedBox(height: 16),
+            const Text('Filter'),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              value: controller.selectedFilter.value,
+              onChanged: (String? newValue) {
+                DateTime today = DateTime.now();
+                setState(() {
+                  controller.selectedFilter.value = newValue!;
+                  controller.startDateSelect.value = true;
+                  controller.endDateSelect.value = true;
+                  if(controller.selectedFilter.value == "All time"){
+                    controller.startDateSelect.value = false;
+                    controller.endDateSelect.value = false;
+                    controller.earningFilterProcess(inputBody: {});
+                  }
+                  else if(controller.selectedFilter.value == "Today") {
+                    controller.startDate.value = today;
+                    controller.endDate.value = today;
+                    controller.earningFilterProcess(inputBody: {
+                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value),
+                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
+                    });
+                  }
+                  else if(controller.selectedFilter.value == "Yesterday") {
+                    controller.startDate.value = today.subtract(const Duration(days: 1));
+                    controller.endDate.value = today.subtract(const Duration(days: 1));
+                    controller.earningFilterProcess(inputBody: {
+                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value),
+                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
+                    });
+                  }
+                  else if(controller.selectedFilter.value == "Last 7 Days") {
+                    controller.startDate.value = today.subtract(const Duration(days: 7));
+                    controller.endDate.value = today;
+                    controller.earningFilterProcess(inputBody: {
+                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value),
+                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
+                    });
+                  }
+                  else if(controller.selectedFilter.value == "Last 30 Days") {
+                    controller.startDate.value = today.subtract(const Duration(days: 30));
+                    controller.endDate.value = today;
+                    controller.earningFilterProcess(inputBody: {
+                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value),
+                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
+                    });
+                  }
+                  else if(controller.selectedFilter.value == "Last 60 Days") {
+                    controller.startDate.value = today.subtract(const Duration(days: 30));
+                    controller.endDate.value = today;
+                    controller.earningFilterProcess(inputBody: {
+                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value),
+                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
+                    });
+                  }
+                  else if(controller.selectedFilter.value == "Last 90 Days") {
+                    controller.startDate.value = today.subtract(const Duration(days: 90));
+                    controller.endDate.value = today;
+                    controller.earningFilterProcess(inputBody: {
+                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value),
+                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
+                    });
+                  }
+                  else if(controller.selectedFilter.value == "Last 365 Days") {
+                    controller.startDate.value = today.subtract(const Duration(days: 365));
+                    controller.endDate.value = today;
+                    controller.earningFilterProcess(inputBody: {
+                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value),
+                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
+                    });
+                  }
+                });
+              },
+              items: controller.filterOptions
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }
 

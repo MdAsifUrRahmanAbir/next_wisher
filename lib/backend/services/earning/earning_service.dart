@@ -5,6 +5,7 @@ import '../../utils/api_method.dart';
 import '../../utils/custom_snackbar.dart';
 import '../../utils/logger.dart';
 import '../api_endpoint.dart';
+import 'earning_filter_model.dart';
 import 'earning_model.dart';
 import 'payout_info_model.dart';
 
@@ -75,6 +76,30 @@ mixin EarningService{
     }
     return null;
   }
+
+
+  ///* EarningFilter api services
+  Future<EarningFilterModel?> earningFilterProcessApi(
+      {required Map<String, dynamic> body}) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).post(
+        ApiEndpoint.earningFilterURL,
+        body,
+      );
+      if (mapResponse != null) {
+        EarningFilterModel result = EarningFilterModel.fromJson(mapResponse);
+        // CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from EarningFilter api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
 
 
 }

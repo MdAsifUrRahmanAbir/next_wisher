@@ -1,4 +1,4 @@
-
+import '../../backend/services/earning/earning_model.dart';
 import '../../controller/profile/earning_controller.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
@@ -28,7 +28,7 @@ class HistoryScreenState extends State<HistoryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _filterWidget(context),
+            // _filterWidget(context),
             verticalSpace(Dimensions.paddingSizeVertical * .4),
             _historyWidget(context),
           ],
@@ -37,112 +37,151 @@ class HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  _filterWidget(BuildContext context) {
-    return Obx(() => Column(
-      crossAxisAlignment: crossStart,
-      children: [
-        const Text('Start Date'),
-        const SizedBox(height: 8),
-        GestureDetector(
-          onTap: () => controller.selectDate(context, true),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  _historyWidget(BuildContext context) {
+    return Expanded(
+      child: ListView.separated(
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            PaymentRequest data =
+                controller.earningModel.data.paymentRequests[index];
+            return Column(
               children: [
-                Text(
-                  controller.startDateSelect.value
-                      ? controller.formatDate(controller.startDate.value)
-                      : 'Select start date',
-                  style: const TextStyle(color: Colors.black),
+                ListTile(
+                  // onTap: () {
+                  //   controller.selectedIndex.value = index;
+                  // },
+                  leading: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(Dimensions.radius),
+                    ),
+                    child: Column(
+                      children: [
+                        TitleHeading2Widget(
+                            text: data.createdAt.day.toString(),
+                            color: CustomColor.whiteColor),
+                        TitleHeading5Widget(
+                            text:
+                                "${data.createdAt.month.toString()}/${data.createdAt.year.toString().substring(2)}",
+                            color: CustomColor.whiteColor),
+                      ],
+                    ),
+                  ),
+                  title: TitleHeading3Widget(text: "ID ${data.invoice}"),
+                  subtitle: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: crossStart,
+                          children: [
+                            data.stripeEmail.isEmpty
+                                ? const SizedBox.shrink()
+                                : TitleHeading5Widget(text: data.stripeEmail),
+                            TitleHeading5Widget(text: data.bankType),
+                          ],
+                        ),
+                      ),
+                      data.stripeEmail.isEmpty
+                          ? InkWell(
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.radius * 4),
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      BankInfoDialog(data: data),
+                                );
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Icon(Icons.remove_red_eye),
+                              ))
+                          : const SizedBox.shrink()
+                    ],
+                  ),
+                  trailing: TitleHeading4Widget(
+                      text: "€${data.amount.toStringAsFixed(2)}"),
                 ),
-                const Icon(Icons.calendar_today),
+                Obx(() => Visibility(
+                    visible: controller.selectedIndex.value == index,
+                    child: const Column(
+                      children: [],
+                    )))
               ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        const Text('End Date'),
-        const SizedBox(height: 8),
-        GestureDetector(
-          onTap: () => controller.selectDate(context, false),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  controller.endDateSelect.value ? controller.formatDate(controller.endDate.value) : 'Select end date',
-                  style: const TextStyle(color: Colors.black),
-                ),
-                const Icon(Icons.calendar_today),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        const Text('Filter'),
-        const SizedBox(height: 8),
-        DropdownButtonFormField<String>(
-          value: controller.selectedFilter.value,
-          onChanged: (String? newValue) {
-            setState(() {
-              controller.selectedFilter.value = newValue!;
-            });
-          },
-          items: controller.filterOptions.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
             );
-          }).toList(),
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
+          },
+          separatorBuilder: (_, i) => verticalSpace(5),
+          itemCount: controller.earningModel.data.paymentRequests.length),
+    );
+  }
+}
+
+class BankInfoDialog extends StatelessWidget {
+  const BankInfoDialog({super.key, required this.data});
+
+  final PaymentRequest data;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text("Bank info", style: TextStyle(fontSize: 18)),
+          GestureDetector(
+            onTap: () => Navigator.pop(context), // Close the dialog
+            child: const Icon(Icons.close, color: Colors.red),
+          ),
+        ],
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InfoRow(label: "Area:", value: data.bankInfo.area),
+          const SizedBox(height: 8),
+          InfoRow(label: "Account holder name:", value: data.bankInfo.fullName),
+          const SizedBox(height: 8),
+          InfoRow(label: "SWIFT / BIC CODE:", value: data.bankInfo.swift),
+          const SizedBox(height: 8),
+          InfoRow(label: "Account number:", value: data.bankInfo.swift),
+        ],
+      ),
+    );
+  }
+}
+
+class InfoRow extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const InfoRow({super.key, required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: mainStart,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            style: const TextStyle(color: Colors.black87),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
-    ));
-  }
-
-  _historyWidget(BuildContext context){
-    return Expanded(
-      child: ListView.separated(shrinkWrap: true, itemBuilder: (context, index){
-        return Column(
-          children: [
-            ListTile(
-              leading: Container(
-                // padding: EdgeInsets.all(0),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(Dimensions.radius),
-                ),
-                child: const Column(
-                  children: [
-                    TitleHeading2Widget(text: "12", color: CustomColor.whiteColor),
-                    TitleHeading5Widget(text: "09/2024", color: CustomColor.whiteColor),
-                  ],
-                ),
-              ),
-              title: const TitleHeading3Widget(text: "ID 0000219"),
-              subtitle: const TitleHeading5Widget(text: "Mobile / Orange"),
-              trailing: const TitleHeading4Widget(text: "€30"),
-            )
-          ],
-        );
-      }, separatorBuilder: (_,i) => verticalSpace(5), itemCount: 8),
     );
   }
 }

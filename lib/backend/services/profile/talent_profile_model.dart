@@ -62,7 +62,7 @@ class Category extends DropdownModel{
 
   @override
   // TODO: implement image
-  String get image => throw UnimplementedError();
+  String get image => "";
 }
 
 class Child extends DropdownModel{
@@ -97,7 +97,7 @@ class Child extends DropdownModel{
 
   @override
   // TODO: implement image
-  String get image => throw UnimplementedError();
+  String get image => "";
 }
 
 class UserInfo {

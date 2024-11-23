@@ -92,7 +92,7 @@ class BookNowController extends GetxController with WishService {
     Map<String, dynamic> inputBody = {
       'talent_id': id,
       'type': type,
-      'amount': paymentInfoModel.data.earning.amount,
+      'amount': type == "tips" ? tipsController.text : paymentInfoModel.data.earning.amount,
     };
     if (type == "wish") {
       inputBody.addAll(
@@ -144,7 +144,7 @@ class BookNowController extends GetxController with WishService {
     Map<String, dynamic> inputBody = {
       'talent_id': id,
       'type': type,
-      'amount': paymentInfoModel.data.earning.amount,
+      'amount': type == "tips" ? tipsController.text : paymentInfoModel.data.earning.amount,
       'payment-type': "mobile-payment",
       'currency': "eur",
       'correspondent': selectedPawapayCountry.value.sim.first.correspondent,

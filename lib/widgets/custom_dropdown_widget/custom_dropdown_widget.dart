@@ -152,16 +152,24 @@ class _CustomDropDownState<T extends DropdownModel>
             (T value) {
               return DropdownMenuItem<T>(
                 value: value,
-                child: Text(
-                  // value.title,
-                  value.title == "" ? widget.customTitle : value.title,
-                  style: CustomStyle.darkHeading3TextStyle.copyWith(
-                    fontSize: Dimensions.headingTextSize3,
-                    fontWeight: FontWeight.w500,
-                    color: widget.isCurrencyDropDown!
-                        ? CustomColor.whiteColor
-                        : CustomColor.primaryLightColor,
-                  ),
+                child: Row(
+                  children: [
+                    value.image.isEmpty ? const SizedBox.shrink(): CircleAvatar(
+                      backgroundImage: AssetImage(value.image),
+                    ),
+                    horizontalSpace(9),
+                    Text(
+                      // value.title,
+                      value.title == "" ? widget.customTitle : value.title,
+                      style: CustomStyle.darkHeading3TextStyle.copyWith(
+                        fontSize: Dimensions.headingTextSize3,
+                        fontWeight: FontWeight.w500,
+                        color: widget.isCurrencyDropDown!
+                            ? CustomColor.whiteColor
+                            : CustomColor.primaryLightColor,
+                      ),
+                    ),
+                  ],
                 ),
               );
             },
