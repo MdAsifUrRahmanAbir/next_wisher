@@ -1,5 +1,4 @@
 import '../../controller/bottom_nav/bottom_nav_controller.dart';
-import '../../routes/routes.dart';
 import '../../utils/basic_widget_imports.dart';
 import 'bottom_nav_item.dart';
 import 'language_selection_bottom_sheet.dart';
@@ -10,12 +9,14 @@ class CustomBottomNavBar extends StatefulWidget {
   final int selectedIndex;
   final Function(int) onItemTapped;
   final BottomNavController controller;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   const CustomBottomNavBar({
     super.key,
     required this.selectedIndex,
     required this.onItemTapped,
     required this.controller,
+    required this.scaffoldKey,
   });
 
   @override
@@ -72,28 +73,35 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   isSelected: widget.selectedIndex == 1,
                   onTap: _showLanguageBottomSheet,
                 ),
-                 BottomNavItem(
+                BottomNavItem(
                   icon: Icons.menu,
                   isSelected: widget.selectedIndex == 2,
                   onTap: () {
-                    Get.toNamed(Routes.guidelineScreen);
+                    widget.scaffoldKey.currentState?.openDrawer();
                   },
                 ),
-                badges.Badge(
-                  position: badges.BadgePosition.topEnd(top: -12, end: 1),
-                  badgeContent: Obx(() => TitleHeading4Widget(
-                        text: widget.controller.isCountLoading
-                            ? "0"
-                            : widget.controller.mailCountModel.data.mailCount
-                                .toString(),
-                        color: CustomColor.whiteColor,
+                Obx(() => (widget.controller.isCountLoading ||
+                        widget.controller.mailCountModel.data.mailCount
+                                .toString() ==
+                            "0")
+                    ? BottomNavItem(
+                        icon: Icons.mail_outline,
+                        isSelected: widget.selectedIndex == 3,
+                        onTap: () => widget.onItemTapped(3),
+                      )
+                    : badges.Badge(
+                        position: badges.BadgePosition.topEnd(top: -12, end: 1),
+                        badgeContent: TitleHeading4Widget(
+                          text: widget.controller.mailCountModel.data.mailCount
+                              .toString(),
+                          color: CustomColor.whiteColor,
+                        ),
+                        child: BottomNavItem(
+                          icon: Icons.mail_outline,
+                          isSelected: widget.selectedIndex == 3,
+                          onTap: () => widget.onItemTapped(3),
+                        ),
                       )),
-                  child: BottomNavItem(
-                    icon: Icons.mail_outline,
-                    isSelected: widget.selectedIndex == 3,
-                    onTap: () => widget.onItemTapped(3),
-                  ),
-                ),
                 BottomNavItem(
                   icon: Icons.person,
                   isSelected: widget.selectedIndex == 4,

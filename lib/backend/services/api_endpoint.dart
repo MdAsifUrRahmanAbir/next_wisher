@@ -55,6 +55,8 @@ class ApiEndpoint {
   ///-> earning and payout
   static String earningURL = '/talent/earnings'.addBaseURl();
 
+  static String talentPayoutInfoURL = '/talent/payout-info'.addBaseURl();
+
   static String talentPayoutRequestURL = '/talent/payout-request'.addBaseURl();
   static String mobilePayoutRequestURL = '/talent/mobile-payout-request'.addBaseURl();
 

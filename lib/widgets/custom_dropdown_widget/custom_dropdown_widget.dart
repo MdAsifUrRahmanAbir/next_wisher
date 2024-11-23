@@ -4,6 +4,7 @@ import '../../../utils/basic_screen_imports.dart';
 
 abstract class DropdownModel {
   String get title;
+  String get image;
 }
 
 class CustomDropDown<T extends DropdownModel> extends StatefulWidget {

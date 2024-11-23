@@ -183,7 +183,10 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String writeYourFeedback  = "Write Your Feedback";
 
   static String selectProfilePicture  = "Select Profile Picture";
+  static String updateProfilePicture  = "Update Profile Picture";
+
   static String selectProfileVideo  = "Select Profile Video";
+  static String updateProfileVideo  = "Update Profile Video";
 
   static String uploaded  = "Uploaded";
   static String enterYourBiography  = "Enter Your Biography";
@@ -195,6 +198,7 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String phoneNumber = "Phone Number";
 
 
+  static String list  = "List";
   static String gui  = "";
 
 

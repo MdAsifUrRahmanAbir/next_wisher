@@ -62,6 +62,10 @@ class Category extends DropdownModel{
   @override
   // TODO: implement title
   String get title => name;
+
+  @override
+  // TODO: implement image
+  String get image => throw UnimplementedError();
 }
 
 class Child extends DropdownModel{
@@ -93,6 +97,10 @@ class Child extends DropdownModel{
   @override
   // TODO: implement title
   String get title => name;
+
+  @override
+  // TODO: implement image
+  String get image => throw UnimplementedError();
 }
 
 class Country extends DropdownModel{
@@ -124,4 +132,8 @@ class Country extends DropdownModel{
   @override
   // TODO: implement title
   String get title => name ;
+
+  @override
+  // TODO: implement image
+  String get image => throw UnimplementedError();
 }

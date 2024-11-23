@@ -6,6 +6,7 @@ import '../../utils/custom_snackbar.dart';
 import '../../utils/logger.dart';
 import '../api_endpoint.dart';
 import 'earning_model.dart';
+import 'payout_info_model.dart';
 
 final log = logger(EarningService);
 
@@ -48,6 +49,27 @@ mixin EarningService{
       }
     } catch (e) {
       log.e(':ladybug::ladybug::ladybug: err from Payment api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
+
+  ///* Get PayoutInfo api services
+  Future<PayoutInfoModel?> payoutInfoProcessApi() async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).get(
+        ApiEndpoint.talentPayoutInfoURL,
+      );
+      if (mapResponse != null) {
+        PayoutInfoModel result = PayoutInfoModel.fromJson(mapResponse);
+        // CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from PayoutInfo api service ==> $e :ladybug::ladybug::ladybug:');
       CustomSnackBar.error('Something went Wrong!');
       return null;
     }

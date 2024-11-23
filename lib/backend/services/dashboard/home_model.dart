@@ -13,43 +13,61 @@ class HomeModel {
 
 class Data {
   final List<Country> countries;
-  final List<CategoriesWithChild> categoriesWithChild;
+  final List<Categories> categories;
   final List<HomeTalent> homeTalents;
   final List<FeaturedVideo> featuredVideos;
 
   Data({
     required this.countries,
-    required this.categoriesWithChild,
+    required this.categories,
     required this.homeTalents,
     required this.featuredVideos,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     countries: List<Country>.from(json["countries"].map((x) => Country.fromJson(x))),
-    categoriesWithChild: List<CategoriesWithChild>.from(json["categories_with_child"].map((x) => CategoriesWithChild.fromJson(x))),
+    categories: List<Categories>.from(json["categories"].map((x) => Categories.fromJson(x))),
     homeTalents: List<HomeTalent>.from(json["homeTalents"].map((x) => HomeTalent.fromJson(x))),
     featuredVideos: List<FeaturedVideo>.from(json["featured_videos"].map((x) => FeaturedVideo.fromJson(x))),
   );
 }
 
-class CategoriesWithChild {
+class Categories {
   final String name;
   final String slug;
-  final int status;
-  final String categoryUrl;
+  final List<Child> child;
+  // final int status;
+  // final String categoryUrl;
 
-  CategoriesWithChild({
+  Categories({
     required this.name,
     required this.slug,
-    required this.status,
-    required this.categoryUrl,
+    required this.child,
+    // required this.status,
+    // required this.categoryUrl,
   });
 
-  factory CategoriesWithChild.fromJson(Map<String, dynamic> json) => CategoriesWithChild(
+  factory Categories.fromJson(Map<String, dynamic> json) => Categories(
     name: json["name"],
     slug: json["slug"],
-    status: json["status"],
-    categoryUrl: json["category_url"],
+    child: List<Child>.from(json["child"].map((x) => Child.fromJson(x))),
+    // status: json["status"],
+    // categoryUrl: json["category_url"],
+  );
+}
+
+class Child {
+  final String name;
+  final String slug;
+
+  Child({
+    required this.name,
+    required this.slug,
+  });
+
+  factory Child.fromJson(Map<String, dynamic> json) => Child(
+    name: json["name"],
+    slug: json["slug"]
   );
 }
 

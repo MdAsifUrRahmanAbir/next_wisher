@@ -23,7 +23,7 @@ class CategoriesWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: (){
-            controller.categoryModelProcess(controller.homeModel.data.categoriesWithChild[index].slug);
+            controller.categoryModelProcess(controller.categoriesList[index].slug);
           },
           child: Column(
             children: [
@@ -39,13 +39,13 @@ class CategoriesWidget extends StatelessWidget {
               ),
               verticalSpace(2),
               TitleHeading4Widget(
-                  text: controller.homeModel.data.categoriesWithChild[index].name,
+                  text: controller.categoriesList[index].name,
                   fontWeight: FontWeight.bold)
             ],
           ),
         );
       },
-      itemCount: controller.homeModel.data.categoriesWithChild.length,
+      itemCount: controller.categoriesList.length,
     );
   }
 }

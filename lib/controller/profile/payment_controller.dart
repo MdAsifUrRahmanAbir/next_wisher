@@ -4,8 +4,14 @@ import 'package:next_wisher/backend/model/common/common_success_model.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../backend/services/earning/earning_service.dart';
+import '../../backend/services/earning/payout_info_model.dart';
 
 class PaymentController extends GetxController with EarningService{
+  @override
+  onInit(){
+    super.onInit();
+    payoutInfoProcess();
+  }
 
   /// paypal
   RxString selectedMethod = 'PayPal'.obs; // Default selected method
@@ -14,7 +20,7 @@ class PaymentController extends GetxController with EarningService{
 
 
   /// mobile
-  RxString selectedNetwork = 'MTN'.obs; // Default network selection
+  // RxString selectedNetwork = 'MTN'.obs; // Default network selection
   final TextEditingController payoutAmountController = TextEditingController();
 
   final TextEditingController accountHolderController = TextEditingController();
@@ -58,6 +64,38 @@ class PaymentController extends GetxController with EarningService{
     update();
     return _paymentModel;
   }
+
+
+
+  /// ------------------------------------- >>
+  final _isInfoLoading = false.obs;
+  bool get isInfoLoading => _isInfoLoading.value;
+
+  late final Rx<MobilepayCountry> selectedCountry;
+  late final Rx<Sim> selectedSim;
+
+  late PayoutInfoModel _payoutInfoModel;
+  PayoutInfoModel get payoutInfoModel => _payoutInfoModel;
+
+
+  ///* Get PayoutInfo in process
+  Future<PayoutInfoModel> payoutInfoProcess() async {
+    _isInfoLoading.value = true;
+    update();
+    await payoutInfoProcessApi().then((value) {
+      _payoutInfoModel = value!;
+      selectedCountry = _payoutInfoModel.data.mobilepayCountries.first.obs;
+      selectedSim = selectedCountry.value.sim.first.obs;
+      _isInfoLoading.value = false;
+      update();
+    }).catchError((onError) {
+      log.e(onError);
+    });
+    _isInfoLoading.value = false;
+    update();
+    return _payoutInfoModel;
+  }
+
 
 
 }

@@ -4,12 +4,14 @@ import 'package:next_wisher/backend/services/api_endpoint.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 
 import '../../backend/services/profile/talent_profile_model.dart';
+import '../../controller/profile/profile_controller.dart';
 import '../../controller/profile/profile_setup_controller.dart';
 import '../../routes/routes.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
 import '../../widgets/others/image_picker_dialog.dart';
+import '../../widgets/video_widget.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
   const ProfileSetupScreen({super.key});
@@ -104,8 +106,14 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
             const Spacer(),
             if (_currentStep < 3) // Show Next button for all but last step
               Obx(() => Visibility(
-                    visible: (controller.uploadImage.value &&
-                            _currentStep == 0) ||
+                    visible: ((controller.uploadImage.value &&
+                                _currentStep == 0) ||
+                            Get.find<ProfileController>()
+                                .talentProfileModelModel
+                                .data
+                                .userInfo
+                                .profileImage
+                                .isNotEmpty) ||
                         (controller.uploadVideo.value && _currentStep == 1) ||
                         _currentStep == 2 ||
                         _currentStep == 3,
@@ -143,20 +151,67 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     height: MediaQuery.sizeOf(context).height * .5,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        image: controller.uploadImage.value
+                        image: Get.find<ProfileController>()
+                                .talentProfileModelModel
+                                .data
+                                .userInfo
+                                .profileImage
+                                .isNotEmpty
                             ? DecorationImage(
-                                image:
-                                    FileImage(File(controller.imageFile.value)))
-                            : null,
+                                image: NetworkImage(
+                                    Get.find<ProfileController>()
+                                        .talentProfileModelModel
+                                        .data
+                                        .userInfo
+                                        .profileImage))
+                            : controller.uploadImage.value
+                                ? DecorationImage(
+                                    image: FileImage(
+                                        File(controller.imageFile.value)))
+                                : null,
                         borderRadius: BorderRadius.circular(Dimensions.radius),
-                        color: Theme.of(context).primaryColor),
+                        color: Get.find<ProfileController>()
+                                .talentProfileModelModel
+                                .data
+                                .userInfo
+                                .profileImage
+                                .isNotEmpty
+                            ? Colors.black
+                            : Theme.of(context).primaryColor),
                     child: TitleHeading3Widget(
                         text: controller.uploadImage.value
                             ? ""
-                            : Strings.selectProfilePicture,
+                            : Get.find<ProfileController>()
+                                    .talentProfileModelModel
+                                    .data
+                                    .userInfo
+                                    .profileImage
+                                    .isNotEmpty
+                                ? ""
+                                : Strings.selectProfilePicture,
                         color: CustomColor.whiteColor),
                   ),
+                ),
+          verticalSpace(Dimensions.paddingSizeVertical * .9),
+          Get.find<ProfileController>()
+                  .talentProfileModelModel
+                  .data
+                  .userInfo
+                  .profileImage
+                  .isNotEmpty
+              ? PrimaryButton(
+                  title: Strings.updateProfilePicture,
+                  onPressed: () {
+                    ImagePickerDialog.pickImage(context, onPicked: (File file) {
+                      controller.imageFile.value = file.path;
+                      controller.talentFileSetupProcess(
+                          endPoint: ApiEndpoint.talentSetupImageURL,
+                          filePath: file.path,
+                          filedName: "image");
+                    });
+                  },
                 )
+              : const SizedBox.shrink()
         ],
       ),
     );
@@ -182,22 +237,38 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                   },
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * .7,
-                    height: controller.uploadVideo.value
-                        ? MediaQuery.sizeOf(context).height * .1
-                        : MediaQuery.sizeOf(context).height * .5,
+                    height: MediaQuery.sizeOf(context).height * .5,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(Dimensions.radius),
                         color: controller.uploadVideo.value
-                            ? Colors.green
+                            ? Colors.black
                             : Theme.of(context).primaryColor),
-                    child: TitleHeading3Widget(
-                        text: controller.uploadVideo.value
-                            ? Strings.uploaded
-                            : Strings.selectProfileVideo,
-                        color: CustomColor.whiteColor),
+                    child: controller.uploadVideo.value
+                        ? VideoWidget(
+                            videoUrl: File(controller.videoFile.value))
+                        : TitleHeading3Widget(
+                            text: controller.uploadVideo.value
+                                ? Strings.uploaded
+                                : Strings.selectProfileVideo,
+                            color: CustomColor.whiteColor),
                   ),
-                )
+                ),
+                verticalSpace(Dimensions.paddingSizeVertical * .9),
+                controller.uploadVideo.value
+                    ? PrimaryButton(
+                        title: Strings.update,
+                        onPressed: () {
+                          ImagePickerDialog.pickVideo(context,
+                              onPicked: (File file) {
+                            controller.videoFile.value = file.path;
+                            controller.talentFileSetupProcess(
+                                endPoint: ApiEndpoint.talentSetupVideoURL,
+                                filePath: file.path,
+                                filedName: "video_file");
+                          });
+                        })
+                    : const SizedBox.shrink()
               ],
             )),
     );
@@ -248,9 +319,11 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                           title: Strings.selectCategory,
                         )),
                     verticalSpace(Dimensions.marginBetweenInputBox),
-                    PrimaryButton(title: Strings.update, onPressed: () {
-                      controller.talentSetupProcess();
-                    })
+                    PrimaryButton(
+                        title: Strings.update,
+                        onPressed: () {
+                          controller.talentSetupProcess();
+                        })
                   ],
                 )),
     );
@@ -298,12 +371,13 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
               );
             }).toList(),
           ),
-
           verticalSpace(Dimensions.marginBetweenInputBox),
-          PrimaryButton(title: Strings.update, onPressed: () {
-            Get.offAllNamed(Routes.btmScreen);
-            // controller.talentSetupProcess();
-          })
+          PrimaryButton(
+              title: Strings.update,
+              onPressed: () {
+                Get.offAllNamed(Routes.btmScreen);
+                // controller.talentSetupProcess();
+              })
         ],
       ),
     );

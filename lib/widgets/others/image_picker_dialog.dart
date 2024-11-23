@@ -94,25 +94,25 @@ class ImagePickerDialog{
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.paddingSizeHorizontal,
-                vertical: Dimensions.paddingSizeVertical,
-              ),
-              child: IconButton(
-                onPressed: () async {
-                  onPicked(await _pickVideo(ImageSource.camera));
-                },
-                icon: Animate(
-                  effects: const [FadeEffect(), ScaleEffect()],
-                  child: Icon(
-                    Icons.videocam,
-                    color: Theme.of(context).primaryColor,
-                    size: Dimensions.iconSizeLarge * 2,
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(
+            //     horizontal: Dimensions.paddingSizeHorizontal,
+            //     vertical: Dimensions.paddingSizeVertical,
+            //   ),
+            //   child: IconButton(
+            //     onPressed: () async {
+            //       onPicked(await _pickVideo(ImageSource.camera));
+            //     },
+            //     icon: Animate(
+            //       effects: const [FadeEffect(), ScaleEffect()],
+            //       child: Icon(
+            //         Icons.videocam,
+            //         color: Theme.of(context).primaryColor,
+            //         size: Dimensions.iconSizeLarge * 2,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -139,7 +139,7 @@ class ImagePickerDialog{
 
 
 
-  static Future<File?> _pickVideo(ImageSource videoSource) async {
+  static Future<File?> _pickVideo(videoSource) async {
     try {
       final video = await ImagePicker().pickVideo(source: videoSource);
       if (video == null) return null;

@@ -81,21 +81,6 @@ class PayScreen extends StatelessWidget {
               ],
             )),
 
-            Obx(() => controller.paymentType.value == "credit-card" ? const SizedBox.shrink(): Column(
-              children: [
-                verticalSpace(Dimensions.paddingSizeVertical * .5),
-
-                Obx(() => CustomDropDown<PawapayCountry>(
-                  items: controller.paymentInfoModel.data.pawapayCountries,
-                  onChanged: (value) {
-                    controller.selectedPawapayCountry.value = value!;
-                  },
-                  hint: "${controller.selectedPawapayCountry.value.sim.first.country} (${controller.selectedPawapayCountry.value.sim.first.currency})",
-                  title: Strings.selectCountry,
-                )),
-              ],
-            )),
-
 
             verticalSpace(Dimensions.paddingSizeVertical * .8),
 
@@ -150,6 +135,22 @@ class PayScreen extends StatelessWidget {
                 ],
               ),
             ),
+
+            Obx(() => controller.paymentType.value == "credit-card" ? const SizedBox.shrink(): Column(
+              children: [
+                verticalSpace(Dimensions.paddingSizeVertical * .8),
+
+                Obx(() => CustomDropDown<PawapayCountry>(
+                  items: controller.paymentInfoModel.data.pawapayCountries,
+                  onChanged: (value) {
+                    controller.selectedPawapayCountryDone.value = true;
+                    controller.selectedPawapayCountry.value = value!;
+                  },
+                  hint: !controller.selectedPawapayCountryDone.value ? Strings.selectCountry: "${controller.selectedPawapayCountry.value.sim.first.country} (${controller.selectedPawapayCountry.value.sim.first.currency})",
+                  title: Strings.selectCountry,
+                )),
+              ],
+            )),
 
 
 

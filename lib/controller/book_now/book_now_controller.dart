@@ -13,7 +13,7 @@ import '../../view/dynamic_webview_screen.dart';
 class BookNowController extends GetxController with WishService {
   final formKey = GlobalKey<FormState>();
 
-  RxString paymentType = 'mobile-bank'.obs;
+  RxString paymentType = 'credit-card'.obs;
   RxString selectedOption = "myself".obs;
   RxString selectedGender = "".obs;
 
@@ -39,6 +39,7 @@ class BookNowController extends GetxController with WishService {
 
   late Rx<Ocasion> selectedOcasion;
   late Rx<PawapayCountry> selectedPawapayCountry;
+  RxBool selectedPawapayCountryDone = false.obs;
 
   late PaymentInfoModel _paymentInfoModel;
   PaymentInfoModel get paymentInfoModel => _paymentInfoModel;

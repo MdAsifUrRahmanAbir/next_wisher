@@ -5,25 +5,47 @@ import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../controller/book_now/book_now_controller.dart';
+import '../../controller/bottom_nav/bottom_nav_controller.dart';
 import '../../controller/bottom_nav/dashboard_controller.dart';
 import '../../routes/routes.dart';
 import '../../utils/strings.dart';
+import '../../widgets/drawer/drawer_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../book_now/pay_screen.dart';
+import '../bottom_nav/custom_bottom_nav_bar.dart';
 
 class TalentProfile extends StatelessWidget {
-  TalentProfile({super.key});
-  final controller = Get.find<DashboardController>();
+  TalentProfile({super.key, this.showBTM = true});
 
+  final bool showBTM;
+  final controller = Get.find<DashboardController>();
   final bookNowController = Get.put(BookNowController());
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PrimaryAppBar(),
+      // appBar: const PrimaryAppBar(),
+
+      //    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+      key: _scaffoldKey,
+      drawer: DrawerWidget(),
+      appBar: PrimaryAppBar(onTap: () {
+        Get.find<BottomNavController>().selectedIndex.value = showBTM ? 0 : 4;
+        Navigator.pop(context);
+      }),
       body: Obx(() => controller.isTalentLoading
           ? const CustomLoadingAPI()
           : _bodyWidget(context)),
+      bottomNavigationBar: !showBTM
+          ? const SizedBox.shrink()
+          : Obx(() => CustomBottomNavBar(
+                selectedIndex:
+                    Get.find<BottomNavController>().selectedIndex.value,
+                onItemTapped: Get.find<BottomNavController>().onItemTapped,
+                controller: Get.find<BottomNavController>(),
+                scaffoldKey: _scaffoldKey,
+              )),
     );
   }
 
@@ -37,7 +59,8 @@ class TalentProfile extends StatelessWidget {
               text: data.talent.name, fontWeight: FontWeight.bold),
           verticalSpace(Dimensions.paddingSizeVertical * .2),
           TitleHeading3Widget(
-            text: "${data.talent.category.name} / ${data.talent.subcategory.name}",
+            text:
+                "${data.talent.category.name} / ${data.talent.subcategory.name}",
             opacity: .5,
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
@@ -52,10 +75,8 @@ class TalentProfile extends StatelessWidget {
               text: Strings.biography, fontWeight: FontWeight.bold),
           verticalSpace(Dimensions.paddingSizeVertical * .2),
           TitleHeading4Widget(
-              text: data.talent.bio,
-              fontWeight: FontWeight.bold),
+              text: data.talent.bio, fontWeight: FontWeight.bold),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
-
           Container(
             height: 500,
             width: 300,
@@ -65,8 +86,7 @@ class TalentProfile extends StatelessWidget {
             ),
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
-          TitleHeading4Widget(
-              text: Strings.spokenLanguage),
+          TitleHeading4Widget(text: Strings.spokenLanguage),
           verticalSpace(Dimensions.paddingSizeVertical * .3),
           TitleHeading3Widget(text: Strings.personalizedVideo),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
@@ -80,9 +100,7 @@ class TalentProfile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(Dimensions.radius)),
             child: Column(
               children: [
-                TitleHeading4Widget(
-                    opacity: .8,
-                    text: Strings.videoHint),
+                TitleHeading4Widget(opacity: .8, text: Strings.videoHint),
                 verticalSpace(Dimensions.paddingSizeVertical * .1),
                 Container(
                   padding: EdgeInsets.symmetric(
@@ -93,7 +111,8 @@ class TalentProfile extends StatelessWidget {
                           BorderRadius.circular(Dimensions.radius * 2),
                       color: Theme.of(context).primaryColor),
                   child: TitleHeading4Widget(
-                      text: "€${data.wish.amount.toStringAsFixed(2)}", color: CustomColor.whiteColor),
+                      text: "€${data.wish.amount.toStringAsFixed(2)}",
+                      color: CustomColor.whiteColor),
                 )
               ],
             ),

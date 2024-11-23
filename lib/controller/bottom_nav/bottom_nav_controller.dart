@@ -22,7 +22,8 @@ class BottomNavController extends GetxController with AuthService, wish.WishServ
     const Center(child: Text("Language")),
     const Center(child: Text("Menu")),
     LocalStorage.isUser() ? MessagePage() : MessagePage(),
-    ProfilePage()
+    ProfilePage(),
+    const Center(child: Text("NextWisher")),
   ];
 
   // List bodyTitle = [

@@ -1,10 +1,9 @@
 import '../../../backend/services/dashboard/home_model.dart';
+import '../../../controller/bottom_nav/bottom_nav_controller.dart';
 import '../../../controller/bottom_nav/dashboard_controller.dart';
 import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
-import '../../../widgets/text_labels/title_heading5_widget.dart';
 import '../../talent_profile/talent_profile.dart';
-import 'featured_celebrities_screen.dart';
 
 class FeaturedCelebritiesWidget extends StatelessWidget {
   const FeaturedCelebritiesWidget({super.key, required this.controller});
@@ -20,16 +19,16 @@ class FeaturedCelebritiesWidget extends StatelessWidget {
           children: [
             TitleHeading3Widget(
                 text: Strings.featuredCelebrities, padding: const EdgeInsets.all(2)),
-            Visibility(
-              visible: controller.homeModel.data.homeTalents.length.isGreaterThan(4),
-              child: TextButton(
-                onPressed: () {
-                  controller.talentList.value  = controller.homeModel.data.homeTalents;
-                  Get.to(FeaturedCelebritiesScreen());
-                },
-                child: TitleHeading5Widget(text: Strings.seeAll),
-              ),
-            )
+            // Visibility(
+            //   visible: controller.homeModel.data.homeTalents.length.isGreaterThan(4),
+            //   child: TextButton(
+            //     onPressed: () {
+            //       controller.talentList.value  = controller.homeModel.data.homeTalents;
+            //       Get.to(FeaturedCelebritiesScreen(showSearchBar: true,));
+            //     },
+            //     child: TitleHeading5Widget(text: Strings.seeAll),
+            //   ),
+            // )
           ],
         ),
         GridView.builder(
@@ -46,6 +45,7 @@ class FeaturedCelebritiesWidget extends StatelessWidget {
             HomeTalent data = controller.talentList[index];
             return GestureDetector(
               onTap: () {
+                Get.find<BottomNavController>().selectedIndex.value = 5;
                 controller.talentsProcess(data.userId.toString());
                 Get.to(TalentProfile());
               },
@@ -80,10 +80,7 @@ class FeaturedCelebritiesWidget extends StatelessWidget {
               ),
             );
           },
-          itemCount:
-              controller.talentList.length.isGreaterThan(4)
-                  ? 4
-                  : controller.talentList.length,
+          itemCount: controller.talentList.length,
         ),
       ],
     ));

@@ -118,7 +118,7 @@ class TipsScreenState extends State<TipsScreen> {
             child: PrimaryButton(
               onPressed: () {
                 Get.find<DashboardController>().talentsProcess(LocalStorage.getId()!);
-                Get.to(TalentProfile());
+                Get.to(TalentProfile(showBTM: false));
                 debugPrint("Preview Profile clicked");
               },
               title: 'Preview Profile',

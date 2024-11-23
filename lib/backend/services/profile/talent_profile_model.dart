@@ -59,6 +59,10 @@ class Category extends DropdownModel{
   @override
   // TODO: implement title
   String get title => name;
+
+  @override
+  // TODO: implement image
+  String get image => throw UnimplementedError();
 }
 
 class Child extends DropdownModel{
@@ -90,6 +94,10 @@ class Child extends DropdownModel{
   @override
   // TODO: implement title
   String get title => name;
+
+  @override
+  // TODO: implement image
+  String get image => throw UnimplementedError();
 }
 
 class UserInfo {
@@ -106,6 +114,7 @@ class UserInfo {
   final String coverImage;
   final String profileImage;
   final String verificationVideo;
+  final String videoPath;
   final String bio;
 
   UserInfo({
@@ -122,6 +131,7 @@ class UserInfo {
     required this.coverImage,
     required this.profileImage,
     required this.verificationVideo,
+    required this.videoPath,
     required this.bio,
   });
 
@@ -137,8 +147,9 @@ class UserInfo {
     role: json["role"],
     balance: json["balance"].toDouble(),
     coverImage: json["cover_image"],
-    profileImage: json["profile_image"],
+    profileImage: json["profile_image"] ?? "",
     verificationVideo: json["verification_video"],
+    videoPath: json["video_path"] ?? "",
     bio: json["bio"],
   );
 }

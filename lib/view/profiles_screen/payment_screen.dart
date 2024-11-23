@@ -28,7 +28,7 @@ class PaymentScreenState extends State<PaymentScreen> {
           ),
         ],
       ),
-      body: Obx(() => controller.isSubmitLoading
+      body: Obx(() => controller.isSubmitLoading || controller.isInfoLoading
           ? const CustomLoadingAPI()
           : _bodyWidget()),
     );
@@ -149,10 +149,12 @@ class PaymentScreenState extends State<PaymentScreen> {
           ElevatedButton(
             onPressed: () {
               // Handle confirmation logic here
-              print('Payout Amount: ${controller.payoutAmountController.text}');
-              print('Email: ${controller.emailController.text}');
-              print('Confirm Email: ${controller.confirmEmailController.text}');
-              print('Payment Method: ${controller.selectedMethod}');
+              debugPrint(
+                  'Payout Amount: ${controller.payoutAmountController.text}');
+              debugPrint('Email: ${controller.emailController.text}');
+              debugPrint(
+                  'Confirm Email: ${controller.confirmEmailController.text}');
+              debugPrint('Payment Method: ${controller.selectedMethod}');
               controller.paymentProcess(
                   endpoint: ApiEndpoint.talentPayoutRequestURL,
                   inputBody: {
@@ -196,6 +198,38 @@ class PaymentScreenState extends State<PaymentScreen> {
             ),
           ),
           const SizedBox(height: 20),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Wrap(
+                children: List.generate(
+                    controller.payoutInfoModel.data.mobilepayCountries.length,
+                    (index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: (){
+                            controller.selectedCountry.value = controller.payoutInfoModel.data.mobilepayCountries[index];
+                            controller.selectedSim.value = controller.selectedCountry.value.sim.first;
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: controller.selectedCountry.value == controller.payoutInfoModel.data.mobilepayCountries[index] ? Theme.of(context).primaryColor : null
+                            ),
+                            child: CircleAvatar(
+                              radius: Dimensions.radius * (3.2),
+                              backgroundImage: AssetImage("assets/country/${controller.payoutInfoModel.data.mobilepayCountries[index].flag}.jpeg"),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
           const Text(
             "Select Network",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -203,9 +237,25 @@ class PaymentScreenState extends State<PaymentScreen> {
           const SizedBox(height: 10),
           Row(
             children: [
-              _buildNetworkButton('MTN'),
-              const SizedBox(width: 10),
-              _buildNetworkButton('Orange'),
+              Obx(() => SizedBox(
+                    height: Dimensions.buttonHeight * .8,
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              controller.selectedSim.value =
+                                  controller.selectedCountry.value.sim[index];
+                            },
+                            child: _buildNetworkButton(
+                                controller.selectedCountry.value.sim[index].mno,
+                                controller.selectedCountry.value.sim[index]),
+                          );
+                        },
+                        separatorBuilder: (_, i) => horizontalSpace(5),
+                        itemCount: controller.selectedCountry.value.sim.length),
+                  )),
             ],
           ),
           const SizedBox(height: 20),
@@ -278,7 +328,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                     "stripe_email_confirmation":
                         controller.confirmEmailController,
                     "bank_type": "mobile",
-                    "settings": { /// todo
+                    "settings": {
+                      /// todo
                       "country": "senegal",
                       "prefix": "221",
                       "sim": "Free"
@@ -295,11 +346,6 @@ class PaymentScreenState extends State<PaymentScreen> {
       ),
     );
   }
-
-
-
-
-
 
   // Helper method to build a payment method widget
   _buildPaymentMethod({
@@ -339,24 +385,18 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget _buildNetworkButton(String network) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            controller.selectedNetwork.value = network;
-          });
-        },
-        child: Container(
-          height: 50,
+  _buildNetworkButton(String network, isSelected) {
+    return Obx(() => Container(
+          height: Dimensions.buttonHeight * .8,
+          width: Dimensions.widthSize * 10,
           decoration: BoxDecoration(
             border: Border.all(
-              color: controller.selectedNetwork.value == network
+              color: isSelected == controller.selectedSim.value
                   ? Colors.blue
                   : Colors.grey,
             ),
             borderRadius: BorderRadius.circular(8),
-            color: controller.selectedNetwork.value == network
+            color: isSelected == controller.selectedSim.value
                 ? Colors.blue.shade100
                 : Colors.white,
           ),
@@ -366,15 +406,13 @@ class PaymentScreenState extends State<PaymentScreen> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: controller.selectedNetwork.value == network
+                color: isSelected == controller.selectedSim.value
                     ? Colors.blue
                     : Colors.black,
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   void _showErrorDialog(String message) {
@@ -411,8 +449,6 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-
-
   /// bank
   _bankWidget() {
     return Expanded(
@@ -425,6 +461,11 @@ class PaymentScreenState extends State<PaymentScreen> {
             _buildTabButton("Canada", 0),
             _buildTabButton("Europe & UK", 1),
             _buildTabButton("Outside Europe", 2),
+            selectedTab == 2
+                ? TextButton(
+                    onPressed: _openList,
+                    child: TitleHeading4Widget(text: Strings.list))
+                : const SizedBox.shrink()
           ],
         ),
         const SizedBox(height: 20),
@@ -433,7 +474,7 @@ class PaymentScreenState extends State<PaymentScreen> {
     ));
   }
 
-  Widget _buildTabButton(String title, int index) {
+  _buildTabButton(String title, int index) {
     return GestureDetector(
       onTap: () => setState(() => selectedTab = index),
       child: Column(
@@ -441,7 +482,8 @@ class PaymentScreenState extends State<PaymentScreen> {
           Text(
             title,
             style: TextStyle(
-              fontWeight: selectedTab == index ? FontWeight.bold : FontWeight.normal,
+              fontWeight:
+                  selectedTab == index ? FontWeight.bold : FontWeight.normal,
               color: selectedTab == index ? Colors.blue : Colors.grey,
             ),
           ),
@@ -456,7 +498,7 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget _buildTabContent() {
+  _buildTabContent() {
     switch (selectedTab) {
       case 0:
         return _buildCanadaTab();
@@ -469,13 +511,16 @@ class PaymentScreenState extends State<PaymentScreen> {
     }
   }
 
-  Widget _buildCanadaTab() {
+  _buildCanadaTab() {
     return Column(
       children: [
-        _buildTextField("Enter Payout Amount", controller.payoutAmountController),
-        _buildTextField("Full Name of Account Holder", controller.accountHolderController),
+        _buildTextField(
+            "Enter Payout Amount", controller.payoutAmountController),
+        _buildTextField(
+            "Full Name of Account Holder", controller.accountHolderController),
         _buildTextField("Interac Registered Email", controller.emailController),
-        _buildTextField("Confirm Interac Registered Email", controller.confirmEmailController),
+        _buildTextField("Confirm Interac Registered Email",
+            controller.confirmEmailController),
         const SizedBox(height: 20),
         Row(
           children: [
@@ -488,7 +533,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                         "amount": controller.payoutAmountController.text,
                         "email": controller.emailController.text,
                         "email_confirmation":
-                        controller.confirmEmailController.text,
+                            controller.confirmEmailController.text,
                         "full_name": controller.accountHolderController.text,
                       },
                       onConfirm: () {
@@ -509,14 +554,15 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget _buildEuropeTab() {
+  _buildEuropeTab() {
     return Column(
       children: [
-        _buildTextField("Enter Payout Amount", controller.payoutAmountController),
-        _buildTextField("Full Name of Account Holder", controller.accountHolderController),
+        _buildTextField(
+            "Enter Payout Amount", controller.payoutAmountController),
+        _buildTextField(
+            "Full Name of Account Holder", controller.accountHolderController),
         _buildTextField("IBAN", controller.emailController),
         _buildTextField("Confirm IBAN", controller.confirmEmailController),
-
         const SizedBox(height: 20),
         Row(
           children: [
@@ -529,7 +575,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                         "amount": controller.payoutAmountController.text,
                         "iban": controller.emailController.text,
                         "iban_confirmation":
-                        controller.confirmEmailController.text,
+                            controller.confirmEmailController.text,
                         "full_name": controller.accountHolderController.text,
                       },
                       onConfirm: () {
@@ -550,21 +596,22 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget _buildOutsideEuropeTab() {
+  _buildOutsideEuropeTab() {
     return Column(
       children: [
         const Text(
           "View the list to see if your country is listed",
           style: TextStyle(color: Colors.grey),
         ),
-        _buildTextField("Enter Payout Amount", controller.payoutAmountController),
-        _buildTextField("Full Name of Account Holder", controller.accountHolderController),
+        _buildTextField(
+            "Enter Payout Amount", controller.payoutAmountController),
+        _buildTextField(
+            "Full Name of Account Holder", controller.accountHolderController),
         _buildTextField("SWIFT/BIC Code", controller.swiftController),
         _buildTextField("Account Number", controller.emailController),
-        _buildTextField("Confirm Account Number", controller.confirmEmailController),
-
+        _buildTextField(
+            "Confirm Account Number", controller.confirmEmailController),
         const SizedBox(height: 20),
-
         Row(
           children: [
             Expanded(
@@ -576,7 +623,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                         "amount": controller.payoutAmountController.text,
                         "account_number": controller.emailController.text,
                         "account_number_confirmation":
-                        controller.confirmEmailController.text,
+                            controller.confirmEmailController.text,
                         "swift": controller.swiftController.text,
                         "full_name": controller.accountHolderController.text,
                       },
@@ -598,7 +645,7 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller) {
+  _buildTextField(String label, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: PrimaryTextInputWidget(
@@ -609,4 +656,51 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
+  _openList() {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.height * 0.6,
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Supported Country",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount:
+                      controller.payoutInfoModel.data.bankCountriesList.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(controller
+                          .payoutInfoModel.data.bankCountriesList[index]),
+                      // onTap: () {
+                      //   Navigator.pop(context);
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     SnackBar(
+                      //       content: Text(
+                      //           "Selected: ${controller.payoutInfoModel.data.bankCountriesList[index]}"),
+                      //     ),
+                      //   );
+                      // },
+                    );
+                  },
+                ),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Close"),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

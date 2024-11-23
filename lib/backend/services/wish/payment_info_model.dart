@@ -86,6 +86,10 @@ class Ocasion extends DropdownModel{
   @override
   // TODO: implement title
   String get title => name;
+
+  @override
+  // TODO: implement image
+  String get image => throw UnimplementedError();
 }
 
 class PawapayCountry extends DropdownModel{
@@ -111,6 +115,10 @@ class PawapayCountry extends DropdownModel{
   @override
   // TODO: implement title
   String get title => "${sim.first.country} (${sim.first.currency})";
+
+  @override
+  // TODO: implement image
+  String get image => throw UnimplementedError();
 }
 
 class Sim {

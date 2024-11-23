@@ -75,6 +75,8 @@ class EarningScreenState extends State<EarningScreen> {
               EarningCardWidget(
                   revenueAmount: data.balance, title: "Balance", color: Colors.black),
               verticalSpace(Dimensions.paddingSizeVertical * .4),
+              _filterWidget(context),
+              verticalSpace(Dimensions.paddingSizeVertical * .4),
               EarningCardWidget(
                   revenueAmount: data.wishAmount,
                   title: "Wishes",
@@ -90,6 +92,88 @@ class EarningScreenState extends State<EarningScreen> {
             ],
           )),
     );
+  }
+
+
+
+  _filterWidget(BuildContext context) {
+    return Obx(() => Column(
+      crossAxisAlignment: crossStart,
+      children: [
+        const Text('Start Date'),
+        const SizedBox(height: 8),
+        GestureDetector(
+          onTap: () => controller.selectDate(context, true),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  controller.startDateSelect.value
+                      ? controller.formatDate(controller.startDate.value)
+                      : 'Select start date',
+                  style: const TextStyle(color: Colors.black),
+                ),
+                const Icon(Icons.calendar_today),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        const Text('End Date'),
+        const SizedBox(height: 8),
+        GestureDetector(
+          onTap: () => controller.selectDate(context, false),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  controller.endDateSelect.value ? controller.formatDate(controller.endDate.value) : 'Select end date',
+                  style: const TextStyle(color: Colors.black),
+                ),
+                const Icon(Icons.calendar_today),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        const Text('Filter'),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<String>(
+          value: controller.selectedFilter.value,
+          onChanged: (String? newValue) {
+            setState(() {
+              controller.selectedFilter.value = newValue!;
+            });
+          },
+          items: controller.filterOptions.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          decoration: InputDecoration(
+            contentPadding:
+            const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+          ),
+        ),
+      ],
+    ));
   }
 }
 

@@ -8,6 +8,7 @@ import '../../backend/services/dashboard/dashboard_service.dart';
 import '../../backend/services/dashboard/home_model.dart';
 import '../../backend/services/dashboard/talents_model.dart';
 import '../../view/nav_pages/dashboard/featured_celebrities_screen.dart';
+import 'bottom_nav_controller.dart';
 
 class DashboardController extends GetxController with DashboardService {
   final List category = [
@@ -42,6 +43,9 @@ class DashboardController extends GetxController with DashboardService {
   bool get isLoading => _isLoading.value;
 
   RxList<HomeTalent> talentList = <HomeTalent>[].obs;
+
+
+  RxList<Categories> categoriesList = <Categories>[].obs;
   final searchController = TextEditingController();
 
   late HomeModel _homeModel;
@@ -53,6 +57,11 @@ class DashboardController extends GetxController with DashboardService {
     update();
     await homeProcessApi().then((value) {
       _homeModel = value!;
+      for (var e in _homeModel.data.categories) {
+        if(e.child.isNotEmpty){
+          categoriesList.add(e);
+        }
+      }
       talentList.value = _homeModel.data.homeTalents;
       _isLoading.value = false;
       update();
@@ -81,9 +90,10 @@ class DashboardController extends GetxController with DashboardService {
     update();
     await categoryModelProcessApi(tag: tag).then((value) {
       _categoryModel = value!;
-      searchController.text = tag;
+      // searchController.text = tag;
       talentList.value = _categoryModel.data.talents;
-      Get.to(FeaturedCelebritiesScreen());
+      Get.find<BottomNavController>().selectedIndex.value = 5;
+      Get.to(FeaturedCelebritiesScreen(showSearchBar: false));
       _isCategoryLoading.value = false;
       update();
     }).catchError((onError) {
