@@ -151,23 +151,23 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     height: MediaQuery.sizeOf(context).height * .5,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        image: Get.find<ProfileController>()
-                                .talentProfileModelModel
-                                .data
-                                .userInfo
-                                .profileImage
-                                .isNotEmpty
+                        image: controller.uploadImage.value
                             ? DecorationImage(
-                                image: NetworkImage(
-                                    Get.find<ProfileController>()
-                                        .talentProfileModelModel
-                                        .data
-                                        .userInfo
-                                        .profileImage))
-                            : controller.uploadImage.value
+                                image:
+                                    FileImage(File(controller.imageFile.value)))
+                            : Get.find<ProfileController>()
+                                    .talentProfileModelModel
+                                    .data
+                                    .userInfo
+                                    .profileImage
+                                    .isNotEmpty
                                 ? DecorationImage(
-                                    image: FileImage(
-                                        File(controller.imageFile.value)))
+                                    image: NetworkImage(
+                                        Get.find<ProfileController>()
+                                            .talentProfileModelModel
+                                            .data
+                                            .userInfo
+                                            .profileImage))
                                 : null,
                         borderRadius: BorderRadius.circular(Dimensions.radius),
                         color: Get.find<ProfileController>()
@@ -247,11 +247,23 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     child: controller.uploadVideo.value
                         ? VideoWidget(
                             videoUrl: File(controller.videoFile.value))
-                        : TitleHeading3Widget(
-                            text: controller.uploadVideo.value
-                                ? Strings.uploaded
-                                : Strings.selectProfileVideo,
-                            color: CustomColor.whiteColor),
+                        : Get.find<ProfileController>()
+                                .talentProfileModelModel
+                                .data
+                                .userInfo
+                                .videoPath
+                                .isNotEmpty
+                            ? VideoWidget(
+                                videoUrl: Get.find<ProfileController>()
+                                    .talentProfileModelModel
+                                    .data
+                                    .userInfo
+                                    .videoPath)
+                            : TitleHeading3Widget(
+                                text: controller.uploadVideo.value
+                                    ? Strings.uploaded
+                                    : Strings.selectProfileVideo,
+                                color: CustomColor.whiteColor),
                   ),
                 ),
                 verticalSpace(Dimensions.paddingSizeVertical * .9),

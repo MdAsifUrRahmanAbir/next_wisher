@@ -11,29 +11,45 @@ import '../../bottom_nav/custom_bottom_nav_bar.dart';
 import '../../talent_profile/talent_profile.dart';
 
 class FeaturedCelebritiesScreen extends StatelessWidget {
-  FeaturedCelebritiesScreen({super.key, required this.showSearchBar});
+  FeaturedCelebritiesScreen({super.key, required this.showSearchBar, this.appTitle = ""});
   final bool showSearchBar;
+  final String appTitle;
   final controller = Get.find<DashboardController>();
      final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-      key: _scaffoldKey,
-      drawer: DrawerWidget(),
-      appBar: PrimaryAppBar(onTap: () {
-        Get.find<BottomNavController>().selectedIndex.value = 0;
-        controller.talentList.value = controller.homeModel.data.homeTalents;
-        Navigator.pop(context);
-      }),
-      body: _bodyWidget(),
-      bottomNavigationBar: Obx(() => CustomBottomNavBar(
-            selectedIndex: Get.find<BottomNavController>().selectedIndex.value,
-            onItemTapped: Get.find<BottomNavController>().onItemTapped,
-            controller: Get.find<BottomNavController>(),
-        scaffoldKey: _scaffoldKey,
-          )),
+    return WillPopScope(
+      onWillPop: () async{
+          Get
+              .find<BottomNavController>()
+              .selectedIndex
+              .value = 0;
+
+          controller.talentList.value = controller.homeModel.data.homeTalents;
+          Navigator.pop(context);
+        return true;
+      },
+      child: Scaffold(
+        //    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+        key: _scaffoldKey,
+        drawer: DrawerWidget(),
+        appBar: PrimaryAppBar(
+          color: appTitle.isEmpty ? null : Colors.black,
+          title: appTitle,
+            onTap: () {
+          Get.find<BottomNavController>().selectedIndex.value = 0;
+          controller.talentList.value = controller.homeModel.data.homeTalents;
+          Navigator.pop(context);
+        }),
+        body: _bodyWidget(),
+        bottomNavigationBar: Obx(() => CustomBottomNavBar(
+              selectedIndex: Get.find<BottomNavController>().selectedIndex.value,
+              onItemTapped: Get.find<BottomNavController>().onItemTapped,
+              controller: Get.find<BottomNavController>(),
+          scaffoldKey: _scaffoldKey,
+            )),
+      ),
     );
   }
 

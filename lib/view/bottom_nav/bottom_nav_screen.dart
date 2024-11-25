@@ -18,11 +18,11 @@ class BottomNavScreen extends StatelessWidget {
       drawer: DrawerWidget(),
       body: _body(context),
       bottomNavigationBar: Obx(() => CustomBottomNavBar(
-            selectedIndex: controller.selectedIndex.value,
-            onItemTapped: controller.onItemTapped,
-            controller: controller,
-          scaffoldKey: _scaffoldKey
-          )),
+          isMain: true,
+          selectedIndex: controller.selectedIndex.value,
+          onItemTapped: controller.onItemTapped,
+          controller: controller,
+          scaffoldKey: _scaffoldKey)),
     );
   }
 

@@ -10,6 +10,7 @@ class CustomBottomNavBar extends StatefulWidget {
   final Function(int) onItemTapped;
   final BottomNavController controller;
   final GlobalKey<ScaffoldState> scaffoldKey;
+  final bool isMain;
 
   const CustomBottomNavBar({
     super.key,
@@ -17,6 +18,7 @@ class CustomBottomNavBar extends StatefulWidget {
     required this.onItemTapped,
     required this.controller,
     required this.scaffoldKey,
+    this.isMain = false
   });
 
   @override
@@ -64,16 +66,19 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 BottomNavItem(
+                  isMain: widget.isMain,
                   icon: Icons.home_filled,
                   isSelected: widget.selectedIndex == 0,
                   onTap: () => widget.onItemTapped(0),
                 ),
                 BottomNavItem(
+                  isMain: widget.isMain,
                   text: "EN",
                   isSelected: widget.selectedIndex == 1,
                   onTap: _showLanguageBottomSheet,
                 ),
                 BottomNavItem(
+                  isMain: widget.isMain,
                   icon: Icons.menu,
                   isSelected: widget.selectedIndex == 2,
                   onTap: () {
@@ -85,7 +90,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                                 .toString() ==
                             "0")
                     ? BottomNavItem(
-                        icon: Icons.mail_outline,
+                  isMain: widget.isMain,
+                  icon: Icons.mail_outline,
                         isSelected: widget.selectedIndex == 3,
                         onTap: () => widget.onItemTapped(3),
                       )
@@ -97,12 +103,14 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                           color: CustomColor.whiteColor,
                         ),
                         child: BottomNavItem(
+                          isMain: widget.isMain,
                           icon: Icons.mail_outline,
                           isSelected: widget.selectedIndex == 3,
                           onTap: () => widget.onItemTapped(3),
                         ),
                       )),
                 BottomNavItem(
+                  isMain: widget.isMain,
                   icon: Icons.person,
                   isSelected: widget.selectedIndex == 4,
                   onTap: () => widget.onItemTapped(4),

@@ -32,7 +32,7 @@ class CategoriesWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
-                      image: DecorationImage(fit: BoxFit.cover, image: AssetImage(controller.category[index]["icon"])),
+                      image: DecorationImage(fit: BoxFit.cover, image: AssetImage(controller.category[index]["icon"]), alignment: Alignment.topCenter),
                       borderRadius:
                       BorderRadius.circular(Dimensions.radius * 2)),
                 ),

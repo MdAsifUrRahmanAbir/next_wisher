@@ -21,11 +21,12 @@ class EarningScreenState extends State<EarningScreen> {
     return Scaffold(
       appBar: PrimaryAppBar(
         actions: [
-          IconButton(
+          TextButton.icon(
               onPressed: () {
                 Get.toNamed(Routes.historyScreen);
               },
-              icon: const Icon(Icons.history))
+              icon: const Icon(Icons.history),
+            label: TitleHeading3Widget(text: Strings.history))
         ],
       ),
       body: Obx(() => (controller.isLoading || controller.isFilterLoading)

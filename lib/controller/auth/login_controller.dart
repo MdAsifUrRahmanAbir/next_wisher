@@ -13,7 +13,7 @@ class LoginController extends GetxController with AuthService {
 
   /// formKeys
   final formKey = GlobalKey<FormState>();
-  RxBool rememberMe = false.obs;
+  RxBool rememberMe = true.obs;
 
   @override
   void dispose() {

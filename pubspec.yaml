@@ -38,13 +38,20 @@ dependencies:
   chewie: ^1.8.5
   badges: ^3.1.2
   path_provider: ^2.1.5
-  device_info_plus: ^11.1.1
+  device_info_plus:
+  rename_app: ^1.6.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints:
+#  flutter_launcher_icons:
+#
+#flutter_launcher_icons:
+#  android: true
+#  ios: false
+#  image_path: "assets/playstore.png"
 
 flutter:
 
@@ -56,3 +63,4 @@ flutter:
     - assets/
     - assets/categories/
     - assets/country/
+    - assets/playstore.png

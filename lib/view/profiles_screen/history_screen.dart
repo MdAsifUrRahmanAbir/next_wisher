@@ -1,6 +1,7 @@
 import '../../backend/services/earning/earning_model.dart';
 import '../../controller/profile/earning_controller.dart';
 import '../../utils/basic_screen_imports.dart';
+import '../../utils/strings.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PrimaryAppBar(title: "History"),
+      appBar: PrimaryAppBar(title:  Strings.history),
       body: _bodyWidget(context),
     );
   }

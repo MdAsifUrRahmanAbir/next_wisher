@@ -6,6 +6,7 @@ import '../../controller/book_now/book_now_controller.dart';
 import '../../controller/bottom_nav/dashboard_controller.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
+import '../../widgets/text_labels/title_heading5_widget.dart';
 
 class PayScreen extends StatelessWidget {
   PayScreen({super.key, required this.isBook});
@@ -43,64 +44,33 @@ class PayScreen extends StatelessWidget {
             ),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
 
-            TitleHeading3Widget(
-                textAlign: TextAlign.center,
-                text: Strings.selectPaymentMethod,
-                fontWeight: FontWeight.bold),
-
-            verticalSpace(Dimensions.paddingSizeVertical * .2),
-
-            Obx(() => Row(
-                  children: [
-                    Row(
-                      children: [
-                        Radio<String>(
-                          value: "credit-card",
-                          groupValue: controller.paymentType.value,
-                          onChanged: (String? value) {
-                            controller.paymentType.value = value!;
-                          },
-                        ),
-                        TitleHeading3Widget(
-                            text: Strings.creditCard,
-                            fontWeight: FontWeight.bold),
-                      ],
-                    ),
-                    horizontalSpace(Dimensions.paddingSizeHorizontal * .5),
-                    Row(
-                      children: [
-                        Radio<String>(
-                          value: "mobile-bank",
-                          groupValue: controller.paymentType.value,
-                          onChanged: (String? value) {
-                            controller.paymentType.value = value!;
-                          },
-                        ),
-                        TitleHeading3Widget(
-                            text: Strings.mobilePayment,
-                            fontWeight: FontWeight.bold)
-                      ],
-                    ),
-                  ],
-                )),
-
-            verticalSpace(Dimensions.paddingSizeVertical * .8),
-
             Visibility(
               visible: !isBook,
-              child: PrimaryTextInputWidget(
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      controller.tipsValue.value = double.parse(value);
-                    }
-                  },
-                  controller: controller.tipsController,
-                  labelText: Strings.tip),
+              child: Column(
+                crossAxisAlignment: crossStart,
+                children: [
+                  TitleHeading5Widget(
+                    text: Strings.enterAmount,
+                    opacity: .5,
+                  ),
+                  verticalSpace(Dimensions.paddingSizeVertical * .3),
+
+                  PrimaryTextInputWidget(
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          controller.tipsValue.value = double.parse(value);
+                        }
+                      },
+                      controller: controller.tipsController,
+                      labelText: Strings.tip),
+
+                  verticalSpace(Dimensions.paddingSizeVertical * .8),
+
+                ],
+              ),
             ),
             // const Divider(),
-
-            verticalSpace(Dimensions.paddingSizeVertical * .8),
 
             Container(
               padding: const EdgeInsets.all(8),
@@ -137,6 +107,55 @@ class PayScreen extends StatelessWidget {
                 ],
               ),
             ),
+
+            verticalSpace(Dimensions.paddingSizeVertical * .8),
+
+            TitleHeading3Widget(
+                textAlign: TextAlign.center,
+                text: Strings.selectPaymentMethod,
+                fontWeight: FontWeight.bold),
+
+            verticalSpace(Dimensions.paddingSizeVertical * .2),
+
+            Obx(() => Row(
+              children: [
+                Row(
+                  children: [
+                    Radio<String>(
+                      value: "credit-card",
+                      groupValue: controller.paymentType.value,
+                      onChanged: (String? value) {
+                        controller.paymentType.value = value!;
+                      },
+                    ),
+                    TitleHeading3Widget(
+                        text: Strings.creditCard,
+                        fontWeight: FontWeight.bold),
+                  ],
+                ),
+                horizontalSpace(Dimensions.paddingSizeHorizontal * .5),
+
+
+
+                Row(
+                  children: [
+                    Radio<String>(
+                      value: "mobile-bank",
+                      groupValue: controller.paymentType.value,
+                      onChanged: (String? value) {
+                        controller.paymentType.value = value!;
+                      },
+                    ),
+                    TitleHeading3Widget(
+                        text: Strings.mobilePayment,
+                        fontWeight: FontWeight.bold)
+                  ],
+                ),
+              ],
+            )),
+
+            // verticalSpace(Dimensions.paddingSizeVertical * .8),
+
 
             Obx(() => controller.paymentType.value == "credit-card"
                 ? const SizedBox.shrink()

@@ -2,6 +2,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/controller/bottom_nav/dashboard_controller.dart';
 import '../../utils/basic_widget_imports.dart';
+import '../../utils/strings.dart';
 
 class DrawerWidget extends StatelessWidget {
   DrawerWidget({super.key});
@@ -64,24 +65,30 @@ class DrawerWidget extends StatelessWidget {
     return ListView(shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       children: [
-        verticalSpace(Dimensions.heightSize * .2),
-        SizedBox(
-          height: MediaQuery.sizeOf(context).height * .07,
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  onPressed: () => Get.close(1),
-                  icon: Icon(
-                    Icons.arrow_back,
-                    size: Dimensions.iconSizeDefault * 1.2,
-                  ),
-                ),
-              )
-            ],
-          ),
+        // verticalSpace(Dimensions.heightSize * .2),
+        Container(
+          alignment: Alignment.center,
+          height: Dimensions.buttonHeight * .7,
+          color: Colors.black,
+          child: TitleHeading3Widget(text: Strings.menu, color: Colors.white),
         ),
+        // SizedBox(
+        //   height: MediaQuery.sizeOf(context).height * .07,
+        //   child: Stack(
+        //     children: [
+        //       Align(
+        //         alignment: Alignment.centerLeft,
+        //         child: IconButton(
+        //           onPressed: () => Get.close(1),
+        //           icon: Icon(
+        //             Icons.arrow_back,
+        //             size: Dimensions.iconSizeDefault * 1.2,
+        //           ),
+        //         ),
+        //       )
+        //     ],
+        //   ),
+        // ),
         _drawerItems(context),
       ],
     );

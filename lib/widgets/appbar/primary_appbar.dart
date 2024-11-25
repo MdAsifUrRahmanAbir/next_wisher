@@ -10,6 +10,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onTap,
     this.showBackButton = true,
     this.actions,
+    this.color,
   });
 
   final String title;
@@ -17,6 +18,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onTap;
   final List<Widget>? actions;
   final bool showBackButton;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +26,18 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       scrolledUnderElevation: 0,
       title: TitleHeading2Widget(
-        text: title,
+        text: capitalizeWords(title),
         fontWeight: FontWeight.w600,
+        color: color == null ? null: Colors.white,
       ),
       elevation: 0,
       leading: showBackButton
           ? BackButtonWidget(
               onTap: onTap ?? () => Navigator.pop(context),
+        color: color == null ? null: Colors.white,
             )
           : null,
-      backgroundColor: Colors.transparent,
+      backgroundColor: color ?? Colors.transparent,
       actions: actions,
       iconTheme: IconThemeData(
         color: Theme.of(context).primaryColor,
@@ -46,4 +50,14 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   // Size get preferredSize => Size.fromHeight(appBar.preferredSize.height);
   Size get preferredSize =>
       Size.fromHeight(appbarSize ?? Dimensions.appBarHeight * .7);
+}
+
+String capitalizeWords(String input) {
+  if (input.isEmpty) return input;
+  return input
+      .split(' ') // Split the string into words
+      .map((word) => word.isNotEmpty
+      ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+      : word) // Capitalize the first letter of each word
+      .join(' '); // Join the words back into a single string
 }

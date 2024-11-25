@@ -7,7 +7,11 @@ import 'profile_controller.dart';
 class ProfileSetupController extends GetxController with ProfileService {
 
 
-  final bioController = TextEditingController();
+  final bioController = TextEditingController(text: Get.find<ProfileController>()
+      .talentProfileModelModel
+      .data
+      .userInfo
+      .bio);
   final profileController = Get.find<ProfileController>();
 
 

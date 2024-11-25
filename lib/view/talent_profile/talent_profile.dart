@@ -2,6 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
+import 'package:next_wisher/backend/utils/custom_snackbar.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../controller/book_now/book_now_controller.dart';
@@ -64,11 +65,19 @@ class TalentProfile extends StatelessWidget {
             opacity: .5,
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
-          StarRating(
-            mainAxisAlignment: mainStart,
-            rating: 0,
-            allowHalfRating: false,
-            onRatingChanged: (rating) {},
+          Row(
+            children: [
+              StarRating(
+                mainAxisAlignment: mainStart,
+                rating: controller.talentsModel.data.talent.ratingPercent,
+                allowHalfRating: false,
+                onRatingChanged: (rating) {},
+              ),
+              TitleHeading3Widget(
+                  text: " ${controller.talentsModel.data.talent.ratingPercent.toStringAsFixed(1)} ", fontWeight: FontWeight.bold),
+              TitleHeading5Widget(
+                  text: "(${controller.talentsModel.data.talent.totalRating})", fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor,),
+            ],
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .2),
           TitleHeading3Widget(
@@ -118,27 +127,38 @@ class TalentProfile extends StatelessWidget {
             ),
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
-          Visibility(
-            visible: LocalStorage.isUser(),
-            child: Column(
-              children: [
-                PrimaryButton(
+          Column(
+            children: [
+              Visibility(
+                visible: data.wish.status,
+                child: PrimaryButton(
                     title: Strings.book,
                     onPressed: () {
-                      bookNowController.paymentInfoProcess(data.talent.id);
-                      Get.toNamed(Routes.bookNowScreen);
+                      if (LocalStorage.isUser()) {
+                        bookNowController.paymentInfoProcess(data.talent.id);
+                        Get.toNamed(Routes.bookNowScreen);
+                      }else{
+                        CustomSnackBar.error(Strings.errorTalentUser);
+                      }
                     }),
-                verticalSpace(Dimensions.paddingSizeVertical * .5),
-                PrimaryButton(
+              ),
+              verticalSpace(Dimensions.paddingSizeVertical * .5),
+              Visibility(
+                visible: data.tips.status,
+                child: PrimaryButton(
                     title: Strings.sendTip,
                     backgroundColor: CustomColor.secondaryLightColor,
                     onPressed: () {
-                      bookNowController.paymentInfoProcess(data.talent.id);
-                      Get.to(PayScreen(isBook: false));
+                      if (LocalStorage.isUser()) {
+                        bookNowController.paymentInfoProcess(data.talent.id);
+                        Get.to(PayScreen(isBook: false));
+                      }else{
+                        CustomSnackBar.error(Strings.errorTalentUser);
+                      }
                     }),
-                verticalSpace(Dimensions.paddingSizeVertical * .5),
-              ],
-            ),
+              ),
+              verticalSpace(Dimensions.paddingSizeVertical * .5),
+            ],
           ),
           Card(
             color: CustomColor.whiteColor,

@@ -16,19 +16,19 @@ class DashboardController extends GetxController with DashboardService {
       "icon": "assets/categories/actor.jpg"
     },
     {
+      "icon": "assets/categories/people.jpg"
+    },
+    {
       "icon": "assets/categories/model.jpg"
     },
     {
       "icon": "assets/categories/music.jpg"
     },
     {
-      "icon": "assets/categories/people.jpg"
+      "icon": "assets/categories/sport.jpg"
     },
     {
       "icon": "assets/categories/radio.jpg"
-    },
-    {
-      "icon": "assets/categories/sport.jpg"
     },
   ];
 
@@ -93,7 +93,7 @@ class DashboardController extends GetxController with DashboardService {
       // searchController.text = tag;
       talentList.value = _categoryModel.data.talents;
       Get.find<BottomNavController>().selectedIndex.value = 5;
-      Get.to(FeaturedCelebritiesScreen(showSearchBar: false));
+      Get.to(FeaturedCelebritiesScreen(showSearchBar: false, appTitle: tag,));
       _isCategoryLoading.value = false;
       update();
     }).catchError((onError) {

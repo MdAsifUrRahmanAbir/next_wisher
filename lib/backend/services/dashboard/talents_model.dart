@@ -33,6 +33,8 @@ class Data {
 
 class Talent {
   final int id;
+  final int totalRating;
+  final double ratingPercent;
   final String name;
   final String username;
   final String bio;
@@ -52,6 +54,8 @@ class Talent {
     required this.verificationVideo,
     required this.category,
     required this.subcategory,
+    required this.totalRating,
+    required this.ratingPercent,
   });
 
   factory Talent.fromJson(Map<String, dynamic> json) => Talent(
@@ -62,6 +66,8 @@ class Talent {
     role: json["role"],
     videoPath: json["video_path"],
     verificationVideo: json["verification_video"],
+    totalRating: json["total_rating"],
+    ratingPercent: json["rating_percent"].toDouble(),
     category: Category.fromJson(json["category"]),
     subcategory: Category.fromJson(json["subcategory"]),
   );
@@ -84,18 +90,21 @@ class Tips {
   final int userId;
   final String type;
   final double amount;
+  final bool status;
 
   Tips({
     required this.id,
     required this.userId,
     required this.type,
     required this.amount,
+    required this.status,
   });
 
   factory Tips.fromJson(Map<String, dynamic> json) => Tips(
     id: json["id"],
     userId: json["user_id"],
     type: json["type"],
+    status: json["status"],
     amount: json["amount"].toDouble(),
   );
 }

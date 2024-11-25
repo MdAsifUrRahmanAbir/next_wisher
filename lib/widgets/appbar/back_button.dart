@@ -3,16 +3,17 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../utils/basic_widget_imports.dart';
 
 class BackButtonWidget extends StatelessWidget {
-  const BackButtonWidget({super.key, required this.onTap});
+  const BackButtonWidget({super.key, required this.onTap, this.color});
 
   final VoidCallback onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: onTap,
       icon: CircleAvatar(
-        backgroundColor: Theme.of(context).primaryColor.withOpacity(.3),
+        backgroundColor: color ?? Theme.of(context).primaryColor.withOpacity(.3),
         child: Animate(
             effects: const [FadeEffect(), ScaleEffect()],
             child: Padding(

@@ -1,9 +1,11 @@
+import '../../controller/bottom_nav/dashboard_controller.dart';
 import '../../utils/basic_widget_imports.dart';
 
 class BottomNavItem extends StatelessWidget {
   final IconData? icon;
   final String? text;
   final bool isSelected;
+  final bool isMain;
   final VoidCallback onTap;
 
   const BottomNavItem({
@@ -12,12 +14,21 @@ class BottomNavItem extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
     this.text,
+    required this.isMain,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: (){
+        if(!isMain){
+          Get.find<DashboardController>().searchController.clear();
+          Get.find<DashboardController>().talentList.value =
+              Get.find<DashboardController>().homeModel.data.homeTalents;
+          Navigator.pop(context);
+        }
+        onTap();
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
