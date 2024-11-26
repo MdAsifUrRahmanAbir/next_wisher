@@ -72,7 +72,8 @@ class PrimaryTextInputWidget extends StatelessWidget {
               return null;
             }
           },
-          onFieldSubmitted: onChanged,
+          // onFieldSubmitted: onChanged,
+          onChanged: onChanged,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimensions.radius * 0.5),

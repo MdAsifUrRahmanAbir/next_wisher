@@ -3,6 +3,7 @@ import 'package:next_wisher/backend/utils/no_data_widget.dart';
 import '../../../backend/services/dashboard/home_model.dart';
 import '../../../controller/bottom_nav/bottom_nav_controller.dart';
 import '../../../controller/bottom_nav/dashboard_controller.dart';
+import '../../../routes/routes.dart';
 import '../../../utils/basic_screen_imports.dart';
 
 import '../../../utils/strings.dart';
@@ -102,7 +103,7 @@ class FeaturedCelebritiesScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         controller.talentsProcess(data.userId.toString());
-                        Get.to(TalentProfile());
+                        Get.toNamed(Routes.talentProfile);
                       },
                       child: Column(
                         crossAxisAlignment: crossStart,
