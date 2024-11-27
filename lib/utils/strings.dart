@@ -203,6 +203,9 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String history  = "History";
 
   static String errorTalentUser  = "Access Denied! You are talent user!";
+  static String accepted  = "Accepted";
+  static String declined  = "Declined";
+
   static String gui  = "";
 
 

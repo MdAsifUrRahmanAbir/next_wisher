@@ -41,6 +41,7 @@ class PaymentRequest {
   final double amount;
   final String stripeEmail;
   final BankInfo bankInfo;
+  final int status;
   final DateTime createdAt;
 
   PaymentRequest({
@@ -49,12 +50,14 @@ class PaymentRequest {
     required this.amount,
     required this.stripeEmail,
     required this.bankInfo,
+    required this.status,
     required this.createdAt,
   });
 
   factory PaymentRequest.fromJson(Map<String, dynamic> json) => PaymentRequest(
     invoice: json["invoice"],
     bankType: json["bank_type"],
+    status: json["status"],
     amount: json["amount"].toDouble(),
     stripeEmail: json["stripe_email"] ?? "",
     bankInfo: BankInfo.fromJson(json["bank_info"]),

@@ -25,28 +25,35 @@ class TalentProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: const PrimaryAppBar(),
-
-      //    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-      key: _scaffoldKey,
-      drawer: DrawerWidget(),
-      appBar: PrimaryAppBar(onTap: () {
+    return WillPopScope(
+      onWillPop: ()async{
         Get.find<BottomNavController>().selectedIndex.value = showBTM ? 0 : 4;
         Navigator.pop(context);
-      }),
-      body: Obx(() => controller.isTalentLoading
-          ? const CustomLoadingAPI()
-          : _bodyWidget(context)),
-      bottomNavigationBar: !showBTM
-          ? const SizedBox.shrink()
-          : Obx(() => CustomBottomNavBar(
-                selectedIndex:
-                    Get.find<BottomNavController>().selectedIndex.value,
-                onItemTapped: Get.find<BottomNavController>().onItemTapped,
-                controller: Get.find<BottomNavController>(),
-                scaffoldKey: _scaffoldKey,
-              )),
+        return true;
+      },
+      child: Scaffold(
+        // appBar: const PrimaryAppBar(),
+      
+        //    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+        key: _scaffoldKey,
+        drawer: DrawerWidget(),
+        appBar: PrimaryAppBar(onTap: () {
+          Get.find<BottomNavController>().selectedIndex.value = showBTM ? 0 : 4;
+          Navigator.pop(context);
+        }),
+        body: Obx(() => controller.isTalentLoading
+            ? const CustomLoadingAPI()
+            : _bodyWidget(context)),
+        bottomNavigationBar: !showBTM
+            ? const SizedBox.shrink()
+            : Obx(() => CustomBottomNavBar(
+                  selectedIndex:
+                      Get.find<BottomNavController>().selectedIndex.value,
+                  onItemTapped: Get.find<BottomNavController>().onItemTapped,
+                  controller: Get.find<BottomNavController>(),
+                  scaffoldKey: _scaffoldKey,
+                )),
+      ),
     );
   }
 
