@@ -1,3 +1,4 @@
+import '../../language/language_controller.dart';
 import '../../utils/basic_widget_imports.dart';
 import '../../utils/strings.dart';
 
@@ -56,7 +57,7 @@ class PrimaryTextInputWidget extends StatelessWidget {
         //   ],
         // ),
         // verticalSpace(Dimensions.marginBetweenInputTitleAndBox * 1),
-        TextFormField(
+        Obx(() => TextFormField(
           cursorColor: Theme.of(context).primaryColor,
           maxLines: maxLine,
           style: CustomStyle.lightHeading4TextStyle
@@ -67,7 +68,7 @@ class PrimaryTextInputWidget extends StatelessWidget {
           keyboardType: keyboardType,
           validator: (String? value) {
             if (value!.isEmpty && optional == "") {
-              return Strings.pleaseFillOutTheField;
+              return languageSettingController.getTranslation(Strings.pleaseFillOutTheField);
             } else {
               return null;
             }
@@ -98,8 +99,12 @@ class PrimaryTextInputWidget extends StatelessWidget {
             fillColor: color,
             contentPadding:
                 const EdgeInsets.only(left: 16, right: 10, top: 10, bottom: 10),
-            hintText: hint,
-            labelText: labelText,
+            hintText: languageSettingController.isLoading
+                ? ""
+                : languageSettingController.getTranslation(hint),
+            labelText: languageSettingController.isLoading
+                ? ""
+                : languageSettingController.getTranslation(labelText),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: false,
             hintStyle: Get.isDarkMode
@@ -116,7 +121,7 @@ class PrimaryTextInputWidget extends StatelessWidget {
             suffixIcon: suffixIcon,
             prefixIcon: prefixIcon,
           ),
-        )
+        ))
         // CustomSize.heightBetween()
       ],
     );

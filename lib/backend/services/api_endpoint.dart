@@ -5,6 +5,7 @@ class ApiEndpoint {
   static String baseUrl = "$mainDomain/public/api/v1";
 
   ///-> Auth for both user and talent
+  static String languageURL = '/languages'.addBaseURl();
   static String loginURL = '/login'.addBaseURl();
   static String registerURL = '/register'.addBaseURl();
   static String logoutURL = '/logout'.addBaseURl();

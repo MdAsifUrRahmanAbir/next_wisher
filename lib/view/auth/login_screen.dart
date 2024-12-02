@@ -3,7 +3,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 
 import '../../controller/auth/login_controller.dart';
-import '../../utils/assets.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
 import '../../widgets/buttons/secondary_button.dart';
@@ -34,9 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _deviceToken = token;
       });
-      print("Device Token: $_deviceToken");
+      debugPrint("Device Token: $_deviceToken");
     } catch (e) {
-      print("Error getting device token: $e");
+      debugPrint("Error getting device token: $e");
     }
   }
 
@@ -62,12 +61,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: ListView(
             // crossAxisAlignment: crossStart,
             children: [
-              // Image.asset(Assets.appBasicLogo),
-              // verticalSpace(Dimensions.marginSizeVertical),
-              // TitleHeading3Widget(
-              //   text: Strings.login,
-              //   color: Theme.of(context).primaryColor,
-              // ),
               verticalSpace(Dimensions.marginBetweenInputTitleAndBox),
               TitleHeading5Widget(
                 text: Strings.loginTitle,

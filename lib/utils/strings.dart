@@ -94,7 +94,7 @@ class Strings {
 
   static String create  = "Create";
   static String update  = "Update";
-  static String logout  = "Log Out";
+  static String logout  = "Logout";
   static String faq  = "FAQ";
   static String changeTheme  = "Change Theme";
   static String helpCenter  = "Help Center";
@@ -150,7 +150,7 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String featuredCelebrities  = "Featured Celebrities";
   static String featuredVideos  = "Featured Videos";
   static String seeAll  = "See All";
-  static String guideline  = "Guideline";
+  static String guideline  = "Guidelines";
   static String personalInformation  = "Personal Information";
 
   static String account  = "Account";
@@ -217,7 +217,6 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String wishRequest  = "Wish Request";
   static String themeChange  = "Theme Change";
   static String tipsTitle  = "Please activate the Tips option to receive tips from your fans or followers";
+  static String selectLanguage  = "Select Language";
   static String gui  = "";
-
-
 }

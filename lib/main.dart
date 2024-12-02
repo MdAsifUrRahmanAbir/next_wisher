@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'language/language_controller.dart';
 import 'routes/pages.dart';
 import 'routes/routes.dart';
 import 'utils/strings.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         initialRoute: Routes.splashScreen,
         initialBinding: BindingsBuilder(
               () {
-            /// if need
+                languageSettingController;
           },
         ),
         getPages: Pages.list,

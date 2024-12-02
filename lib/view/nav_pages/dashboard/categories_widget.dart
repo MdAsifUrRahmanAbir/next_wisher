@@ -40,6 +40,8 @@ class CategoriesWidget extends StatelessWidget {
               verticalSpace(2),
               TitleHeading4Widget(
                   text: controller.categoriesList[index].name,
+                  maxLines: 1,
+                  textOverflow: TextOverflow.ellipsis,
                   fontWeight: FontWeight.bold)
             ],
           ),

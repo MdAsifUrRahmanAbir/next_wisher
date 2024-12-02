@@ -1,3 +1,4 @@
+import '../../language/language_controller.dart';
 import '../../utils/basic_widget_imports.dart';
 import '../../utils/strings.dart';
 
@@ -46,7 +47,7 @@ class _PasswordInputWidgetState extends State<PasswordInputWidget> {
           keyboardType: widget.keyboardType,
           validator: (String? value) {
             if (value!.isEmpty) {
-              return Strings.pleaseFillOutTheField;
+              return languageSettingController.getTranslation(Strings.pleaseFillOutTheField);
             } else {
               return null;
             }
@@ -75,8 +76,8 @@ class _PasswordInputWidgetState extends State<PasswordInputWidget> {
             fillColor: widget.color,
             contentPadding:
                 const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-            hintText: (widget.hint),
-            labelText: widget.labelText,
+            hintText: languageSettingController.getTranslation(widget.hint),
+            labelText: languageSettingController.getTranslation(widget.labelText),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: false,
             hintStyle: Get.isDarkMode

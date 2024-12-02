@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../language/language_controller.dart';
 import '../../utils/dimensions.dart';
 
 class TitleHeading1Widget extends StatelessWidget {
@@ -35,8 +37,10 @@ class TitleHeading1Widget extends StatelessWidget {
       opacity: opacity,
       child: Padding(
         padding: padding,
-        child: Text(
-          (text),
+        child: Obx(() => Text(
+          languageSettingController.isLoading
+              ? ""
+              : languageSettingController.getTranslation(text),
           // style: isDark.value
           //     ? CustomStyle.darkHeading1TextStyle.copyWith(
           //         fontSize: fontSize, fontWeight: fontWeight, color: color)
@@ -46,12 +50,11 @@ class TitleHeading1Widget extends StatelessWidget {
               fontSize: fontSize ?? Dimensions.headingTextSize1,
               fontWeight: fontWeight ?? FontWeight.w700,
               color: color,
-            shadows: shadows
-          ),
+              shadows: shadows),
           textAlign: textAlign,
           overflow: textOverflow,
           maxLines: maxLines,
-        ),
+        )),
       ),
     );
   }

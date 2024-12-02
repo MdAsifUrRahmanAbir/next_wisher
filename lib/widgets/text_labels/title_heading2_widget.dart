@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../language/language_controller.dart';
 import '../../utils/dimensions.dart';
 
 class TitleHeading2Widget extends StatelessWidget {
@@ -32,24 +34,26 @@ class TitleHeading2Widget extends StatelessWidget {
     return Opacity(
       opacity: opacity,
       child: Padding(
-        padding: padding,
-        child: Text(
-              (text),
+          padding: padding,
+          child: Obx(
+            () => Text(
+              languageSettingController.isLoading
+                  ? ""
+                  : languageSettingController.getTranslation(text),
               // style: isDark.value
               //     ? CustomStyle.darkHeading2TextStyle.copyWith(
               //         fontSize: fontSize, fontWeight: fontWeight, color: color)
               //     : CustomStyle.lightHeading2TextStyle.copyWith(
               //         fontSize: fontSize, fontWeight: fontWeight, color: color),
-          style: TextStyle(
-              fontSize: fontSize ?? Dimensions.headingTextSize2,
-              fontWeight: fontWeight ?? FontWeight.w700,
-              color: color
-          ),
+              style: TextStyle(
+                  fontSize: fontSize ?? Dimensions.headingTextSize2,
+                  fontWeight: fontWeight ?? FontWeight.w700,
+                  color: color),
               textAlign: textAlign,
               overflow: textOverflow,
               maxLines: maxLines,
             ),
-      ),
+          )),
     );
   }
 }

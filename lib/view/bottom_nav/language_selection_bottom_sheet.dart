@@ -1,4 +1,5 @@
 import '../../utils/basic_screen_imports.dart';
+import '../../utils/strings.dart';
 
 class LanguageSelectionBottomSheet extends StatefulWidget {
   final String selectedLanguage;
@@ -38,35 +39,35 @@ class LanguageSelectionBottomSheetState
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const TitleHeading2Widget(
-            text: "Select Language",
+          TitleHeading2Widget(
+            text: Strings.selectLanguage,
               fontWeight: FontWeight.bold
           ),
           RadioListTile(
             title: const TitleHeading2Widget(
-                text: "English"),
-            value: "English",
+                text: " English"),
+            value: "english",
             groupValue: _selectedLanguage,
             onChanged: (value) => _selectLanguage(value!),
           ),
           RadioListTile(
             title: const TitleHeading2Widget(
-                text: "Français"),
-            value: "Français",
+                text: " Français"),
+            value: "french",
             groupValue: _selectedLanguage,
             onChanged: (value) => _selectLanguage(value!),
           ),
           RadioListTile(
             title: const TitleHeading2Widget(
-                text: "Portuguese"),
-            value: "Portuguese",
+                text: " Portuguese"),
+            value: "portugues",
             groupValue: _selectedLanguage,
             onChanged: (value) => _selectLanguage(value!),
           ),
           RadioListTile(
             title: const TitleHeading2Widget(
-                text: "Español"),
-            value: "Español",
+                text: " Español"),
+            value: "spanish",
             groupValue: _selectedLanguage,
             onChanged: (value) => _selectLanguage(value!),
           ),

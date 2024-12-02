@@ -1,6 +1,7 @@
 import 'package:next_wisher/utils/theme.dart';
 
 import '../../controller/bottom_nav/bottom_nav_controller.dart';
+import '../../language/language_controller.dart';
 import '../../utils/basic_widget_imports.dart';
 import 'bottom_nav_item.dart';
 import 'language_selection_bottom_sheet.dart';
@@ -14,22 +15,27 @@ class CustomBottomNavBar extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isMain;
 
-  const CustomBottomNavBar({
-    super.key,
-    required this.selectedIndex,
-    required this.onItemTapped,
-    required this.controller,
-    required this.scaffoldKey,
-    this.isMain = false
-  });
+  const CustomBottomNavBar(
+      {super.key,
+      required this.selectedIndex,
+      required this.onItemTapped,
+      required this.controller,
+      required this.scaffoldKey,
+      this.isMain = false});
 
   @override
   State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
 }
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
-  String _selectedLanguage = "English"; // Default language
+  String _selectedLanguage = "english"; // Default language
   RxBool isDarkMood = false.obs;
+
+  @override
+  void initState() {
+    _selectedLanguage = languageSettingController.selectedLanguage.value;
+    super.initState();
+  }
 
   void _showLanguageBottomSheet() {
     showModalBottomSheet(
@@ -40,6 +46,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           onLanguageSelected: (String language) {
             setState(() {
               _selectedLanguage = language;
+              languageSettingController.changeLanguage(language);
             });
             Navigator.pop(context); // Close the bottom sheet
           },
@@ -51,7 +58,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     isDarkMood.value = Themes().theme == ThemeMode.dark;
-    return  BottomAppBar(
+    return BottomAppBar(
       height: 60,
       elevation: 10,
       // color: isDarkMood.value ? Colors.black : CustomColor.whiteColor,
@@ -64,8 +71,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             decoration: BoxDecoration(
                 // color: isDarkMood.value ? Colors.black : CustomColor.whiteColor,
                 borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(Dimensions.radius),
-                )),
+              top: Radius.circular(Dimensions.radius),
+            )),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -77,7 +84,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 ),
                 BottomNavItem(
                   isMain: widget.isMain,
-                  text: "EN",
+                  text: _selectedLanguage == "french"
+                      ? "FR"
+                      : _selectedLanguage == "portugues"
+                          ? "PR"
+                          : _selectedLanguage == "spanish"
+                              ? "SP"
+                              : "EN",
                   isSelected: widget.selectedIndex == 1,
                   onTap: _showLanguageBottomSheet,
                 ),
@@ -94,8 +107,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                                 .toString() ==
                             "0")
                     ? BottomNavItem(
-                  isMain: widget.isMain,
-                  icon: Icons.mail_outline,
+                        isMain: widget.isMain,
+                        icon: Icons.mail_outline,
                         isSelected: widget.selectedIndex == 3,
                         onTap: () => widget.onItemTapped(3),
                       )

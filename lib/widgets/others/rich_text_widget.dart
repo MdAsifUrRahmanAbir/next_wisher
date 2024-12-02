@@ -1,3 +1,4 @@
+import '../../language/language_controller.dart';
 import '../../utils/basic_widget_imports.dart';
 
 class RichTextWidget extends StatelessWidget {
@@ -17,11 +18,11 @@ class RichTextWidget extends StatelessWidget {
         TextSpan(
           children: [
             TextSpan(
-              text: (preText),
+              text: languageSettingController.getTranslation(preText),
               style: Theme.of(context).textTheme.bodySmall
             ),
             TextSpan(
-              text: (postText),
+              text: languageSettingController.getTranslation(postText),
               style: CustomStyle.lightHeading5TextStyle.copyWith(
                 color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.w600,

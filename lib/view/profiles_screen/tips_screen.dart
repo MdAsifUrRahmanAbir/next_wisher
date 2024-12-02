@@ -44,9 +44,8 @@ class TipsScreenState extends State<TipsScreen> {
             text: Strings.tipsTitle,
           ),
           const SizedBox(height: 30),
-          const Text(
-            'Activate',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          TitleHeading3Widget(
+            text: Strings.activate,fontWeight: FontWeight.bold
           ),
           const SizedBox(height: 10),
           Row(
@@ -67,14 +66,12 @@ class TipsScreenState extends State<TipsScreen> {
                   ),
                   child: Row(
                     children: [
-                      Text(
-                        'Yes',
-                        style: TextStyle(
-                          color: controller.tipsIsActivated.value
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      TitleHeading3Widget(
+                        text: Strings.yes,
+                        color: controller.tipsIsActivated.value
+                            ? Colors.white
+                            : Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                       if (controller.tipsIsActivated.value)
                         const Icon(Icons.check, color: Colors.white, size: 16),
@@ -97,14 +94,12 @@ class TipsScreenState extends State<TipsScreen> {
                         : Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Text(
-                    'No',
-                    style: TextStyle(
-                      color: !controller.tipsIsActivated.value
-                          ? Colors.white
-                          : Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: TitleHeading3Widget(
+                    text: Strings.no,
+                    color: !controller.tipsIsActivated.value
+                        ? Colors.white
+                        : Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -118,7 +113,7 @@ class TipsScreenState extends State<TipsScreen> {
                 Get.to(TalentProfile(showBTM: false));
                 debugPrint("Preview Profile clicked");
               },
-              title: 'Preview Profile',
+              title: Strings.previewProfile,
             ),
           ),
         ],
