@@ -21,5 +21,6 @@ class Routes {
   static const String tipsScreen = '/TipsScreen';
   static const String paymentScreen = '/PaymentScreen';
   static const String historyScreen = '/HistoryScreen';
+  static const String themeChangeScreen = '/themeChangeScreen';
 
 }

@@ -9,6 +9,7 @@ import '../../utils/basic_screen_imports.dart';
 class WishAnTipsController extends GetxController with WishAndTipsService{
 
   final amountController = TextEditingController();
+  RxDouble amount = 0.0.obs;
   RxBool wishIsActivated = true.obs;
   RxBool tipsIsActivated = true.obs;
 
@@ -37,6 +38,7 @@ class WishAnTipsController extends GetxController with WishAndTipsService{
 
       wishIsActivated.value = _wishStatusModel.data.wish.status == 1 ? true: false;
       amountController.text = _wishStatusModel.data.wish.amount.toStringAsFixed(2);
+      amount.value = _wishStatusModel.data.wish.amount;
 
       debugPrint("WISH");
       debugPrint(_wishStatusModel.data.wish.status.toString());

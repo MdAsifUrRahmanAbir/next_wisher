@@ -16,6 +16,7 @@ import '../view/profiles_screen/guidline_screen.dart';
 import '../view/profiles_screen/history_screen.dart';
 import '../view/profiles_screen/payment_screen.dart';
 import '../view/profiles_screen/profle_setup_screen.dart';
+import '../view/profiles_screen/theme_change_screen.dart';
 import '../view/profiles_screen/tips_screen.dart';
 import '../view/profiles_screen/wish_request_screen.dart';
 import '../view/talent_profile/talent_profile.dart';
@@ -98,6 +99,10 @@ class Pages{
     GetPage(
       name: Routes.historyScreen,
       page: () =>  const HistoryScreen(),
+    ),
+    GetPage(
+      name: Routes.themeChangeScreen,
+      page: () =>  const ThemeChangeScreen(),
     ),
   ];
 }

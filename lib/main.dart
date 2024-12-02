@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +11,12 @@ import 'routes/routes.dart';
 import 'utils/strings.dart';
 import 'utils/theme.dart';
 
+
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  debugPrint("Handling a background message: ${message.messageId}");
+}
+
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +26,9 @@ void main() async{
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
   ]);
+
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const MyApp());
 }

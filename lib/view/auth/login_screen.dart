@@ -1,4 +1,5 @@
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 
 import '../../controller/auth/login_controller.dart';
@@ -11,10 +12,33 @@ import '../../widgets/others/rich_text_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import 'forgot_password_dialog.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final controller = Get.put(LoginController());
+  String? _deviceToken;
+
+  @override
+  void initState() {
+    super.initState();
+    _getDeviceToken();
+  }
+  Future<void> _getDeviceToken() async {
+    try {
+      String? token = await FirebaseMessaging.instance.getToken();
+      setState(() {
+        _deviceToken = token;
+      });
+      print("Device Token: $_deviceToken");
+    } catch (e) {
+      print("Error getting device token: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

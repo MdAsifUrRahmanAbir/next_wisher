@@ -43,6 +43,7 @@ class Talent {
   final String verificationVideo;
   final Category category;
   final Category subcategory;
+  final List<Rating> rating;
 
   Talent({
     required this.id,
@@ -56,6 +57,7 @@ class Talent {
     required this.subcategory,
     required this.totalRating,
     required this.ratingPercent,
+    required this.rating,
   });
 
   factory Talent.fromJson(Map<String, dynamic> json) => Talent(
@@ -70,6 +72,41 @@ class Talent {
     ratingPercent: json["rating_percent"].toDouble(),
     category: Category.fromJson(json["category"]),
     subcategory: Category.fromJson(json["subcategory"]),
+    rating: List<Rating>.from(json["rating"].map((x) => Rating.fromJson(x))),
+  );
+}
+
+
+class Rating {
+  // final int id;
+  // final int talentId;
+  // final int userId;
+  // final int talentEarningId;
+  final double rating;
+  final String feedback;
+  final DateTime createdAt;
+  // final DateTime updatedAt;
+
+  Rating({
+    // required this.id,
+    // required this.talentId,
+    // required this.userId,
+    // required this.talentEarningId,
+    required this.rating,
+    required this.feedback,
+    required this.createdAt,
+    // required this.updatedAt,
+  });
+
+  factory Rating.fromJson(Map<String, dynamic> json) => Rating(
+    // id: json["id"],
+    // talentId: json["talent_id"],
+    // userId: json["user_id"],
+    // talentEarningId: json["talent_earning_id"],
+    rating: (json["rating"] ?? 0).toDouble(),
+    feedback: json["feedback"],
+    createdAt: DateTime.parse(json["created_at"]),
+    // updatedAt: DateTime.parse(json["updated_at"]),
   );
 }
 

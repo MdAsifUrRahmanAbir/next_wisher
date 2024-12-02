@@ -2,6 +2,7 @@ import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../backend/local_storage/local_storage.dart';
+import '../../backend/utils/custom_snackbar.dart';
 import '../../controller/bottom_nav/dashboard_controller.dart';
 import '../../controller/profile/wish_and_tips_controller.dart';
 import '../../utils/strings.dart';
@@ -20,11 +21,8 @@ class WishRequestState extends State<WishRequest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wish Request'),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+      appBar: PrimaryAppBar(
+        title: Strings.wishRequest
       ),
       body: Obx(() =>
           controller.isLoading ? const CustomLoadingAPI() : _bodyWidget()),
@@ -36,14 +34,13 @@ class WishRequestState extends State<WishRequest> {
       padding: const EdgeInsets.all(16.0),
       child: ListView(
         children: [
-          const Text(
-            'Please setup an amount to charge for Wish Request',
-            style: TextStyle(fontSize: 16, color: Colors.black87),
+          TitleHeading3Widget(text:
+            Strings.wishTitle,
           ),
           const SizedBox(height: 20),
-          const Text(
-            'Enter Amount',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          TitleHeading3Widget(text:
+            Strings.enterAmount,
+              fontWeight: FontWeight.bold
           ),
           const SizedBox(height: 10),
           Row(
@@ -52,6 +49,11 @@ class WishRequestState extends State<WishRequest> {
                 child: PrimaryTextInputWidget(
                   controller: controller.amountController,
                   keyboardType: TextInputType.number,
+                  onChanged: (value){
+                    if(value.isNotEmpty){
+                      controller.amount.value = double.parse(value);
+                    }
+                  },
                   labelText: Strings.enterAmount,
                   hint: '',
                 ),
@@ -60,16 +62,20 @@ class WishRequestState extends State<WishRequest> {
               Expanded(
                 child: PrimaryButton(
                     onPressed: () {
+                      if(controller.amount.value.isLowerThan(30) || controller.amount.value.isGreaterThan(2500)){
+                        CustomSnackBar.error(Strings.tipsLimit);
+                        return;
+                      }
                       controller.wishSaveProcess();
                     },
-                    title: 'Update/Save'),
+                    title: Strings.updateAndSave),
               ),
             ],
           ),
           const SizedBox(height: 30),
-          const Text(
-            'Activate',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          TitleHeading3Widget(
+            text: Strings.activate,
+              fontWeight: FontWeight.bold,
           ),
           const SizedBox(height: 10),
           Row(
@@ -90,14 +96,12 @@ class WishRequestState extends State<WishRequest> {
                   ),
                   child: Row(
                     children: [
-                      Text(
-                        'Yes',
-                        style: TextStyle(
-                          color: controller.wishIsActivated.value
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      TitleHeading4Widget(
+                        text: Strings.yes,
+                        color: controller.wishIsActivated.value
+                            ? Colors.white
+                            : Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                       if (controller.wishIsActivated.value)
                         const Icon(Icons.check, color: Colors.white, size: 16),
@@ -120,14 +124,12 @@ class WishRequestState extends State<WishRequest> {
                         : Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Text(
-                    'No',
-                    style: TextStyle(
-                      color: !controller.wishIsActivated.value
-                          ? Colors.white
-                          : Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: TitleHeading4Widget(
+                    text: Strings.no,
+                    color: !controller.wishIsActivated.value
+                        ? Colors.white
+                        : Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -142,7 +144,7 @@ class WishRequestState extends State<WishRequest> {
                 Get.to(TalentProfile(showBTM: false,));
                 debugPrint("Preview Profile clicked");
               },
-              title: 'Preview Profile',
+              title: Strings.previewProfile,
             ),
           ),
         ],

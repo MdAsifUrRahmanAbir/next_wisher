@@ -118,7 +118,8 @@ class HistoryScreenState extends State<HistoryScreen> {
                     visible: controller.selectedIndex.value == index,
                     child: const Column(
                       children: [],
-                    )))
+                    ))),
+                Divider(),
               ],
             );
           },
@@ -178,17 +179,16 @@ class InfoRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: mainStart,
       children: [
-        Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+        TitleHeading4Widget(
+          text: label,
+            fontWeight: FontWeight.bold
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: Text(
-            value,
+          child: TitleHeading4Widget(
+            text: value,
             textAlign: TextAlign.end,
-            style: const TextStyle(color: Colors.black87),
-            overflow: TextOverflow.ellipsis,
+            textOverflow: TextOverflow.ellipsis,
           ),
         ),
       ],

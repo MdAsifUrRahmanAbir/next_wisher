@@ -359,13 +359,11 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
             children: languages.map((language) {
               bool isSelected = selectedLanguages.contains(language);
               return FilterChip(
-                label: Text(
-                  language,
-                  style: TextStyle(
-                    color: isSelected ? Colors.green : Colors.black,
-                    fontWeight:
-                        isSelected ? FontWeight.bold : FontWeight.normal,
-                  ),
+                label: TitleHeading4Widget(
+                  text: language,
+                  color: isSelected ? Colors.green : null,
+                  fontWeight:
+                  isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
                 selected: isSelected,
                 onSelected: (selected) {

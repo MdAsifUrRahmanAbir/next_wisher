@@ -31,7 +31,7 @@ class MessagePage extends StatelessWidget {
                     text: Strings.inbox,
                     color: controller.selectedType.value == 1
                         ? Theme.of(context).primaryColor
-                        : Colors.black,
+                        : null,
                     opacity: controller.selectedType.value == 1 ? 1 : .5,
                   ),
                 ),
@@ -44,7 +44,7 @@ class MessagePage extends StatelessWidget {
                     text: Strings.sent,
                     color: controller.selectedType.value == 2
                         ? Theme.of(context).primaryColor
-                        : Colors.black,
+                        : null,
                     opacity: controller.selectedType.value == 2 ? 1 : .5,
                   ),
                 ),

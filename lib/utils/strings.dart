@@ -206,6 +206,17 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String accepted  = "Accepted";
   static String declined  = "Declined";
 
+  static String tipsLimit  = "Tips Limit is €10 ~ €500";
+  static String wishLimit  = "Tips Limit is €30 ~ €2500";
+  static String previewProfile  = "Preview Profile";
+  static String no  = "No";
+  static String yes  = "Yes";
+  static String activate  = "Activate";
+  static String updateAndSave  = "Update/Save";
+  static String wishTitle  = "Please setup an amount to charge for Wish Request";
+  static String wishRequest  = "Wish Request";
+  static String themeChange  = "Theme Change";
+  static String tipsTitle  = "Please activate the Tips option to receive tips from your fans or followers";
   static String gui  = "";
 
 

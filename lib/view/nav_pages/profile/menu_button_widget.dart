@@ -14,13 +14,10 @@ class MenuButton extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       dense: true,
-      title: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 18.0,
-          fontWeight: FontWeight.bold,
-        ),
+      title: TitleHeading3Widget(
+        text: title,
+        fontSize: 18.0,
+        fontWeight: FontWeight.bold,
       ),
     );
   }

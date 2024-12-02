@@ -4,6 +4,7 @@ import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../controller/bottom_nav/dashboard_controller.dart';
 import '../../controller/profile/wish_and_tips_controller.dart';
+import '../../utils/strings.dart';
 import '../talent_profile/talent_profile.dart';
 
 class TipsScreen extends StatefulWidget {
@@ -20,11 +21,8 @@ class TipsScreenState extends State<TipsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tips'),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+      appBar: PrimaryAppBar(
+        title: Strings.tip,
       ),
       body: Obx(() =>
           controller.isLoading ? const CustomLoadingAPI() : _bodyWidget()),
@@ -37,14 +35,13 @@ class TipsScreenState extends State<TipsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Tips',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          TitleHeading3Widget(
+            text: Strings.tip,
+              fontSize: 20, fontWeight: FontWeight.bold
           ),
           const SizedBox(height: 10),
-          const Text(
-            'Please activate the Tips option to receive tips from your fans or followers',
-            style: TextStyle(fontSize: 16, color: Colors.black87),
+           TitleHeading4Widget(
+            text: Strings.tipsTitle,
           ),
           const SizedBox(height: 30),
           const Text(

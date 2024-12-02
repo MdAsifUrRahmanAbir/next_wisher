@@ -1,3 +1,5 @@
+import 'package:next_wisher/utils/theme.dart';
+
 import '../../controller/bottom_nav/bottom_nav_controller.dart';
 import '../../utils/basic_widget_imports.dart';
 import 'bottom_nav_item.dart';
@@ -27,6 +29,7 @@ class CustomBottomNavBar extends StatefulWidget {
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   String _selectedLanguage = "English"; // Default language
+  RxBool isDarkMood = false.obs;
 
   void _showLanguageBottomSheet() {
     showModalBottomSheet(
@@ -47,10 +50,11 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
+    isDarkMood.value = Themes().theme == ThemeMode.dark;
+    return  BottomAppBar(
       height: 60,
       elevation: 10,
-      color: CustomColor.whiteColor,
+      // color: isDarkMood.value ? Colors.black : CustomColor.whiteColor,
       padding: EdgeInsets.zero,
       child: Column(
         children: [
@@ -58,7 +62,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           verticalSpace(5),
           Container(
             decoration: BoxDecoration(
-                color: Colors.white,
+                // color: isDarkMood.value ? Colors.black : CustomColor.whiteColor,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(Dimensions.radius),
                 )),

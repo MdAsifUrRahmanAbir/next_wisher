@@ -67,6 +67,13 @@ class ProfilePage extends StatelessWidget {
             ),
             _talentSitesWidget(),
             const Divider(height: 1, thickness: 1),
+            MenuButton(
+              title: Strings.themeChange,
+              onTap: (){
+                Get.toNamed(Routes.themeChangeScreen);
+              },
+            ),
+            const Divider(height: 1, thickness: 1),
             Obx(() => Get.find<BottomNavController>().isLogoutLoading
                 ? const CustomLoadingAPI()
                 : MenuButton(

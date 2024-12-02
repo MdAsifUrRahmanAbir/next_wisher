@@ -1,4 +1,5 @@
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
+import 'package:next_wisher/backend/utils/custom_snackbar.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../backend/services/wish/payment_info_model.dart';
@@ -192,10 +193,22 @@ class PayScreen extends StatelessWidget {
                                 (model.commission / 100))).toStringAsFixed(2)}",
                     backgroundColor: CustomColor.secondaryLightColor,
                     onPressed: () {
+                      debugPrint(">> $isBook");
+                      debugPrint(">> ${controller.tipsValue.value}");
+                      debugPrint(">> ${((!isBook) && (controller.tipsValue.value.isGreaterThan(500) || controller.tipsValue.value.isLowerThan(10)))}");
+                      debugPrint(">> ${(controller.tipsValue.value.isGreaterThan(500) || controller.tipsValue.value.isLowerThan(10))}");
+
+                      if((!isBook) && (controller.tipsValue.value.isGreaterThan(500) || controller.tipsValue.value.isLowerThan(10))){
+                        debugPrint("00000");
+                        CustomSnackBar.error(Strings.tipsLimit);
+                        return;
+                      }
+                      debugPrint("1111111");
                       if (controller.paymentType.value == "credit-card") {
                         controller.payment(
                             data.id.toString(), isBook ? "wish" : "tips");
-                      } else {
+                      }
+                      else {
                         showConversionBottomSheet(
                           Get.context!,
                           currencyCode: controller.selectedPawapayCountry.value

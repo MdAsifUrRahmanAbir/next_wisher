@@ -51,5 +51,14 @@
     <string>We need access to your camera for video verification.</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>We need access to your microphone for video verification.</string>
+
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <false/>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
+
   </dict>
 </plist>
