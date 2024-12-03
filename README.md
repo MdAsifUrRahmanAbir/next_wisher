@@ -15,6 +15,4 @@ bokkor3279789976@gmail.com
 12345678
 
 
-Next Task
-1. Language, 
-2. Push Notification
+Push Notification

@@ -172,7 +172,7 @@ class TalentProfile extends StatelessWidget {
             ],
           ),
           Card(
-            color: CustomColor.whiteColor,
+            color: Get.isDarkMode ? Colors.black: CustomColor.whiteColor,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(

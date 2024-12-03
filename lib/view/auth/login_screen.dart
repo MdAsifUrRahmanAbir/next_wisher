@@ -79,7 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               _rememberMeWidget(context),
               verticalSpace(Dimensions.marginSizeVertical),
-               Obx(() => controller.isLoading ? const CustomLoadingAPI(): PrimaryButton(title: Strings.loginNow, onPressed: controller.login)),
+               Obx(() => controller.isLoading ? const CustomLoadingAPI(): PrimaryButton(title: Strings.loginNow, onPressed: (){
+                 controller.login(_deviceToken ?? "");
+               })),
               verticalSpace(Dimensions.marginSizeVertical),
               _richTextWidget()
             ],

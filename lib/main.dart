@@ -1,11 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'firebase_options.dart';
+import 'helper/local_notification_helper.dart';
+import 'helper/notification_helper.dart';
 import 'language/language_controller.dart';
 import 'routes/pages.dart';
 import 'routes/routes.dart';
@@ -14,9 +17,9 @@ import 'utils/theme.dart';
 
 
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  debugPrint("Handling a background message: ${message.messageId}");
-}
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   debugPrint("Handling a background message: ${message.messageId}");
+// }
 
 void main() async{
 
@@ -28,8 +31,16 @@ void main() async{
     DeviceOrientation.portraitUp,
   ]);
 
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  NotificationHelper.initialization();
+  NotificationHelper.requestPermission();
+  NotificationHelper.getBackgroundNotification();
+  NotificationHelper.localNotification();
+  NotificationService.init();
 
   runApp(const MyApp());
 }

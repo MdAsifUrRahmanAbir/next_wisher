@@ -23,9 +23,9 @@ class LoginController extends GetxController with AuthService {
     super.dispose();
   }
 
-  void login() async {
+  void login(String deviceToken) async {
     if (formKey.currentState!.validate()) {
-      await loginProcess();
+      await loginProcess(deviceToken);
     }
   }
 
@@ -51,12 +51,13 @@ class LoginController extends GetxController with AuthService {
   LoginModel get loginModel => _loginModel;
 
   ///* Login in process
-  Future<LoginModel> loginProcess() async {
+  Future<LoginModel> loginProcess(String deviceToken) async {
     _isLoading.value = true;
     update();
     Map<String, dynamic> inputBody = {
       'email': emailController.text,
-      'password': passwordController.text
+      'password': passwordController.text,
+      'fcm_token': deviceToken
     };
     await loginProcessApi(body: inputBody).then((value) {
       _loginModel = value!;

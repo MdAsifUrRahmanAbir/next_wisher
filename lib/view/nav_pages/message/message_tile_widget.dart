@@ -90,6 +90,7 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
         backgroundColor: Theme.of(context).primaryColor,
         child: TitleHeading2Widget(
           text: getInitials(widget.data.name),
+          textAlign: TextAlign.center,
           color: Colors.white,
         ),
       ),
@@ -100,16 +101,18 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
         fontWeight: FontWeight.bold,
       ),
       subtitle: TitleHeading5Widget(text: widget.data.instructions),
-      trailing: Column(
-        crossAxisAlignment: crossEnd,
-        children: [
-          TitleHeading5Widget(
-              text: DateFormat('dd-MM-yyyy').format(widget.data.createdAt)),
-          verticalSpace(Dimensions.paddingSizeVertical * .3),
-          TitleHeading5Widget(
-              text: widget.data.downloadStatus ? widget.data.settings: isNegative ? "00:00:00:00": "$days:$hours:$minutes:$seconds",
-              color: widget.data.downloadStatus ? Colors.green : Colors.red),
-        ],
+      trailing: FittedBox(
+        child: Column(
+          crossAxisAlignment: crossEnd,
+          children: [
+            TitleHeading5Widget(
+                text: DateFormat('dd-MM-yyyy').format(widget.data.createdAt), maxLines: 1,),
+            verticalSpace(Dimensions.paddingSizeVertical * .2),
+            TitleHeading5Widget(
+                text: widget.data.downloadStatus ? widget.data.settings: isNegative ? "00:00:00:00": "$days:$hours:$minutes:$seconds",
+                color: widget.data.downloadStatus ? Colors.green : Colors.red),
+          ],
+        ),
       ),
     );
   }
