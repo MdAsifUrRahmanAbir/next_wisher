@@ -15,4 +15,5 @@ bokkor3279789976@gmail.com
 12345678
 
 
-Push Notification
+after book redirect to msg,
+for tips, redirect to talent profile

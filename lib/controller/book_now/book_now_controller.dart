@@ -1,4 +1,5 @@
 import 'package:next_wisher/backend/utils/custom_snackbar.dart';
+import 'package:next_wisher/controller/bottom_nav/bottom_nav_controller.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../backend/services/wish/mobile_payment_model.dart';
@@ -116,8 +117,9 @@ class BookNowController extends GetxController with WishService {
         link: _stripePaymentModel.data.redirectUrl,
         onFinished: (url) {
           if(url.toString() == _stripePaymentModel.data.redirectionResponse.successUrl){
-            Get.offAllNamed(Routes.btmScreen);
-            CustomSnackBar.success(Strings.successfullyPaymentDone);
+            openDialog(type);
+            // Get.offAllNamed(Routes.btmScreen);
+            // CustomSnackBar.success(Strings.successfullyPaymentDone);
           }
         },
       ));
@@ -173,8 +175,9 @@ class BookNowController extends GetxController with WishService {
         link: _mobilePaymentModel.data.redirectUrl,
         onFinished: (url) {
           if(url.toString().contains("/success")){
-            Get.offAllNamed(Routes.btmScreen);
-            CustomSnackBar.success(Strings.successfullyPaymentDone);
+            openDialog(type);
+            // Get.offAllNamed(Routes.btmScreen);
+            // CustomSnackBar.success(Strings.successfullyPaymentDone);
           }
         },
       ));
@@ -190,4 +193,64 @@ class BookNowController extends GetxController with WishService {
   }
 
 
+
+
+
+  openDialog(String type){
+    showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          contentPadding: EdgeInsets.all(20),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                    size: 40,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      if(type == "tips"){
+                        Get.close(3);
+                      }else{
+                        Get.find<BottomNavController>().selectedIndex.value = 3;
+                        Get.offAllNamed(Routes.btmScreen, arguments: true);
+                      }
+                    },
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.red,
+                      size: 24,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Payment successful',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                type == "tips" ? Strings.successfullyPaymentDone : 'Your order has been placed. We\'ll send you an email with your order details.',
+                style: TextStyle(fontSize: 14, color: Colors.black54),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

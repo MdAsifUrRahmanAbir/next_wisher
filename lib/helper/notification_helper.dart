@@ -37,7 +37,7 @@ class NotificationHelper{
       sound: true,
     );
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      debugPrint('-----------Permission granted: ${settings.authorizationStatus}');
+      debugPrint('-----------Permission granted:n ');
     } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
       debugPrint(
           '-------------------User granted provisional permission: ${settings.authorizationStatus}');

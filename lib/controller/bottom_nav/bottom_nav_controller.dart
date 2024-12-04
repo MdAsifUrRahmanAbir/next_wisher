@@ -13,6 +13,8 @@ class BottomNavController extends GetxController with AuthService, wish.WishServ
   RxInt selectedIndex = 0.obs;
   RxBool isDark = false.obs;
 
+  bool? fromPayment = Get.arguments;
+
   void onItemTapped(int index) {
       selectedIndex.value = index;
   }
@@ -50,6 +52,10 @@ class BottomNavController extends GetxController with AuthService, wish.WishServ
 
   @override
   void onInit() {
+
+    if(fromPayment ?? false){
+      onItemTapped(3);
+    }
     mailCountProcess();
     super.onInit();
   }
