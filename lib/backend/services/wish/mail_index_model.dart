@@ -29,6 +29,8 @@ class Email {
   final int talentId;
   final String userName;
   final String name;
+  final String mailName;
+  final String talentName;
   final String role;
   final String attachment;
   final String from;
@@ -51,7 +53,9 @@ class Email {
     required this.userId,
     required this.talentId,
     required this.userName,
+    required this.mailName,
     required this.name,
+    required this.talentName,
     required this.role,
     required this.attachment,
     required this.from,
@@ -76,6 +80,8 @@ class Email {
     talentId: json["talent_id"],
     userName: json["user_name"] ?? "",
     name: json["name"] ?? "",
+    mailName: json["mail_name"] ?? "",
+    talentName: json["talent_name"] ?? "",
     role: json["role"],
     attachment: json["attachment"],
     from: json["from"] ?? "",

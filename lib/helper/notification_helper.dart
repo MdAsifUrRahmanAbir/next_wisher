@@ -1,6 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'local_notification_helper.dart';
 import 'notification_model.dart';
@@ -38,10 +37,13 @@ class NotificationHelper{
     );
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       debugPrint('-----------Permission granted:n ');
-    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+
+    }
+    else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
       debugPrint(
           '-------------------User granted provisional permission: ${settings.authorizationStatus}');
-    } else {
+    }
+    else {
       debugPrint(
           '-------------User declined or has not accepted permission: ${settings.authorizationStatus}');
     }
@@ -62,10 +64,10 @@ class NotificationHelper{
         body: message.notification?.body ?? "",
       );
 
-      Get.defaultDialog(
-          title: message.notification?.title ?? "",
-          content: Text(message.notification?.body ?? "")
-      );
+      // Get.defaultDialog(
+      //     title: message.notification?.title ?? "",
+      //     content: Text(message.notification?.body ?? "")
+      // );
 
     });
   }

@@ -30,7 +30,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             }, icon: Icon(Icons.home_filled, color: Theme.of(context).primaryColor,))
           ],
         ),
-        body: Stack(
+        body:  Stack(
           children: [
             InAppWebView(
               initialUrlRequest: URLRequest(url: WebUri(widget.link)),
@@ -38,16 +38,21 @@ class _WebViewScreenState extends State<WebViewScreen> {
               onLoadStart: (InAppWebViewController controller, Uri? url) {
                 setState(() {
                   isLoading = true;
+                  debugPrint("Load Start >> $url");
+                  debugPrint("Load Start >> $isLoading");
                 });
+                widget.onFinished!(url);
               },
               onLoadStop: (InAppWebViewController controller, Uri? url) {
-                widget.onFinished!(url);
                 setState(() {
                   isLoading = false;
+                  debugPrint("Load Stop >> $isLoading");
                 });
               },
             ),
-            Visibility(visible: isLoading, child: const CustomLoadingAPI())
+
+            isLoading ? CustomLoadingAPI(): SizedBox.shrink()
+            // Visibility(visible: isLoading, child: const CustomLoadingAPI())
           ],
         ));
   }

@@ -75,9 +75,6 @@ flutter:
   #   - images/a_dot_burr.jpeg
   assets:
     - assets/
-    - assets/appstore.png
     - assets/categories/
     - assets/country/
-    - assets/logo.png
-    - assets/playstore.png
-    - assets/welcome.png
+

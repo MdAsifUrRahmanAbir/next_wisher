@@ -1,4 +1,5 @@
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
+import 'package:next_wisher/backend/utils/custom_snackbar.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../backend/services/wish/payment_info_model.dart';
@@ -45,6 +46,9 @@ class BookNowScreen extends StatelessWidget {
 
                       groupValue: controller.selectedOption.value,
                       onChanged: (String? value) {
+                        controller.nameController.text = "";
+                        controller.fromController.text = "";
+                        controller.forController.text = "";
                         controller.selectedOption.value = value!;
                       },
                     ),
@@ -59,6 +63,10 @@ class BookNowScreen extends StatelessWidget {
                       value: "else",
                       groupValue: controller.selectedOption.value,
                       onChanged: (String? value) {
+                        controller.nameController.text = "";
+                        controller.fromController.text = "";
+                        controller.forController.text = "";
+
                         controller.selectedOption.value = value!;
                       },
                     ),
@@ -143,7 +151,12 @@ class BookNowScreen extends StatelessWidget {
                 title: Strings.continueToPayment,
                 backgroundColor: CustomColor.redColor    ,
                 onPressed: () {
-                  controller.pay();
+                  if(controller.selectedGender.value.isNotEmpty) {
+                    controller.pay();
+                  }
+                  else{
+                    CustomSnackBar.error("Please Select Gender First");
+                  }
                 }),
 
             verticalSpace(Dimensions.paddingSizeVertical * 1),

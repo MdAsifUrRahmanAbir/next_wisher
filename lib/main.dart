@@ -34,13 +34,13 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   NotificationHelper.initialization();
-  NotificationHelper.requestPermission();
-  NotificationHelper.getBackgroundNotification();
-  NotificationHelper.localNotification();
   NotificationService.init();
+
+  NotificationHelper.getBackgroundNotification();
+  debugPrint("MAIN >> 3");
+  NotificationHelper.localNotification();
 
   runApp(const MyApp());
 }

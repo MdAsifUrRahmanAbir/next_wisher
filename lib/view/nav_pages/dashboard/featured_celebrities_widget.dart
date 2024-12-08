@@ -1,3 +1,5 @@
+import 'package:next_wisher/backend/utils/no_data_widget.dart';
+
 import '../../../backend/services/dashboard/home_model.dart';
 import '../../../controller/bottom_nav/bottom_nav_controller.dart';
 import '../../../controller/bottom_nav/dashboard_controller.dart';
@@ -31,7 +33,7 @@ class FeaturedCelebritiesWidget extends StatelessWidget {
             // )
           ],
         ),
-        GridView.builder(
+        controller.talentList.isEmpty ? NoDataWidget(): GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.all(8),
           shrinkWrap: true,

@@ -207,7 +207,7 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String declined  = "Declined";
 
   static String tipsLimit  = "Tips Limit is €10 ~ €500";
-  static String wishLimit  = "Tips Limit is €30 ~ €2500";
+  static String wishLimit  = "Wish Limit is €30 ~ €2500";
   static String previewProfile  = "Preview Profile";
   static String no  = "No";
   static String yes  = "Yes";

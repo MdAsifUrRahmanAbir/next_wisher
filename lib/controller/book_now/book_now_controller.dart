@@ -6,10 +6,10 @@ import '../../backend/services/wish/mobile_payment_model.dart';
 import '../../backend/services/wish/payment_info_model.dart';
 import '../../backend/services/wish/stripe_payment_model.dart';
 import '../../backend/services/wish/wish_service.dart';
-import '../../routes/routes.dart';
 import '../../utils/strings.dart';
 import '../../view/book_now/pay_screen.dart';
 import '../../view/dynamic_webview_screen.dart';
+import '../bottom_nav/message_controller.dart';
 
 class BookNowController extends GetxController with WishService {
   final formKey = GlobalKey<FormState>();
@@ -20,7 +20,6 @@ class BookNowController extends GetxController with WishService {
 
   final tipsController = TextEditingController(text: "10");
   RxDouble tipsValue = 10.0.obs;
-
 
   final nameController = TextEditingController();
   final fromController = TextEditingController();
@@ -52,7 +51,8 @@ class BookNowController extends GetxController with WishService {
     await paymentInfoProcessApi(id.toString()).then((value) {
       _paymentInfoModel = value!;
       selectedOcasion = _paymentInfoModel.data.ocasions.first.obs;
-      selectedPawapayCountry = _paymentInfoModel.data.pawapayCountries.first.obs;
+      selectedPawapayCountry =
+          _paymentInfoModel.data.pawapayCountries.first.obs;
       _isLoading.value = false;
       update();
     }).catchError((onError) {
@@ -93,20 +93,20 @@ class BookNowController extends GetxController with WishService {
     Map<String, dynamic> inputBody = {
       'talent_id': id,
       'type': type,
-      'amount': type == "tips" ? tipsController.text : paymentInfoModel.data.earning.amount,
+      'amount': type == "tips"
+          ? tipsController.text
+          : paymentInfoModel.data.earning.amount,
     };
     if (type == "wish") {
-      inputBody.addAll(
-        {
-          'dedicated_to': selectedOption.value,
-          'occasion_id': selectedOcasion.value.id,
-          'name': nameController.text,
-          'from': fromController.text,
-          'to': forController.text,
-          'gender': selectedGender.value,
-          'instruction': instructionsController.text,
-        }
-      );
+      inputBody.addAll({
+        'dedicated_to': selectedOption.value,
+        'occasion_id': selectedOcasion.value.id,
+        'name': nameController.text,
+        'from': fromController.text,
+        'for': forController.text,
+        'gender': selectedGender.value,
+        'instructions': instructionsController.text,
+      });
     }
 
     await stripePaymentProcessApi(body: inputBody, idType: '/$id/$type')
@@ -115,11 +115,27 @@ class BookNowController extends GetxController with WishService {
       Get.to(WebViewScreen(
         appTitle: "",
         link: _stripePaymentModel.data.redirectUrl,
-        onFinished: (url) {
-          if(url.toString() == _stripePaymentModel.data.redirectionResponse.successUrl){
-            openDialog(type);
+        onFinished: (url) async {
+          if (url.toString() ==
+              _stripePaymentModel.data.redirectionResponse.successUrl) {
+            try {
+              if (type == "tips") {
+                Get.close(2);
+              }else{
+                Get.find<MessageController>().mailIndexProcess();
+                Get.find<MessageController>().selectedType.value = 2;
+                Get.close(4);
+                Get.find<BottomNavController>().selectedIndex.value = 3;
+              }
+            } finally {
+              openDialog(type, id);
+            }
+
             // Get.offAllNamed(Routes.btmScreen);
             // CustomSnackBar.success(Strings.successfullyPaymentDone);
+          }else if (url.toString().contains("/payment/stripe/cancel")) {
+            Get.close(2);
+            CustomSnackBar.error("Payment is not Done!");
           }
         },
       ));
@@ -133,20 +149,21 @@ class BookNowController extends GetxController with WishService {
     return _stripePaymentModel;
   }
 
-
   late MobilePaymentModel _mobilePaymentModel;
   MobilePaymentModel get mobilePaymentModel => _mobilePaymentModel;
 
-
   ///* MobilePayment in process
-  Future<MobilePaymentModel> mobilePaymentProcess(String id, String type) async {
+  Future<MobilePaymentModel> mobilePaymentProcess(
+      String id, String type) async {
     _isPaymentLoading.value = true;
     update();
 
     Map<String, dynamic> inputBody = {
       'talent_id': id,
       'type': type,
-      'amount': type == "tips" ? tipsController.text : paymentInfoModel.data.earning.amount,
+      'amount': type == "tips"
+          ? tipsController.text
+          : paymentInfoModel.data.earning.amount,
       'payment-type': "mobile-payment",
       'currency': "eur",
       'correspondent': selectedPawapayCountry.value.sim.first.correspondent,
@@ -154,30 +171,39 @@ class BookNowController extends GetxController with WishService {
       'country': selectedPawapayCountry.value.sim.first.country,
     };
     if (type == "wish") {
-      inputBody.addAll(
-          {
-            'dedicated_to': selectedOption.value,
-            'occasion_id': selectedOcasion.value.id,
-            'name': nameController.text,
-            'from': fromController.text,
-            'to': forController.text,
-            'gender': selectedGender.value,
-            'instruction': instructionsController.text,
-          }
-      );
+      inputBody.addAll({
+        'dedicated_to': selectedOption.value,
+        'occasion_id': selectedOcasion.value.id,
+        'name': nameController.text,
+        'from': fromController.text,
+        'for': forController.text,
+        'gender': selectedGender.value,
+        'instructions': instructionsController.text,
+      });
     }
 
-    await mobilePaymentProcessApi(body: inputBody,  idType: '/$id/$type').then((value) {
+    await mobilePaymentProcessApi(body: inputBody, idType: '/$id/$type')
+        .then((value) {
       _mobilePaymentModel = value!;
 
       Get.to(WebViewScreen(
         appTitle: "",
         link: _mobilePaymentModel.data.redirectUrl,
-        onFinished: (url) {
-          if(url.toString().contains("/success")){
-            openDialog(type);
-            // Get.offAllNamed(Routes.btmScreen);
-            // CustomSnackBar.success(Strings.successfullyPaymentDone);
+        onFinished: (url) async {
+          if (url.toString().contains("/success")) {
+            try {
+              if (type == "tips") {
+                Get.close(2);
+              }else{
+                Get.close(3);
+              }
+            } finally {
+              openDialog(type, id);
+            }
+          }
+          else if (url.toString().contains("cancel=true")) {
+            Get.close(2);
+            CustomSnackBar.error("Payment is not Done!");
           }
         },
       ));
@@ -192,15 +218,13 @@ class BookNowController extends GetxController with WishService {
     return _mobilePaymentModel;
   }
 
-
-
-
-
-  openDialog(String type){
+  openDialog(String type, String id) {
     showDialog(
       context: Get.context!,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          // backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -218,11 +242,15 @@ class BookNowController extends GetxController with WishService {
                   ),
                   InkWell(
                     onTap: () {
-                      if(type == "tips"){
-                        Get.close(3);
-                      }else{
-                        Get.find<BottomNavController>().selectedIndex.value = 3;
-                        Get.offAllNamed(Routes.btmScreen, arguments: true);
+                      Get.close(1);
+                      if (type == "tips") {
+
+                        Get.find<MessageController>().mailIndexProcess();
+                      } else {
+                        // Get.find<MessageController>().mailIndexProcess();
+                        // Get.find<MessageController>().selectedType.value = 2;
+                        // Get.find<BottomNavController>().selectedIndex.value = 3;
+                        // Get.offAllNamed(Routes.btmScreen, arguments: true);
                       }
                     },
                     child: Icon(
@@ -243,8 +271,10 @@ class BookNowController extends GetxController with WishService {
               ),
               SizedBox(height: 10),
               Text(
-                type == "tips" ? Strings.successfullyPaymentDone : 'Your order has been placed. We\'ll send you an email with your order details.',
-                style: TextStyle(fontSize: 14, color: Colors.black54),
+                type == "tips"
+                    ? Strings.successfullyPaymentDone
+                    : 'Your order has been placed. We\'ll send you an email with your order details.',
+                style: TextStyle(fontSize: 14),
                 textAlign: TextAlign.center,
               ),
             ],

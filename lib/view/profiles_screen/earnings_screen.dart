@@ -120,7 +120,6 @@ class EarningScreenState extends State<EarningScreen> {
                       controller.startDateSelect.value
                           ? controller.formatDate(controller.startDate.value)
                           : 'Select start date',
-                      style: const TextStyle(color: Colors.black),
                     ),
                     const Icon(Icons.calendar_today),
                   ],
@@ -146,7 +145,6 @@ class EarningScreenState extends State<EarningScreen> {
                       controller.endDateSelect.value
                           ? controller.formatDate(controller.endDate.value)
                           : 'Select end date',
-                      style: const TextStyle(color: Colors.black),
                     ),
                     const Icon(Icons.calendar_today),
                   ],

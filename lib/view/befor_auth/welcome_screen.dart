@@ -1,3 +1,4 @@
+import '../../helper/notification_helper.dart';
 import '../../language/language_controller.dart';
 import '../../routes/routes.dart';
 import '../../utils/basic_screen_imports.dart';
@@ -18,6 +19,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void initState() {
+    NotificationHelper.requestPermission();
+    debugPrint("MAIN >> 2");
     _selectedLanguage = languageSettingController.selectedLanguage.value;
     super.initState();
   }
@@ -105,6 +108,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         onPressed: () {
                           Get.toNamed(Routes.userTypeScreen);
                         }),
+
+                    verticalSpace(Dimensions.paddingSizeVertical * .5),
+
+                    // TextButton(onPressed: (){
+                    //   Get.offAllNamed(Routes.btmScreen);
+                    // }, child: TitleHeading3Widget(text: "Guest User")),
                   ],
                 ),
               )

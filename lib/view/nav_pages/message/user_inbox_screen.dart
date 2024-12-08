@@ -30,6 +30,8 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
     super.initState();
   }
 
+  RxBool isDownloaded = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +40,12 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
             child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            widget.data.fulfilledAt
+                ? TitleHeading3Widget(
+                    text: "Request Fulfilled".toUpperCase(),
+                    color: Colors.green)
+                : SizedBox.shrink(),
+            verticalSpace(Dimensions.paddingSizeVertical * .4),
             TitleHeading3Widget(
                 text: widget.data.userName,
                 color: Theme.of(context).primaryColor),
@@ -58,24 +66,27 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.paddingSizeHorizontal * .6,
                               vertical: Dimensions.paddingSizeVertical * .4),
-                          child: Obx(() => Get.find<MessageController>()
-                                  .isDownloadLoading
-                              ? const CustomLoadingAPI()
-                              : PrimaryButton(
-                                  title: Strings.download,
-                                  onPressed: () {
-                                    widget.downloadFile(
-                                        url: widget.data.attachment,
-                                        name: widget.data.attachment
-                                            .split("/")
-                                            .last,
-                                        onSuccess: () {
-                                          Get.find<MessageController>()
-                                              .downloadFileProcess(
-                                                  widget.data.attachment,
-                                                  widget.data.id.toString());
-                                        });
-                                  })),
+                          child: Obx(() =>
+                              Get.find<MessageController>().isDownloadLoading
+                                  ? const CustomLoadingAPI()
+                                  : PrimaryButton(
+                                      title: Strings.download,
+                                      onPressed: () {
+                                        widget.downloadFile(
+                                            url: widget.data.attachment,
+                                            name: widget.data.attachment
+                                                .split("/")
+                                                .last,
+                                            onSuccess: () {
+                                              Get.find<MessageController>()
+                                                  .downloadFileProcess(
+                                                      widget.data.attachment,
+                                                      widget.data.id.toString())
+                                                  .then((value) {
+                                                isDownloaded.value = true;
+                                              });
+                                            });
+                                      })),
                         )
                       ],
                     )
@@ -83,7 +94,8 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
                       controller: chewieController,
                     ),
             ),
-            widget.data.name.isNotEmpty
+            verticalSpace(10),
+            widget.data.mailName.isNotEmpty
                 ? Column(
                     children: [
                       _row(Strings.name, widget.data.name),
@@ -104,7 +116,7 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
             verticalSpace(Dimensions.paddingSizeVertical * .2),
             _row(Strings.message, widget.data.instructions),
             Visibility(
-              visible: widget.data.downloadStatus,
+              visible: widget.data.downloadStatus || isDownloaded.value,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.paddingSizeHorizontal * .6,
@@ -127,59 +139,67 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
                             .data
                             .ratingStatus
                         ? const SizedBox.shrink()
-                        : Column(
-                            crossAxisAlignment: crossStart,
-                            children: [
-                              verticalSpace(
-                                  Dimensions.paddingSizeVertical * .3),
-                              TitleHeading3Widget(text: Strings.yourRatting),
-                              verticalSpace(
-                                  Dimensions.paddingSizeVertical * .2),
-                              Obx(() => StarRating(
-                                mainAxisAlignment: mainStart,
-                                rating: Get.find<MessageController>().ratting.value,
-                                allowHalfRating: false,
-                                onRatingChanged: (double rating) {
-                                  Get.find<MessageController>().ratting.value = rating;
-                                },
-                              )),
-                              verticalSpace(
-                                  Dimensions.paddingSizeVertical * .5),
-                              PrimaryTextInputWidget(
-                                controller: Get.find<MessageController>()
-                                    .feedbackController,
-                                labelText: Strings.feedback,
-                                hint: Strings.writeYourFeedback,
-                                maxLine: 5,
-                              ),
-                              verticalSpace(
-                                  Dimensions.paddingSizeVertical * .3),
-                              Row(
-                                mainAxisAlignment: mainEnd,
-                                children: [
-                                  Obx(() => Get.find<MessageController>()
-                                          .isSubmitLoading
-                                      ? const CustomLoadingAPI()
-                                      : OutlinedButton(
-                                          onPressed: () {
-                                            Get.find<MessageController>()
-                                                .ratingSubmitProcess(
-                                                    talentId: widget
-                                                        .data.talentId
-                                                        .toString(),
-                                                    userId: widget.data.userId
-                                                        .toString(),
-                                                    earningId: widget
-                                                        .data.talentEarningId
-                                                        .toString());
-                                          },
-                                          child: TitleHeading3Widget(
-                                              text: Strings.send)))
-                                ],
-                              ),
-                              verticalSpace(
-                                  Dimensions.paddingSizeVertical * .3),
-                            ],
+                        : Visibility(
+                            visible: widget.data.downloadStatus ||
+                                isDownloaded.value,
+                            child: Column(
+                              crossAxisAlignment: crossStart,
+                              children: [
+                                verticalSpace(
+                                    Dimensions.paddingSizeVertical * .3),
+                                TitleHeading3Widget(text: Strings.yourRatting),
+                                verticalSpace(
+                                    Dimensions.paddingSizeVertical * .2),
+                                Obx(() => StarRating(
+                                      mainAxisAlignment: mainStart,
+                                      rating: Get.find<MessageController>()
+                                          .ratting
+                                          .value,
+                                      allowHalfRating: false,
+                                      onRatingChanged: (double rating) {
+                                        Get.find<MessageController>()
+                                            .ratting
+                                            .value = rating;
+                                      },
+                                    )),
+                                verticalSpace(
+                                    Dimensions.paddingSizeVertical * .5),
+                                PrimaryTextInputWidget(
+                                  controller: Get.find<MessageController>()
+                                      .feedbackController,
+                                  labelText: Strings.feedback,
+                                  hint: Strings.writeYourFeedback,
+                                  maxLine: 5,
+                                ),
+                                verticalSpace(
+                                    Dimensions.paddingSizeVertical * .3),
+                                Row(
+                                  mainAxisAlignment: mainEnd,
+                                  children: [
+                                    Obx(() => Get.find<MessageController>()
+                                            .isSubmitLoading
+                                        ? const CustomLoadingAPI()
+                                        : OutlinedButton(
+                                            onPressed: () {
+                                              Get.find<MessageController>()
+                                                  .ratingSubmitProcess(
+                                                      talentId: widget
+                                                          .data.talentId
+                                                          .toString(),
+                                                      userId: widget.data.userId
+                                                          .toString(),
+                                                      earningId: widget
+                                                          .data.talentEarningId
+                                                          .toString());
+                                            },
+                                            child: TitleHeading3Widget(
+                                                text: Strings.send)))
+                                  ],
+                                ),
+                                verticalSpace(
+                                    Dimensions.paddingSizeVertical * .3),
+                              ],
+                            ),
                           ))
                 : const SizedBox.shrink()
           ],

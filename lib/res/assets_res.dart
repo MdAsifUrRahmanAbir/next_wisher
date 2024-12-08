@@ -8,8 +8,4 @@ class AssetsRes {
 
   static const String PLUGIN_NAME = 'next_wisher';
   static const String PLUGIN_VERSION = '1.0.0+1';
-  static const String APPSTORE = 'assets/appstore.png';
-  static const String LOGO = 'assets/logo.png';
-  static const String PLAYSTORE = 'assets/playstore.png';
-  static const String WELCOME = 'assets/welcome.png';
 }

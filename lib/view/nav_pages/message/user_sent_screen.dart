@@ -39,7 +39,15 @@ class _UserSentScreenState extends State<UserSentScreen> {
             widget.data.name.isNotEmpty
                 ? Column(
                     children: [
-                      _row(Strings.name, widget.data.name),
+                      widget.data.from.isNotEmpty
+                          ? SizedBox.shrink()
+                          : _row(Strings.name, widget.data.mailName),
+                      widget.data.from.isEmpty
+                          ? SizedBox.shrink()
+                          : _row(Strings.from, widget.data.from),
+                      widget.data.from.isEmpty
+                          ? SizedBox.shrink()
+                          : _row(Strings.forText, widget.data.emailFor),
                       verticalSpace(Dimensions.paddingSizeVertical * .2),
                     ],
                   )
@@ -102,7 +110,8 @@ class _UserSentScreenState extends State<UserSentScreen> {
                                               isVideoFile(file!.path)) {
                                             Get.find<MessageController>()
                                                 .mailReplyProcess(
-                                                    widget.data.id.toString(), file!.path);
+                                                    widget.data.id.toString(),
+                                                    file!.path);
                                           } else {
                                             CustomSnackBar.error(
                                                 Strings.selectVideoFile);

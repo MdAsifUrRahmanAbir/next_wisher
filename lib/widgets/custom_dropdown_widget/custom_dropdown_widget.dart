@@ -110,9 +110,9 @@ class _CustomDropDownState<T extends DropdownModel>
             style: CustomStyle.darkHeading3TextStyle.copyWith(
               fontSize: Dimensions.headingTextSize3,
               fontWeight: FontWeight.w500,
-              color: widget.isCurrencyDropDown!
-                  ? CustomColor.whiteColor
-                  : CustomColor.primaryLightColor,
+              // color: widget.isCurrencyDropDown!
+              //     ? CustomColor.whiteColor
+              //     : CustomColor.primaryLightColor,
             ),
           ),
           value: _selectedItem,

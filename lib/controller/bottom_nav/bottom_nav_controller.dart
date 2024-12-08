@@ -8,15 +8,17 @@ import '../../backend/services/wish/wish_service.dart' as wish;
 import '../../view/nav_pages/dashboard/dashboard_page.dart';
 import '../../view/nav_pages/message/messages_page.dart';
 import '../../view/nav_pages/profile/profile_page.dart';
+import 'message_controller.dart';
 
-class BottomNavController extends GetxController with AuthService, wish.WishService{
+class BottomNavController extends GetxController
+    with AuthService, wish.WishService {
   RxInt selectedIndex = 0.obs;
   RxBool isDark = false.obs;
 
-  bool? fromPayment = Get.arguments;
+  dynamic argument = Get.arguments;
 
   void onItemTapped(int index) {
-      selectedIndex.value = index;
+    selectedIndex.value = index;
   }
 
   List body = [
@@ -35,10 +37,6 @@ class BottomNavController extends GetxController with AuthService, wish.WishServ
   //   "Profile"
   // ];
 
-
-
-
-
   // RxBool isFirst = true.obs;
   // Stream<MailCountModel> getDashboardDataStream() async* {
   //   while (true) {
@@ -49,24 +47,27 @@ class BottomNavController extends GetxController with AuthService, wish.WishServ
   //   }
   // }
 
-
   @override
   void onInit() {
-
-    if(fromPayment ?? false){
-      onItemTapped(3);
+    debugPrint(" >> ARGUMENTS : $argument");
+    debugPrint(argument.toString());
+    if (argument is bool) {
+      if(argument) {
+        onItemTapped(3);
+      }
+    } else if (argument is String) {
+      Get.find<MessageController>().mailSeenProcess(argument);
     }
     mailCountProcess();
     super.onInit();
   }
+
   /// ------------------------------------- >>
   final _isCountLoading = false.obs;
   bool get isCountLoading => _isCountLoading.value;
 
-
   late MailCountModel _mailCountModel;
   MailCountModel get mailCountModel => _mailCountModel;
-
 
   ///* Get MailCount in process
   Future<MailCountModel> mailCountProcess() async {
@@ -84,24 +85,18 @@ class BottomNavController extends GetxController with AuthService, wish.WishServ
     return _mailCountModel;
   }
 
-
-
-
   /// ------------------------------------- >>
   final _isLogoutLoading = false.obs;
   bool get isLogoutLoading => _isLogoutLoading.value;
 
-
   late CommonSuccessModel _logoutModel;
   CommonSuccessModel get logoutModel => _logoutModel;
-
 
   ///* Logout in process
   Future<CommonSuccessModel> logoutProcess() async {
     _isLogoutLoading.value = true;
     update();
-    Map<String, dynamic> inputBody = {
-    };
+    Map<String, dynamic> inputBody = {};
     await logoutProcessApi(body: inputBody).then((value) {
       _logoutModel = value!;
       LocalStorage.logout();
@@ -114,5 +109,4 @@ class BottomNavController extends GetxController with AuthService, wish.WishServ
     update();
     return _logoutModel;
   }
-
 }

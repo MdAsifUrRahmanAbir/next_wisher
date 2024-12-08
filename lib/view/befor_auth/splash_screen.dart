@@ -9,12 +9,19 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Image.asset(
-              Assets.splashImage,
-            fit: BoxFit.cover,
+          Column(
+            mainAxisAlignment: mainCenter,
+            children: [
+              Image.asset(
+                  Get.isDarkMode ? Assets.splashDark : Assets.splashLight,
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+              ),
+            ],
           ),
           Visibility(
             visible: Get.find<LanguageSettingController>().isLoading,

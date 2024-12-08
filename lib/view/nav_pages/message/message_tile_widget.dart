@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
 
 import '../../../backend/services/wish/mail_index_model.dart';
+import '../../../controller/bottom_nav/message_controller.dart';
 import '../../../utils/basic_screen_imports.dart';
 import '../../../widgets/text_labels/title_heading5_widget.dart';
 
@@ -31,7 +32,7 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
     targetDate = DateFormat("yyyy-MM-dd HH:mm:ss")
         .parse((widget.data.createdAt.add(const Duration(days: 5))).toString());
     // _calculateRemainingTime();
-    if(!widget.data.downloadStatus) {
+    if (!widget.data.downloadStatus) {
       _startTimer();
     }
   }
@@ -43,6 +44,7 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
       }
     });
   }
+
   bool isNegative = false;
   void _calculateRemainingTime() {
     setState(() {
@@ -56,7 +58,7 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
 
   @override
   void dispose() {
-    if(!widget.data.downloadStatus) {
+    if (!widget.data.downloadStatus) {
       _timer.cancel();
     }
     super.dispose();
@@ -89,7 +91,13 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
       leading: CircleAvatar(
         backgroundColor: Theme.of(context).primaryColor,
         child: TitleHeading2Widget(
-          text: getInitials(widget.data.name),
+          text: getInitials(!LocalStorage.isUser()
+              ? (Get.find<MessageController>().selectedType.value == 1)
+                  ? widget.data.name
+                  : widget.data.talentName
+              : (Get.find<MessageController>().selectedType.value == 2)
+                  ? widget.data.name
+                  : widget.data.talentName),
           textAlign: TextAlign.center,
           color: Colors.white,
         ),
@@ -97,7 +105,13 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
       onTap: widget.onTap,
       dense: true,
       title: TitleHeading4Widget(
-        text: widget.data.name,
+        text: !LocalStorage.isUser()
+            ? (Get.find<MessageController>().selectedType.value == 1)
+                ? widget.data.name
+                : widget.data.talentName
+            : (Get.find<MessageController>().selectedType.value == 2)
+                ? widget.data.name
+                : widget.data.talentName,
         fontWeight: FontWeight.bold,
       ),
       subtitle: TitleHeading5Widget(text: widget.data.instructions),
@@ -106,10 +120,16 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
           crossAxisAlignment: crossEnd,
           children: [
             TitleHeading5Widget(
-                text: DateFormat('dd-MM-yyyy').format(widget.data.createdAt), maxLines: 1,),
+              text: DateFormat('dd-MM-yyyy').format(widget.data.createdAt),
+              maxLines: 1,
+            ),
             verticalSpace(Dimensions.paddingSizeVertical * .2),
             TitleHeading5Widget(
-                text: widget.data.downloadStatus ? widget.data.settings: isNegative ? "00:00:00:00": "$days:$hours:$minutes:$seconds",
+                text: widget.data.downloadStatus
+                    ? widget.data.settings
+                    : isNegative
+                        ? "00:00:00:00"
+                        : "$days:$hours:$minutes:$seconds",
                 color: widget.data.downloadStatus ? Colors.green : Colors.red),
           ],
         ),
