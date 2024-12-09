@@ -65,7 +65,7 @@ class _UserSentScreenState extends State<UserSentScreen> {
             _row(Strings.instruction, widget.data.instructions),
             verticalSpace(Dimensions.paddingSizeVertical * .8),
             Visibility(
-                visible: !LocalStorage.isUser(),
+                visible: (!LocalStorage.isUser() && !widget.data.downloadStatus),
                 child: Column(
                   crossAxisAlignment: crossStart,
                   children: [

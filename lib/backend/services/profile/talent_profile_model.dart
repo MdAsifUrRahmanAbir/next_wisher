@@ -116,6 +116,7 @@ class UserInfo {
   final String verificationVideo;
   final String videoPath;
   final String bio;
+  final String supportedLanguages;
 
   UserInfo({
     required this.id,
@@ -133,6 +134,7 @@ class UserInfo {
     required this.verificationVideo,
     required this.videoPath,
     required this.bio,
+    required this.supportedLanguages,
   });
 
   factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
@@ -151,5 +153,6 @@ class UserInfo {
     verificationVideo: json["verification_video"],
     videoPath: json["video_path"] ?? "",
     bio: json["bio"],
+    supportedLanguages: json["supported_languages"] ?? "[]",
   );
 }

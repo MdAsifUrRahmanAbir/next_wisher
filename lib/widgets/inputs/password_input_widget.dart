@@ -9,12 +9,13 @@ class PasswordInputWidget extends StatefulWidget {
     required this.hint,
     this.keyboardType,
     this.readOnly = false,
+    this.error = "",
     this.focusedBorderWidth = 1.2,
     this.enabledBorderWidth = 1,
     this.color = Colors.transparent, required this.labelText,
   });
   final TextEditingController controller;
-  final String hint, labelText;
+  final String hint, labelText, error;
   final TextInputType? keyboardType;
   final bool? readOnly;
   final Color? color;
@@ -47,7 +48,7 @@ class _PasswordInputWidgetState extends State<PasswordInputWidget> {
           keyboardType: widget.keyboardType,
           validator: (String? value) {
             if (value!.isEmpty) {
-              return languageSettingController.getTranslation(Strings.pleaseFillOutTheField);
+              return languageSettingController.getTranslation(widget.error.isNotEmpty ? widget.error: Strings.pleaseFillOutTheField);
             } else {
               return null;
             }

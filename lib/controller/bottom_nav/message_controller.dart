@@ -5,6 +5,7 @@ import '../../backend/local_storage/local_storage.dart';
 import '../../backend/services/wish/mail_index_model.dart';
 import '../../backend/services/wish/ratting_check_model.dart';
 import '../../backend/services/wish/wish_service.dart';
+import '../../routes/routes.dart';
 import '../../utils/basic_screen_imports.dart';
 import 'bottom_nav_controller.dart';
 
@@ -107,12 +108,15 @@ class MessageController extends GetxController with WishService, DownloadFile {
   final _isReplyLoading = false.obs;
   bool get isReplyLoading => _isReplyLoading.value;
 
+  RxBool isReplied = false.obs;
+
   late CommonSuccessModel _mailReplyModel;
   CommonSuccessModel get mailReplyModel => _mailReplyModel;
 
   ///* MailReply in process
   Future<CommonSuccessModel> mailReplyProcess(String id, String filePath) async {
     _isReplyLoading.value = true;
+    isReplied.value = false;
     update();
     Map<String, String> inputBody = {
       'mail_id': id,
@@ -121,6 +125,7 @@ class MessageController extends GetxController with WishService, DownloadFile {
 
     await mailReplyProcessApi(body: inputBody, filePath: filePath).then((value) {
       _mailReplyModel = value!;
+      Get.offAllNamed(Routes.btmScreen);
       _isReplyLoading.value = false;
       update();
     }).catchError((onError) {

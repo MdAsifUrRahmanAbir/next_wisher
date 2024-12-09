@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:next_wisher/backend/model/common/common_success_model.dart';
 
 import '../../backend/services/profile/profile_service.dart';
+import '../../routes/routes.dart';
 import '../../utils/basic_screen_imports.dart';
 import 'profile_controller.dart';
 
 class ProfileSetupController extends GetxController with ProfileService {
+
+  RxList<String> languages = ['English', 'Spanish', 'French', 'Portuguese'].obs;
+  RxList<String> selectedLanguages = <String>[].obs;
 
 
   final bioController = TextEditingController(text: Get.find<ProfileController>()
@@ -12,6 +18,27 @@ class ProfileSetupController extends GetxController with ProfileService {
       .data
       .userInfo
       .bio);
+
+  @override
+  void onInit() {
+    // add supported language
+    selectedLanguages.value = [...castToList(Get.find<ProfileController>()
+        .talentProfileModelModel
+        .data
+        .userInfo.supportedLanguages)];
+
+    super.onInit();
+  }
+
+  castToList(String list){
+    // Convert single quotes to double quotes for JSON compatibility
+    String value = list.replaceAll("'", '"');
+
+    // Decode the JSON string into a list
+    return jsonDecode(value).cast<String>();
+  }
+
+
   final profileController = Get.find<ProfileController>();
 
 
@@ -33,6 +60,30 @@ class ProfileSetupController extends GetxController with ProfileService {
     };
     await talentSetupProcessApi(body: inputBody).then((value) {
       _talentSetupModel = value!;
+      _isLoading.value = false;
+      update();
+    }).catchError((onError) {
+      log.e(onError);
+    });
+    _isLoading.value = false;
+    update();
+    return _talentSetupModel;
+  }
+
+  /// Supported Language
+
+  ///* TalentSetup in process
+  Future<CommonSuccessModel> talentSupportedLanguageProcess() async {
+    _isLoading.value = true;
+    update();
+    Map<String, dynamic> inputBody = {
+      'supported_languages': selectedLanguages,
+    };
+    await supportedLanguageProcessApi(body: inputBody).then((value) {
+      _talentSetupModel = value!;
+
+      Get.offAllNamed(Routes.btmScreen);
+
       _isLoading.value = false;
       update();
     }).catchError((onError) {

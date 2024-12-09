@@ -47,6 +47,7 @@ class ApiEndpoint {
   static String talentSetupImageURL = '/talent/profile-setup-image'.addBaseURl();
   static String talentSetupVideoURL = '/talent/profile-setup-video'.addBaseURl();
   static String talentSetupURL = '/talent/profile-setup'.addBaseURl();
+  static String languageSupportURL = '/talent/supported-languages'.addBaseURl();
 
   ///-> Talent Wish & Tips Request Set Up
   static String talentWishRequestURL = '/talent/wish-request'.addBaseURl();

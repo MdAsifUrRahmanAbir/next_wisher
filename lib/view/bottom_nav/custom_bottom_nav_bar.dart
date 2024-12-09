@@ -112,18 +112,23 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                         isSelected: widget.selectedIndex == 3,
                         onTap: () => widget.onItemTapped(3),
                       )
-                    : badges.Badge(
-                        position: badges.BadgePosition.topEnd(top: -12, end: 1),
-                        badgeContent: TitleHeading4Widget(
-                          text: widget.controller.mailCountModel.data.mailCount
-                              .toString(),
-                          color: CustomColor.whiteColor,
-                        ),
-                        child: BottomNavItem(
-                          isMain: widget.isMain,
-                          icon: Icons.mail_outline,
-                          isSelected: widget.selectedIndex == 3,
-                          onTap: () => widget.onItemTapped(3),
+                    : InkWell(
+                        onTap: () => widget.onItemTapped(3),
+                        child: badges.Badge(
+                          position:
+                              badges.BadgePosition.topEnd(top: -12, end: 1),
+                          badgeContent: TitleHeading4Widget(
+                            text: widget
+                                .controller.mailCountModel.data.mailCount
+                                .toString(),
+                            color: CustomColor.whiteColor,
+                          ),
+                          child: BottomNavItem(
+                            isMain: widget.isMain,
+                            icon: Icons.mail_outline,
+                            isSelected: widget.selectedIndex == 3,
+                            onTap: () => widget.onItemTapped(3),
+                          ),
                         ),
                       )),
                 BottomNavItem(

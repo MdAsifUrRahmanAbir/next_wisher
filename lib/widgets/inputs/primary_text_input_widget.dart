@@ -4,7 +4,7 @@ import '../../utils/strings.dart';
 
 class PrimaryTextInputWidget extends StatelessWidget {
   final TextEditingController controller;
-  final String labelText, optional, hint;
+  final String labelText, optional, hint, error;
   final TextInputType? keyboardType;
   final bool? readOnly;
   final Color? color;
@@ -24,6 +24,7 @@ class PrimaryTextInputWidget extends StatelessWidget {
     this.focusedBorderWidth = 1.2,
     this.enabledBorderWidth = 1,
     this.maxLine = 1,
+    this.error = "",
     this.color = Colors.transparent,
     this.suffixIcon,
     this.onTap,
@@ -68,7 +69,7 @@ class PrimaryTextInputWidget extends StatelessWidget {
           keyboardType: keyboardType,
           validator: (String? value) {
             if (value!.isEmpty && optional == "") {
-              return languageSettingController.getTranslation(Strings.pleaseFillOutTheField);
+              return languageSettingController.getTranslation(error.isNotEmpty ? error: Strings.pleaseFillOutTheField);
             } else {
               return null;
             }

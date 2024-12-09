@@ -6,7 +6,6 @@ import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import '../../backend/services/profile/talent_profile_model.dart';
 import '../../controller/profile/profile_controller.dart';
 import '../../controller/profile/profile_setup_controller.dart';
-import '../../routes/routes.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
@@ -267,7 +266,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                   ),
                 ),
                 verticalSpace(Dimensions.paddingSizeVertical * .9),
-                controller.uploadVideo.value
+                !controller.uploadVideo.value
                     ? PrimaryButton(
                         title: Strings.update,
                         onPressed: () {
@@ -342,8 +341,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   }
 
   _buildStep4() {
-    List<String> languages = ['English', 'Spanish', 'French', 'Portuguese'];
-    List<String> selectedLanguages = [];
+
 
     return Center(
       child: Column(
@@ -356,37 +354,38 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
           const SizedBox(height: 20),
           Wrap(
             spacing: 8.0,
-            children: languages.map((language) {
-              bool isSelected = selectedLanguages.contains(language);
-              return FilterChip(
+            children: controller.languages.map((language) {
+              return Obx(() => FilterChip(
                 label: TitleHeading4Widget(
                   text: language,
-                  color: isSelected ? Colors.green : null,
+                  color: controller.selectedLanguages.toString().contains(language) ? Colors.green : null,
                   fontWeight:
-                  isSelected ? FontWeight.bold : FontWeight.normal,
+                  controller.selectedLanguages.toString().contains(language) ? FontWeight.bold : FontWeight.normal,
                 ),
-                selected: isSelected,
+                selected: controller.selectedLanguages.toString().contains(language),
                 onSelected: (selected) {
                   setState(() {
                     if (selected) {
-                      selectedLanguages.add(language);
+                      if(!controller.selectedLanguages.toString().contains(language)) {
+                        controller.selectedLanguages.add(language);
+                      }
                     } else {
-                      selectedLanguages.remove(language);
+                      controller.selectedLanguages.remove(language);
                     }
                     debugPrint(language);
                     debugPrint(selected.toString());
-                    debugPrint(isSelected.toString());
+                    debugPrint(controller.selectedLanguages.toString().contains(language).toString());
                   });
                 },
-              );
+              ));
             }).toList(),
           ),
           verticalSpace(Dimensions.marginBetweenInputBox),
           PrimaryButton(
               title: Strings.update,
               onPressed: () {
-                Get.offAllNamed(Routes.btmScreen);
-                // controller.talentSetupProcess();
+
+                controller.talentSupportedLanguageProcess();
               })
         ],
       ),

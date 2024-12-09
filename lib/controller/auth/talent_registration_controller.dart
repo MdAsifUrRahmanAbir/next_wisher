@@ -27,19 +27,34 @@ class TalentRegistrationController extends GetxController with AuthService{
 
   void register() async {
     if (formKey.currentState!.validate()) {
-      if(passwordController.text == confirmPasswordController.text) {
-        if(isChecked.value) {
-          if(filePath.isNotEmpty) {
-            await registerProcess();
-          }else{
-            CustomSnackBar.error("Select a video.");
+    if(!firstCountry.value) {
+      if( !firstCategory.value){
+        if(!firstSubcategory.value) {
+          if (passwordController.text == confirmPasswordController.text) {
+            if (isChecked.value) {
+              if (filePath.isNotEmpty) {
+                await registerProcess();
+              } else {
+                CustomSnackBar.error("Select a video.");
+              }
+            } else {
+              CustomSnackBar.error("Agree with privacy policy.");
+            }
+          }
+          else {
+            CustomSnackBar.error("The password confirmation does not match.");
           }
         }else{
-          CustomSnackBar.error("Agree with privacy policy.");
+          CustomSnackBar.error("Category cannot be empty");
         }
+
       }else{
-        CustomSnackBar.error("The password confirmation does not match.");
+        CustomSnackBar.error("Sub category cannot be empty");
       }
+
+    }else{
+      CustomSnackBar.error("Country cannot be empty");
+    }
     }
   }
 

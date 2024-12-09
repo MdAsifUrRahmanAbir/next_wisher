@@ -42,6 +42,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                 controller: controller.nameController,
                 labelText: Strings.name,
                 hint: "",
+                error: "Username cannot be empty",
                 // hint: Strings.enterName,
               ),
               verticalSpace(Dimensions.marginBetweenInputBox),
@@ -49,6 +50,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                 controller: controller.emailController,
                 // hint: Strings.enterEmail,
                 hint: "",
+                error: "Email cannot be empty",
                 labelText: Strings.email,
               ),
               verticalSpace(Dimensions.marginBetweenInputBox),
@@ -101,7 +103,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                 controller: controller.linkController,
                 // hint: Strings.enterSocialLink,
                 hint: "",
-
+                error: "Link cannot be empty",
                 labelText: Strings.socialLink,
               ),
               TitleHeading5Widget(
@@ -117,12 +119,14 @@ class TalentRegistrationScreen extends StatelessWidget {
               PasswordInputWidget(
                 controller: controller.passwordController,
                 hint: "",
+                error: "The password field is required.",
                 labelText: Strings.password,
               ),
               verticalSpace(Dimensions.marginBetweenInputBox),
               PasswordInputWidget(
                 controller: controller.confirmPasswordController,
                 hint: "",
+                error: "The confirm password field is required.",
                 labelText: Strings.confirmPassword,
               ),
               _checkBoxWidget(context),

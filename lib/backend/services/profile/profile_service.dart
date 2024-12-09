@@ -147,6 +147,30 @@ mixin ProfileService {
     return null;
   }
 
+
+  ///* TalentSetup api services
+  Future<CommonSuccessModel?> supportedLanguageProcessApi(
+      {required Map<String, dynamic> body}) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: false).post(
+        ApiEndpoint.languageSupportURL,
+        body,
+      );
+      if (mapResponse != null) {
+        CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
+        CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(
+          ':ladybug::ladybug::ladybug: err from TalentSetup api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
   ///* TalentImageSetup api services
   Future<CommonSuccessModel?> talentFileSetupProcessApi({
     required String endPoint,

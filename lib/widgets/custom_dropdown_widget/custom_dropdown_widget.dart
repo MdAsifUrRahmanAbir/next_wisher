@@ -107,17 +107,14 @@ class _CustomDropDownState<T extends DropdownModel>
         child: DropdownButton2<T>(
           hint: Text(
             widget.hint.isEmpty ? widget.title : widget.hint,
-            style: CustomStyle.darkHeading3TextStyle.copyWith(
+            style: TextStyle(
               fontSize: Dimensions.headingTextSize3,
               fontWeight: FontWeight.w500,
-              // color: widget.isCurrencyDropDown!
-              //     ? CustomColor.whiteColor
-              //     : CustomColor.primaryLightColor,
             ),
           ),
           value: _selectedItem,
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
+            // color: Theme.of(context).primaryColor,
             fontSize: Dimensions.headingTextSize3,
             fontWeight: FontWeight.w500,
           ),
@@ -136,7 +133,7 @@ class _CustomDropDownState<T extends DropdownModel>
           dropdownStyleData: DropdownStyleData(
             maxHeight: MediaQuery.sizeOf(context).height * .3,
             decoration: BoxDecoration(
-              color: widget.dropDownColor ?? CustomColor.whiteColor,
+              // color: widget.dropDownColor ?? CustomColor.whiteColor,
               borderRadius: BorderRadius.circular(Dimensions.radius),
             ),
           ),
@@ -164,9 +161,9 @@ class _CustomDropDownState<T extends DropdownModel>
                       style: CustomStyle.darkHeading3TextStyle.copyWith(
                         fontSize: Dimensions.headingTextSize3,
                         fontWeight: FontWeight.w500,
-                        color: widget.isCurrencyDropDown!
-                            ? CustomColor.whiteColor
-                            : CustomColor.primaryLightColor,
+                        // color: widget.isCurrencyDropDown!
+                        //     ? CustomColor.whiteColor
+                        //     : CustomColor.primaryLightColor,
                       ),
                     ),
                   ],
