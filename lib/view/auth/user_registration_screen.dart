@@ -1,10 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:next_wisher/widgets/inputs/password_input_widget.dart';
 
 import '../../controller/auth/user_registration_controller.dart';
-import '../../utils/assets.dart';
+import '../../language/language_controller.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
-import '../../widgets/text_labels/title_heading5_widget.dart';
+import '../dynamic_webview_screen.dart';
 
 class UserRegistrationScreen extends StatelessWidget {
   UserRegistrationScreen({super.key});
@@ -15,7 +16,7 @@ class UserRegistrationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PrimaryAppBar(
-        title: Strings.createUserAccount,
+        title: "Create Your Account",
       ),
       body: _body(context),
     );
@@ -33,46 +34,44 @@ class UserRegistrationScreen extends StatelessWidget {
           key: controller.formKey,
           child: ListView(
             children: [
-              // Image.asset(Assets.appBasicLogo),
-              // verticalSpace(Dimensions.marginSizeVertical),
-              // TitleHeading3Widget(
-              //   text: Strings.createUserAccount,
-              //   color: Theme.of(context).primaryColor,
-              // ),
               verticalSpace(Dimensions.marginSizeVertical),
               PrimaryTextInputWidget(
                 controller: controller.nameController,
                 labelText: Strings.name,
-                hint: Strings.enterName,
+                hint: "",
+                error: "Username cannot be empty",
               ),
-      
+
               verticalSpace(Dimensions.marginBetweenInputBox),
               PrimaryTextInputWidget(
                 controller: controller.emailController,
-                hint: Strings.enterEmail,
+                hint: "",
+                error: "Email cannot be empty",
                 labelText: Strings.email,
               ),
-      
+
               verticalSpace(Dimensions.marginBetweenInputBox),
               PasswordInputWidget(
                 controller: controller.passwordController,
-                hint: Strings.enterPassword,
+                hint: "",
+                error: "The password field is required.",
                 labelText: Strings.password,
               ),
 
               verticalSpace(Dimensions.marginBetweenInputBox),
               PasswordInputWidget(
                 controller: controller.confirmPasswordController,
-                hint: Strings.enterPassword,
+                hint: "",
+                error: "The password field is required.",
                 labelText: Strings.confirmPassword,
               ),
 
               _checkBoxWidget(context),
-      
+
               verticalSpace(Dimensions.marginSizeVertical),
-              PrimaryButton(title: Strings.signUp, onPressed: controller.register),
+              PrimaryButton(title: "Register", onPressed: controller.register),
               verticalSpace(Dimensions.marginSizeVertical),
-      
+
               // Row(
               //   mainAxisAlignment: mainCenter,
               //   children: [
@@ -81,6 +80,7 @@ class UserRegistrationScreen extends StatelessWidget {
               //       preText: Strings.alreadyHaveAnAccount, postText: Strings.loginNow, onPressed: controller.clickOnRichText),
               //   ],
               // )
+
             ],
           ),
         ),
@@ -90,24 +90,73 @@ class UserRegistrationScreen extends StatelessWidget {
 
   _checkBoxWidget(BuildContext context) {
     return Obx(() => Row(
-      crossAxisAlignment: crossStart,
-      children: [
-        Checkbox(
-            activeColor: Theme.of(context).primaryColor,
-            value: controller.isChecked.value,
-            onChanged: controller.onChangedInRememberMe)
-            .paddingZero,
-        Expanded(
-          child: TitleHeading5Widget(
-            padding: const EdgeInsets.only(
-                top: 10
-            ),
-            text: Strings.userRichText,
-            opacity: .8,
-            // fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    ));
+          crossAxisAlignment: crossStart,
+          children: [
+            Checkbox(
+                    activeColor: Theme.of(context).primaryColor,
+                    value: controller.isChecked.value,
+                    onChanged: controller.onChangedInRememberMe)
+                .paddingZero,
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                  text: languageSettingController
+                      .getTranslation('By signing up, you agree to our'),
+                  style: TextStyle(fontSize: 14),
+                  children: [
+                    TextSpan(
+                      text: ' ', // Add spaces here for the gap
+                    ),
+                    TextSpan(
+                      text: languageSettingController
+                          .getTranslation('Terms of service'),
+                      style: TextStyle(color: Colors.orange, fontSize: 14),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          debugPrint('Terms of Service clicked');
+                          Get.to(WebViewScreen(
+                              link:
+                                  'https://nextwisher.com/pages/terms-of-service',
+                              appTitle: '',
+                              homeIconShow: false));
+                        },
+                    ),
+                    TextSpan(
+                      text: ' ', // Add spaces here for the gap
+                    ),
+                    TextSpan(
+                      text: languageSettingController.getTranslation('and'),
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    TextSpan(
+                      text: ' ', // Add spaces here for the gap
+                    ),
+                    TextSpan(
+                      text: languageSettingController
+                          .getTranslation('Privacy Policy'),
+                      style: TextStyle(color: Colors.orange, fontSize: 14),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          debugPrint('Privacy Policy clicked');
+                          Get.to(WebViewScreen(
+                            link: 'https://nextwisher.com/pages/privacy-policy',
+                            appTitle: '',
+                            homeIconShow: false,
+                          ));
+                        },
+                    ),
+                    TextSpan(
+                      text: '.',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            )),
+          ],
+        ));
   }
 }

@@ -8,9 +8,10 @@ import '../utils/basic_screen_imports.dart';
 class WebViewScreen extends StatefulWidget {
   final String link, appTitle;
   final Function? onFinished;
+  final bool homeIconShow;
 
   const WebViewScreen(
-      {super.key, required this.link, required this.appTitle, this.onFinished});
+      {super.key, required this.link, required this.appTitle, this.onFinished, this.homeIconShow = true});
 
   @override
   State<WebViewScreen> createState() => _WebViewScreenState();
@@ -25,9 +26,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
         appBar: PrimaryAppBar(
           title: widget.appTitle,
           actions: [
-            IconButton(onPressed: (){
+            widget.homeIconShow ? IconButton(onPressed: (){
               Get.offAllNamed(Routes.btmScreen);
-            }, icon: Icon(Icons.home_filled, color: Theme.of(context).primaryColor,))
+            }, icon: Icon(Icons.home_filled, color: Theme.of(context).primaryColor,)) : SizedBox.shrink()
           ],
         ),
         body:  Stack(

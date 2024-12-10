@@ -1,3 +1,5 @@
+import 'package:next_wisher/backend/utils/custom_loading_api.dart';
+
 import '../../controller/auth/login_controller.dart';
 import '../../utils/basic_widget_imports.dart';
 import '../../utils/strings.dart';
@@ -8,7 +10,7 @@ class ForgotPasswordDialog {
     showDialog(
       context: Get.context!,
       builder: (BuildContext context) => AlertDialog(
-        title: Text(Strings.forgotPassword),
+        title: TitleHeading3Widget(text: "Forgot password?"),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
@@ -18,14 +20,14 @@ class ForgotPasswordDialog {
               PrimaryTextInputWidget(
                 controller: Get.find<LoginController>().resetEmailController,
                 labelText: Strings.email,
-                hint: Strings.enterEmail,
+                hint: "",
               ),
             ],
           ),
         ),
         actions: <Widget>[
-          PrimaryButton(
-                  title: Strings.confirm,
+           PrimaryButton(
+                  title: "Send",
                   onPressed: Get.find<LoginController>().forgotPasswordSendLink,
                 )
         ],

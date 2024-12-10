@@ -8,6 +8,7 @@ class ApiEndpoint {
   ///-> Auth for both user and talent
   static String languageURL = '/languages'.addBaseURl();
   static String loginURL = '/login'.addBaseURl();
+  static String forgotPasswordURL = '/forgot-password-api'.addBaseURl();
   static String registerURL = '/register'.addBaseURl();
   static String logoutURL = '/logout'.addBaseURl();
   static String signupInfoURL = '/signup-info'.addBaseURl();

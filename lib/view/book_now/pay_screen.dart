@@ -5,6 +5,7 @@ import 'package:next_wisher/utils/basic_screen_imports.dart';
 import '../../backend/services/wish/payment_info_model.dart';
 import '../../controller/book_now/book_now_controller.dart';
 import '../../controller/bottom_nav/dashboard_controller.dart';
+import '../../language/language_controller.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
@@ -40,7 +41,7 @@ class PayScreen extends StatelessWidget {
             TitleHeading2Widget(text: data.name, fontWeight: FontWeight.bold),
             verticalSpace(Dimensions.paddingSizeVertical * .2),
             TitleHeading3Widget(
-              text: "${data.category.name} / ${data.subcategory.name}",
+              text: "${languageSettingController.getTranslation(data.category.name)}/${languageSettingController.getTranslation(data.subcategory.name)}",
               opacity: .5,
             ),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
@@ -113,12 +114,12 @@ class PayScreen extends StatelessWidget {
 
             TitleHeading3Widget(
                 textAlign: TextAlign.center,
-                text: Strings.selectPaymentMethod,
+                text: "Select payment method",
                 fontWeight: FontWeight.bold),
 
             verticalSpace(Dimensions.paddingSizeVertical * .2),
 
-            Obx(() => Row(
+            Obx(() => Column(
               children: [
                 Row(
                   children: [
@@ -130,7 +131,7 @@ class PayScreen extends StatelessWidget {
                       },
                     ),
                     TitleHeading3Widget(
-                        text: Strings.creditCard,
+                        text: "Credit card",
                         fontWeight: FontWeight.bold),
                   ],
                 ),
@@ -148,7 +149,7 @@ class PayScreen extends StatelessWidget {
                       },
                     ),
                     TitleHeading3Widget(
-                        text: Strings.mobilePayment,
+                        text: "Mobile payment",
                         fontWeight: FontWeight.bold)
                   ],
                 ),
@@ -183,7 +184,7 @@ class PayScreen extends StatelessWidget {
             Obx(() => controller.isPaymentLoading
                 ? const CustomLoadingAPI()
                 : PrimaryButton(
-                    title: Strings.pay,
+                    title: "Continue to payment",
                     prefix: "💳",
                     suffix:
                         "€${((isBook

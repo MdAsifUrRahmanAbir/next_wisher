@@ -64,7 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     left: 1,
                     right: 1,
                     child: TitleHeading5Widget(
-                      text: Strings.welcomeText,
+                      text: "Special videos for special occasions",
                       color: Colors.white,
                       textAlign: TextAlign.center,
                       padding: EdgeInsets.symmetric(
@@ -96,14 +96,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
                     verticalSpace(Dimensions.paddingSizeVertical * .5),
                     PrimaryButton(
-                        title: Strings.signIn,
+                        title: "Login",
                         backgroundColor: Theme.of(context).primaryColor,
                         onPressed: () {
                           Get.toNamed(Routes.loginScreen);
                         }),
                     verticalSpace(Dimensions.paddingSizeVertical * .5),
                     PrimaryButton(
-                        title: Strings.register,
+                        title: "Sign up",
                         backgroundColor: CustomColor.redColor,
                         onPressed: () {
                           Get.toNamed(Routes.userTypeScreen);

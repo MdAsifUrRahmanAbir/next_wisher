@@ -10,7 +10,7 @@ class UserTypeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PrimaryAppBar(
-        title: Strings.createAccountAsA,
+        title: "Create your account as a:",
       ),
       body: _body(context),
     );
@@ -27,11 +27,11 @@ class UserTypeScreen extends StatelessWidget {
           children: [
             verticalSpace(Dimensions.marginBetweenInputTitleAndBox),
             TitleHeading5Widget(
-              text: Strings.aUserCanPlace,
+              text: "A user can place order or request from celebrities/talents:",
             ),
             verticalSpace(Dimensions.marginBetweenInputTitleAndBox),
             TitleHeading5Widget(
-              text: Strings.aTalentCanEarn,
+              text: "A celebrity/talent can earn by fulfilling requests from users/fans:",
             ),
             verticalSpace(Dimensions.marginSizeVertical),
             Row(

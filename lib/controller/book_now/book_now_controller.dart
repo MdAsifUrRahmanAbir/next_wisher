@@ -38,6 +38,7 @@ class BookNowController extends GetxController with WishService {
   bool get isLoading => _isLoading.value;
 
   late Rx<Ocasion> selectedOcasion;
+  RxBool isOccasionSelect = false.obs;
   late Rx<PawapayCountry> selectedPawapayCountry;
   RxBool selectedPawapayCountryDone = false.obs;
 

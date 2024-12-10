@@ -2,7 +2,6 @@ import '../../controller/bottom_nav/bottom_nav_controller.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../widgets/drawer/drawer_widget.dart';
 import 'custom_bottom_nav_bar.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class BottomNavScreen extends StatelessWidget {
   BottomNavScreen({super.key});

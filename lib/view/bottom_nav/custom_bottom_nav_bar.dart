@@ -83,7 +83,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   onTap: () => widget.onItemTapped(0),
                 ),
                 BottomNavItem(
-                  isMain: widget.isMain,
+                  isMain: true,
                   text: _selectedLanguage == "french"
                       ? "FR"
                       : _selectedLanguage == "portugues"
@@ -92,10 +92,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                               ? "SP"
                               : "EN",
                   isSelected: widget.selectedIndex == 1,
-                  onTap: _showLanguageBottomSheet,
+                  onTap: () {
+                    // widget.onItemTapped(0);
+                    _showLanguageBottomSheet();
+                  },
                 ),
                 BottomNavItem(
-                  isMain: widget.isMain,
+                  isMain: true,
                   icon: Icons.menu,
                   isSelected: widget.selectedIndex == 2,
                   onTap: () {

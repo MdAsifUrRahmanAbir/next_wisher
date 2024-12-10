@@ -1,4 +1,5 @@
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
+import 'package:next_wisher/backend/model/common/common_success_model.dart';
 
 import '../../../routes/routes.dart';
 import '../../backend/services/auth/auth_service.dart';
@@ -40,7 +41,8 @@ class LoginController extends GetxController with AuthService {
   }
 
   void forgotPasswordSendLink() {
-    // forgotPasswordProcess();
+    Get.close(1);
+    forgotPasswordProcess();
   }
 
   /// ------------------------------------- >>
@@ -80,4 +82,39 @@ class LoginController extends GetxController with AuthService {
     update();
     return _loginModel;
   }
+
+
+
+
+
+
+  /// ------------------------------------- >>
+  final _isForgotLoading = false.obs;
+  bool get isForgotLoading => _isForgotLoading.value;
+
+
+  late CommonSuccessModel _forgotPasswordModel;
+  CommonSuccessModel get forgotPasswordModel => _forgotPasswordModel;
+
+
+  ///* ForgotPassword in process
+  Future<CommonSuccessModel> forgotPasswordProcess() async {
+    _isForgotLoading.value = true;
+    update();
+    Map<String, dynamic> inputBody = {
+      'email': resetEmailController.text,
+    };
+    await forgotPasswordProcessApi(body: inputBody).then((value) {
+      _forgotPasswordModel = value!;
+      _isForgotLoading.value = false;
+      update();
+    }).catchError((onError) {
+      log.e(onError);
+    });
+    _isForgotLoading.value = false;
+    update();
+    return _forgotPasswordModel;
+  }
+
+
 }

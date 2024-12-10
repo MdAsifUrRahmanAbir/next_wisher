@@ -29,6 +29,7 @@ class TalentRegistrationController extends GetxController with AuthService{
     if (formKey.currentState!.validate()) {
     if(!firstCountry.value) {
       if( !firstCategory.value){
+
         if(!firstSubcategory.value) {
           if (passwordController.text == confirmPasswordController.text) {
             if (isChecked.value) {

@@ -4,7 +4,7 @@ class Strings {
   static String pleaseFillOutTheField = "Please FillOut The Field";
 
   static String welcomeText= "Personalized videos from your favorite celebrities.";
-  static String signIn= "Sign In";
+  static String signIn= "Sign in";
 
   static String createAccountAsA= "Create your account as a:";
 
@@ -136,9 +136,9 @@ class Strings {
   static String selectSubcategory  = "Select Subcategory";
   static String book  = "Book";
   static String pay  = "Pay";
-  static String sendTip  = "Send Tip";
+  static String sendTip  = "Send tip";
 
-  static String continueToPayment  = "Continue To Payment";
+  static String continueToPayment  = "Continue to payment";
   static String moneyBackGuarantee  = "Money Back Guarantee";
 
   static String moneyBackGuaranteeDetails  = ''' 
@@ -159,7 +159,7 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String message  = "Message";
   static String male  = "Male";
   static String female  = "Female";
-  static String someoneElse  = "Someone Else";
+  static String someoneElse  = "Someone else";
   static String mySelf  = "My Self";
   static String videoHint  = "Book me for a personalized video for any occasion and let's make it memorable.";
   static String personalizedVideo  = "Personalized video";

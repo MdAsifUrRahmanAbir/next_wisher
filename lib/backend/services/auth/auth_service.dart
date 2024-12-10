@@ -35,6 +35,31 @@ mixin AuthService{
   }
 
 
+  ///* ForgotPassword api services
+  Future<CommonSuccessModel?> forgotPasswordProcessApi(
+      {required Map<String, dynamic> body}) async {
+    Map<String, dynamic>? mapResponse;
+    try {
+      mapResponse = await ApiMethod(isBasic: true).post(
+        ApiEndpoint.forgotPasswordURL,
+        body,
+      );
+      if (mapResponse != null) {
+        CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
+        CustomSnackBar.success(result.message.success.first.toString());
+        return result;
+      }
+    } catch (e) {
+      log.e(':ladybug::ladybug::ladybug: err from ForgotPassword api service ==> $e :ladybug::ladybug::ladybug:');
+      CustomSnackBar.error('Something went Wrong!');
+      return null;
+    }
+    return null;
+  }
+
+
+
+
   ///* Register api services
   Future<RegisterModel?> registerProcessApi(
       {required Map<String, dynamic> body}) async {

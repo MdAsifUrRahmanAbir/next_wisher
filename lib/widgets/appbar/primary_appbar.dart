@@ -20,13 +20,14 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
   final Color? color;
 
+  /// capitalizeWords()
   @override
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
       scrolledUnderElevation: 0,
-      title: TitleHeading2Widget(
-        text: capitalizeWords(title),
+      title: TitleHeading3Widget(
+        text: title,
         fontWeight: FontWeight.w600,
         color: color == null ? null: Colors.white,
       ),

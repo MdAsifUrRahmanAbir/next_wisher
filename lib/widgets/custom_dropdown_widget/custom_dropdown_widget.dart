@@ -105,12 +105,10 @@ class _CustomDropDownState<T extends DropdownModel>
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<T>(
-          hint: Text(
-            widget.hint.isEmpty ? widget.title : widget.hint,
-            style: TextStyle(
-              fontSize: Dimensions.headingTextSize3,
-              fontWeight: FontWeight.w500,
-            ),
+          hint: TitleHeading3Widget(
+            text: widget.hint.isEmpty ? widget.title : widget.hint,
+            fontSize: Dimensions.headingTextSize3,
+            fontWeight: FontWeight.w500,
           ),
           value: _selectedItem,
           style: TextStyle(

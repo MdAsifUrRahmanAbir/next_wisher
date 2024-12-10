@@ -57,13 +57,11 @@ class PrimaryButton extends StatelessWidget {
               ),
             ),
 
-            Text(
-               (title),
-              style: CustomStyle.darkHeading3TextStyle.copyWith(
-                fontSize: fontSize ?? Dimensions.headingTextSize3,
-                color: CustomColor.whiteColor,
-                fontWeight: fontWeight ?? FontWeight.w600,
-              ),
+            TitleHeading3Widget(
+               text: (title),
+              fontSize: fontSize ?? Dimensions.headingTextSize3,
+              color: CustomColor.whiteColor,
+              fontWeight: fontWeight ?? FontWeight.w600,
             ),
 
 

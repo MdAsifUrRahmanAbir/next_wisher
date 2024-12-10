@@ -1,13 +1,16 @@
+import 'package:flutter/gestures.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/widgets/inputs/password_input_widget.dart';
 
 import '../../backend/services/auth/register_info_model.dart';
 import '../../controller/auth/talent_registration_controller.dart';
+import '../../language/language_controller.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
 import '../../widgets/others/custom_video_picker_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
+import '../dynamic_webview_screen.dart';
 
 class TalentRegistrationScreen extends StatelessWidget {
   TalentRegistrationScreen({super.key});
@@ -104,7 +107,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                 // hint: Strings.enterSocialLink,
                 hint: "",
                 error: "Link cannot be empty",
-                labelText: Strings.socialLink,
+                labelText: "https://",
               ),
               TitleHeading5Widget(
                   text: Strings.enterSocialLinkHint,
@@ -126,7 +129,7 @@ class TalentRegistrationScreen extends StatelessWidget {
               PasswordInputWidget(
                 controller: controller.confirmPasswordController,
                 hint: "",
-                error: "The confirm password field is required.",
+                error: "The password field is required.",
                 labelText: Strings.confirmPassword,
               ),
               _checkBoxWidget(context),
@@ -134,7 +137,7 @@ class TalentRegistrationScreen extends StatelessWidget {
               Obx(() => controller.isRegisterLoading
                   ? const CustomLoadingAPI()
                   : PrimaryButton(
-                      title: Strings.go, onPressed: controller.register)),
+                      title: "Go", onPressed: controller.register)),
               verticalSpace(Dimensions.marginSizeVertical),
             ],
           ),
@@ -153,13 +156,64 @@ class TalentRegistrationScreen extends StatelessWidget {
                     onChanged: controller.onChangedInRememberMe)
                 .paddingZero,
             Expanded(
-              child: TitleHeading5Widget(
-                padding: const EdgeInsets.only(top: 10),
-                text: Strings.talentRichText,
-                opacity: .8,
-                // fontWeight: FontWeight.bold,
-              ),
-            ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: RichText(
+                    textAlign: TextAlign.start,
+                    text: TextSpan(
+                      text: languageSettingController
+                          .getTranslation('I certify that I am at least 18 years old. I have read and agree to the'),
+                      style: TextStyle(fontSize: 14),
+                      children: [
+                        TextSpan(
+                          text: ' ', // Add spaces here for the gap
+                        ),
+                        TextSpan(
+                          text: languageSettingController
+                              .getTranslation('Terms of service'),
+                          style: TextStyle(color: Colors.orange, fontSize: 14),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              debugPrint('Terms of Service clicked');
+                              Get.to(WebViewScreen(
+                                  link:
+                                  'https://nextwisher.com/pages/terms-of-service',
+                                  appTitle: '',
+                                  homeIconShow: false));
+                            },
+                        ),
+                        TextSpan(
+                          text: ' ', // Add spaces here for the gap
+                        ),
+                        TextSpan(
+                          text: languageSettingController.getTranslation('and'),
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        TextSpan(
+                          text: ' ', // Add spaces here for the gap
+                        ),
+                        TextSpan(
+                          text: languageSettingController
+                              .getTranslation('Privacy Policy'),
+                          style: TextStyle(color: Colors.orange, fontSize: 14),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              debugPrint('Privacy Policy clicked');
+                              Get.to(WebViewScreen(
+                                link: 'https://nextwisher.com/pages/privacy-policy',
+                                appTitle: '',
+                                homeIconShow: false,
+                              ));
+                            },
+                        ),
+                        TextSpan(
+                          text: '.',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
           ],
         ));
   }

@@ -16,7 +16,8 @@ class BookNowScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PrimaryAppBar(),
-      body: Obx(() => controller.isLoading ? const CustomLoadingAPI() : _bodyWidget()),
+      body: Obx(() =>
+          controller.isLoading ? const CustomLoadingAPI() : _bodyWidget()),
     );
   }
 
@@ -28,22 +29,19 @@ class BookNowScreen extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(12),
           children: [
-            TitleHeading2Widget(
-                text: data.name, fontWeight: FontWeight.bold),
+            TitleHeading2Widget(text: data.name, fontWeight: FontWeight.bold),
             verticalSpace(Dimensions.paddingSizeVertical * .2),
             TitleHeading3Widget(
-              text: "${data.category.name} / ${data.subcategory.name}",
+              text: "${data.category.name}/${data.subcategory.name}",
               opacity: .5,
             ),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
-
             Row(
               children: [
                 Row(
                   children: [
                     Radio<String>(
                       value: "myself",
-
                       groupValue: controller.selectedOption.value,
                       onChanged: (String? value) {
                         controller.nameController.text = "";
@@ -52,10 +50,10 @@ class BookNowScreen extends StatelessWidget {
                         controller.selectedOption.value = value!;
                       },
                     ),
-                    TitleHeading3Widget(text: Strings.mySelf, fontWeight: FontWeight.bold),
+                    TitleHeading3Widget(
+                        text: "Myself", fontWeight: FontWeight.bold),
                   ],
                 ),
-
                 horizontalSpace(Dimensions.paddingSizeHorizontal * .5),
                 Row(
                   children: [
@@ -70,33 +68,38 @@ class BookNowScreen extends StatelessWidget {
                         controller.selectedOption.value = value!;
                       },
                     ),
-                    TitleHeading3Widget(text: Strings.someoneElse, fontWeight: FontWeight.bold)
+                    TitleHeading3Widget(
+                        text: "Someone else", fontWeight: FontWeight.bold)
                   ],
                 ),
               ],
             ),
-
             verticalSpace(Dimensions.paddingSizeVertical * .5),
-
             Visibility(
               visible: controller.selectedOption.value == "else",
               child: Column(
                 children: [
-                  PrimaryTextInputWidget(controller: controller.fromController, labelText: Strings.from, hint: Strings.enterName),
+                  PrimaryTextInputWidget(
+                      controller: controller.fromController,
+                      labelText: Strings.from,
+                      hint: ""),
                   verticalSpace(Dimensions.paddingSizeVertical * .5),
-                  PrimaryTextInputWidget(controller: controller.forController, labelText: Strings.forText, hint: Strings.enterName),
+                  PrimaryTextInputWidget(
+                      controller: controller.forController,
+                      labelText: Strings.forText,
+                      hint: ""),
                 ],
               ),
             ),
-
             Visibility(
                 visible: controller.selectedOption.value == "myself",
-                child: PrimaryTextInputWidget(controller: controller.nameController, labelText: Strings.name, hint: Strings.enterName)),
-
+                child: PrimaryTextInputWidget(
+                    controller: controller.nameController,
+                    labelText: "Enter your name",
+                    hint: "")),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
-
-            TitleHeading3Widget(text: Strings.gender, fontWeight: FontWeight.bold),
-
+            TitleHeading3Widget(
+                text: Strings.gender, fontWeight: FontWeight.bold),
             Row(
               children: [
                 Row(
@@ -105,14 +108,13 @@ class BookNowScreen extends StatelessWidget {
                       value: "Female",
                       groupValue: controller.selectedGender.value,
                       onChanged: (String? value) {
-
                         controller.selectedGender.value = value!;
                       },
                     ),
-                    TitleHeading3Widget(text: Strings.female, fontWeight: FontWeight.bold),
+                    TitleHeading3Widget(
+                        text: Strings.female, fontWeight: FontWeight.bold),
                   ],
                 ),
-
                 horizontalSpace(Dimensions.paddingSizeHorizontal * .5),
                 Row(
                   children: [
@@ -123,44 +125,49 @@ class BookNowScreen extends StatelessWidget {
                         controller.selectedGender.value = value!;
                       },
                     ),
-                    TitleHeading3Widget(text: Strings.male, fontWeight: FontWeight.bold)
+                    TitleHeading3Widget(
+                        text: Strings.male, fontWeight: FontWeight.bold)
                   ],
                 ),
               ],
             ),
-
             verticalSpace(Dimensions.paddingSizeVertical * .5),
-
+            TitleHeading3Widget(
+                text: "Occasion", fontWeight: FontWeight.bold),
+            verticalSpace(Dimensions.paddingSizeVertical * .2),
             Obx(() => CustomDropDown<Ocasion>(
-              items: controller.paymentInfoModel.data.ocasions,
-              onChanged: (value) {
-                controller.selectedOcasion.value = value!;
-              },
-              hint: controller.selectedOcasion.value.name,
-              title: Strings.occasion,
-            )),
-
-
+                  items: controller.paymentInfoModel.data.ocasions,
+                  onChanged: (value) {
+                    controller.isOccasionSelect.value = true;
+                    controller.selectedOcasion.value = value!;
+                  },
+                  hint: controller.isOccasionSelect.value ? controller.selectedOcasion.value.name : "Select Occasion",
+                  title: "Select Occasion",
+                )),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
 
-            PrimaryTextInputWidget(controller: controller.instructionsController, labelText: Strings.instruction, hint: "", maxLine: 3,),
+            TitleHeading3Widget(
+                text: "Instructions", fontWeight: FontWeight.bold),
+            verticalSpace(Dimensions.paddingSizeVertical * .2),
 
-
+            PrimaryTextInputWidget(
+              controller: controller.instructionsController,
+              labelText: "Write Instructions",
+              hint: "",
+              maxLine: 3,
+            ),
             verticalSpace(Dimensions.paddingSizeVertical * 1.5),
             PrimaryButton(
-                title: Strings.continueToPayment,
-                backgroundColor: CustomColor.redColor    ,
+                title: "Continue to payment",
+                backgroundColor: CustomColor.redColor,
                 onPressed: () {
-                  if(controller.selectedGender.value.isNotEmpty) {
+                  if (controller.selectedGender.value.isNotEmpty) {
                     controller.pay();
-                  }
-                  else{
+                  } else {
                     CustomSnackBar.error("Please Select Gender First");
                   }
                 }),
-
             verticalSpace(Dimensions.paddingSizeVertical * 1),
-
           ],
         ),
       ),
