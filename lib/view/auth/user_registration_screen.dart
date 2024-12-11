@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:next_wisher/widgets/inputs/password_input_widget.dart';
 
+import '../../backend/utils/custom_loading_api.dart';
 import '../../controller/auth/user_registration_controller.dart';
 import '../../language/language_controller.dart';
 import '../../utils/basic_screen_imports.dart';
@@ -69,7 +70,7 @@ class UserRegistrationScreen extends StatelessWidget {
               _checkBoxWidget(context),
 
               verticalSpace(Dimensions.marginSizeVertical),
-              PrimaryButton(title: "Register", onPressed: controller.register),
+              Obx(() => controller.isLoading ? CustomLoadingAPI(): PrimaryButton(title: "Register", onPressed: controller.register)),
               verticalSpace(Dimensions.marginSizeVertical),
 
               // Row(
@@ -105,7 +106,7 @@ class UserRegistrationScreen extends StatelessWidget {
                 text: TextSpan(
                   text: languageSettingController
                       .getTranslation('By signing up, you agree to our'),
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 14, color: Get.isDarkMode ? Colors.white : Colors.black),
                   children: [
                     TextSpan(
                       text: ' ', // Add spaces here for the gap
@@ -113,7 +114,7 @@ class UserRegistrationScreen extends StatelessWidget {
                     TextSpan(
                       text: languageSettingController
                           .getTranslation('Terms of service'),
-                      style: TextStyle(color: Colors.orange, fontSize: 14),
+                      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           debugPrint('Terms of Service clicked');
@@ -129,7 +130,7 @@ class UserRegistrationScreen extends StatelessWidget {
                     ),
                     TextSpan(
                       text: languageSettingController.getTranslation('and'),
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 14, color: Get.isDarkMode ? Colors.white : Colors.black),
                     ),
                     TextSpan(
                       text: ' ', // Add spaces here for the gap
@@ -137,7 +138,7 @@ class UserRegistrationScreen extends StatelessWidget {
                     TextSpan(
                       text: languageSettingController
                           .getTranslation('Privacy Policy'),
-                      style: TextStyle(color: Colors.orange, fontSize: 14),
+                      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           debugPrint('Privacy Policy clicked');
@@ -150,7 +151,7 @@ class UserRegistrationScreen extends StatelessWidget {
                     ),
                     TextSpan(
                       text: '.',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 14, color: Get.isDarkMode ? Colors.white : Colors.black),
                     ),
                   ],
                 ),

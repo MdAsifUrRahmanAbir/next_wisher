@@ -163,7 +163,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                     text: TextSpan(
                       text: languageSettingController
                           .getTranslation('I certify that I am at least 18 years old. I have read and agree to the'),
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 14, color: Get.isDarkMode ? Colors.white : Colors.black),
                       children: [
                         TextSpan(
                           text: ' ', // Add spaces here for the gap
@@ -171,7 +171,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                         TextSpan(
                           text: languageSettingController
                               .getTranslation('Terms of service'),
-                          style: TextStyle(color: Colors.orange, fontSize: 14),
+                          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               debugPrint('Terms of Service clicked');
@@ -187,7 +187,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                         ),
                         TextSpan(
                           text: languageSettingController.getTranslation('and'),
-                          style: TextStyle(fontSize: 14),
+                          style: TextStyle(fontSize: 14, color: Get.isDarkMode ? Colors.white : Colors.black),
                         ),
                         TextSpan(
                           text: ' ', // Add spaces here for the gap
@@ -195,7 +195,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                         TextSpan(
                           text: languageSettingController
                               .getTranslation('Privacy Policy'),
-                          style: TextStyle(color: Colors.orange, fontSize: 14),
+                          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               debugPrint('Privacy Policy clicked');
@@ -208,7 +208,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                         ),
                         TextSpan(
                           text: '.',
-                          style: TextStyle(fontSize: 14),
+                          style: TextStyle(fontSize: 14, color: Get.isDarkMode ? Colors.white : Colors.black),
                         ),
                       ],
                     ),

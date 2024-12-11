@@ -38,7 +38,7 @@ class TitleHeading2Widget extends StatelessWidget {
           child: Obx(
             () => Text(
               languageSettingController.isLoading
-                  ? ""
+                  ? text
                   : languageSettingController.getTranslation(text),
               // style: isDark.value
               //     ? CustomStyle.darkHeading2TextStyle.copyWith(

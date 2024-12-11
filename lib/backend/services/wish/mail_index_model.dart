@@ -94,7 +94,7 @@ class Email {
     instructions: json["instructions"] ?? "",
     mailFor: json["mailFor"] ?? "",
     talentEarningId: json["talent_earning_id"],
-    createdAt: DateTime.parse(json["created_at"]),
+    createdAt: DateTime.parse(json["created_at"]).toUtc(),
     noteEmail: json["note_email"],
     downloadStatus: json["download_status"],
     fulfilledAt: json["fulfilled_at"],

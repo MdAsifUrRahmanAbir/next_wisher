@@ -8,20 +8,25 @@ import '../../backend/utils/navigator_plug.dart';
 class SplashController extends GetxController {
   final navigatorPlug = NavigatorPlug();
 
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  //   navigatorPlug.startListening(
+  //     seconds: 3,
+  //     onChanged: () {
+  //       _goToScreen();
+  //     },
+  //   );
+  // }
 
   @override
   void onReady() {
     super.onReady();
-    navigatorPlug.startListening(
-      seconds: 3,
-      onChanged: () {
-        _goToScreen();
-      },
-    );
+    _goToScreen();
   }
 
   _goToScreen() async {
-    Timer(const Duration(seconds: 0), () {
+    Timer(const Duration(seconds: 3), () {
       LocalStorage.isLoggedIn()
           ? Get.offAllNamed(Routes.btmScreen)
           : Get.offAllNamed(Routes.welcomeScreen);

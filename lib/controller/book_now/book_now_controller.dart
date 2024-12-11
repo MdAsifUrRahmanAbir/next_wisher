@@ -206,6 +206,14 @@ class BookNowController extends GetxController with WishService {
             Get.close(2);
             CustomSnackBar.error("Payment is not Done!");
           }
+          else if ( url.toString().contains("failure?token")) {
+            Get.close(2);
+            CustomSnackBar.error("Payment is not Done!");
+          }
+          else if ( url.toString().contains("/final-status-callback-api?depositId")) {
+            Get.close(2);
+            CustomSnackBar.error("Payment is not Done!");
+          }
         },
       ));
 
