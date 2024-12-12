@@ -53,20 +53,6 @@ dev_dependencies:
 
   flutter_lints:
 
-#flutter_launcher_icons:
-#  android: "launcher_icon"
-#  ios: true
-#  image_path: "assets/playstore.png"
-#  min_sdk_android: 21 # android min sdk min:16, default 21
-
-#icons_launcher:
-#  image_path: "assets/playstore.png"
-#  platforms:
-#    android:
-#      enable: true
-#    ios:
-#      enable: true
-
 flutter:
 
   uses-material-design: true

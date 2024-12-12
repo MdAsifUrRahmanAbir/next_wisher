@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>Next Wisher</string>
+    <string>Nextwisher</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -51,7 +51,6 @@
     <string>We need access to your camera for video verification.</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>We need access to your microphone for video verification.</string>
-
     <key>FirebaseAppDelegateProxyEnabled</key>
     <false/>
     <key>NSAppTransportSecurity</key>
@@ -59,6 +58,5 @@
       <key>NSAllowsArbitraryLoads</key>
       <true/>
     </dict>
-
   </dict>
 </plist>

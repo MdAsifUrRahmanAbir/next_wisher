@@ -30,7 +30,7 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
   void initState() {
     super.initState();
     targetDate = DateFormat("yyyy-MM-dd HH:mm:ss")
-        .parse(widget.data.createdAt.add(const Duration(days: 5)).toUtc().toString());
+        .parse(widget.data.createdAt.add(const Duration(days: 5)).toLocal().toString());
     // _calculateRemainingTime();
     if (!widget.data.downloadStatus) {
       _startTimer();
@@ -120,7 +120,7 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
           crossAxisAlignment: crossEnd,
           children: [
             TitleHeading5Widget(
-              text: DateFormat('dd-MM-yyyy').format(widget.data.createdAt.toUtc()),
+              text: DateFormat('dd-MM-yyyy').format(widget.data.createdAt.toLocal()),
               maxLines: 1,
             ),
             verticalSpace(Dimensions.paddingSizeVertical * .2),
@@ -139,7 +139,6 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
 }
 
 /// "$days Days : $hours Hours : $minutes Minutes : $seconds Seconds"
-
 String getInitials(String name) {
   List<String> nameParts = name.split(' '); // Split the name by spaces
   String initials = '';

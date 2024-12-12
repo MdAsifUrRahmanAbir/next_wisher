@@ -26,6 +26,7 @@ class _UserSentScreenState extends State<UserSentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("Attachment >> ${widget.data.attachment}");
     return Scaffold(
         appBar: const PrimaryAppBar(),
         body: SafeArea(
@@ -65,7 +66,7 @@ class _UserSentScreenState extends State<UserSentScreen> {
             _row(Strings.instruction, widget.data.instructions),
             verticalSpace(Dimensions.paddingSizeVertical * .8),
             Visibility(
-                visible: (!LocalStorage.isUser() && !widget.data.downloadStatus),
+                visible: (!LocalStorage.isUser() && widget.data.attachment.isEmpty),
                 child: Column(
                   crossAxisAlignment: crossStart,
                   children: [

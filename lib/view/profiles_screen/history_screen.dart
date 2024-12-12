@@ -45,6 +45,7 @@ class HistoryScreenState extends State<HistoryScreen> {
           itemBuilder: (context, index) {
             PaymentRequest data =
                 controller.earningModel.data.paymentRequests[index];
+            debugPrint("Amount:: ${data.amount.toStringAsFixed(2)}   >>   ${data.status}");
             return Column(
               children: [
                 ListTile(
@@ -108,8 +109,8 @@ class HistoryScreenState extends State<HistoryScreen> {
                           text: "€${data.amount.toStringAsFixed(2)}"),
                       verticalSpace(3),
                       TitleHeading4Widget(
-                          text: data.status == 1 ? Strings.accepted: Strings.declined,
-                        color: data.status == 1 ? Colors.green : Colors.red,
+                          text: data.status == 1 ? Strings.accepted: data.status == 0 ? "Pending": Strings.declined,
+                        color: data.status == 1 ? Colors.green : data.status == 0 ? Colors.orange: Colors.red,
                       ),
                     ]
                   )
