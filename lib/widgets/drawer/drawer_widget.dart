@@ -36,7 +36,7 @@ class DrawerWidget extends StatelessWidget {
               dense: true,
               title: TextButton(
                 onPressed: () {
-                  controller.categoryModelProcess(controller.categoriesList[index].slug);
+                  controller.categoryModelProcess(controller.categoriesList[index].slug, controller.categoriesList[index].name);
                 },
                 child: TitleHeading3Widget(
                     text: controller.categoriesList[index].name),
@@ -46,7 +46,7 @@ class DrawerWidget extends StatelessWidget {
                     controller.categoriesList[index].child.length,
                     (i) => TextButton(
                         onPressed: () {
-                          controller.categoryModelProcess(controller.categoriesList[index].child[i].slug);
+                          controller.categoryModelProcess(controller.categoriesList[index].child[i].slug, controller.categoriesList[index].child[i].name);
                         },
                         child: TitleHeading3Widget(
                             text: controller

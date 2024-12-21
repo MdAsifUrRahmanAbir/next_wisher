@@ -20,6 +20,7 @@ import '../view/profiles_screen/theme_change_screen.dart';
 import '../view/profiles_screen/tips_screen.dart';
 import '../view/profiles_screen/wish_request_screen.dart';
 import '../view/talent_profile/talent_profile.dart';
+import '../view/talent_profile/talent_profile_next.dart';
 import 'routes.dart';
 
 class Pages{
@@ -75,6 +76,10 @@ class Pages{
     GetPage(
       name: Routes.talentProfile,
       page: () =>  TalentProfile(),
+    ),
+    GetPage(
+      name: Routes.talentProfileNext,
+      page: () =>  TalentProfileNext(),
     ),
     GetPage(
       name: Routes.bookNowScreen,

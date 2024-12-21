@@ -1,8 +1,8 @@
 import 'package:next_wisher/backend/extensions/custom_extensions.dart';
 
 class ApiEndpoint {
-  static String mainDomain = "https://next-wisher.skyflightbd.com/public";
-  // static String mainDomain = "https://nextwisher.com";
+  // static String mainDomain = "https://next-wisher.skyflightbd.com/public";
+  static String mainDomain = "https://nextwisher.com";
   static String baseUrl = "$mainDomain/api/v1";
 
   ///-> Auth for both user and talent

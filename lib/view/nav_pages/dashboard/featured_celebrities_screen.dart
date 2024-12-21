@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:next_wisher/backend/utils/no_data_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../backend/services/dashboard/home_model.dart';
 import '../../../controller/bottom_nav/bottom_nav_controller.dart';
@@ -9,7 +11,6 @@ import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
 import '../../../widgets/drawer/drawer_widget.dart';
 import '../../bottom_nav/custom_bottom_nav_bar.dart';
-import '../../talent_profile/talent_profile.dart';
 
 class FeaturedCelebritiesScreen extends StatelessWidget {
   FeaturedCelebritiesScreen({super.key, required this.showSearchBar, this.appTitle = ""});
@@ -103,7 +104,7 @@ class FeaturedCelebritiesScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         controller.talentsProcess(data.userId.toString());
-                        Get.toNamed(Routes.talentProfile);
+                        Get.toNamed(Routes.talentProfileNext);
                       },
                       child: Column(
                         crossAxisAlignment: crossStart,
@@ -112,12 +113,28 @@ class FeaturedCelebritiesScreen extends StatelessWidget {
                             child: Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(data.profileImage),
-                                      fit: BoxFit.cover),
-                                  color: Theme.of(context).primaryColor,
+                                  // image: DecorationImage(
+                                  //     image: NetworkImage(data.profileImage),
+                                  //     fit: BoxFit.cover),
+                                  color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(
                                       Dimensions.radius * .4)),
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                                imageUrl: data.profileImage,
+                                placeholder: (context, url) => Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              ),
                             ),
                           ),
                           TitleHeading3Widget(

@@ -77,8 +77,12 @@ class _PasswordInputWidgetState extends State<PasswordInputWidget> {
             fillColor: widget.color,
             contentPadding:
                 const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-            hintText: languageSettingController.getTranslation(widget.hint),
-            labelText: languageSettingController.getTranslation(widget.labelText),
+            hintText: languageSettingController.isLoading
+                ? ""
+                : languageSettingController.getTranslation(widget.hint),
+            labelText: languageSettingController.isLoading
+                ? ""
+                : languageSettingController.getTranslation(widget.labelText),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: false,
             hintStyle: Get.isDarkMode

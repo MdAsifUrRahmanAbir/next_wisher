@@ -1,10 +1,7 @@
-import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 
 import '../../../utils/basic_screen_imports.dart';
 
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-import '../../controller/profile/guidline_controller.dart';
 import '../../utils/strings.dart';
 import '../../utils/theme.dart';
 

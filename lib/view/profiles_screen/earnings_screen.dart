@@ -171,16 +171,16 @@ class EarningScreenState extends State<EarningScreen> {
                     controller.startDate.value = today;
                     controller.endDate.value = today;
                     controller.earningFilterProcess(inputBody: {
-                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value),
-                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
+                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value.toUtc()),
+                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value.toUtc()),
                     });
                   }
                   else if(controller.selectedFilter.value == "Yesterday") {
                     controller.startDate.value = today.subtract(const Duration(days: 1));
                     controller.endDate.value = today.subtract(const Duration(days: 1));
                     controller.earningFilterProcess(inputBody: {
-                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value),
-                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
+                      'start_date': DateFormat('yyyy-MM-dd').format(controller.startDate.value.toUtc()),
+                      'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value.toUtc()),
                     });
                   }
                   else if(controller.selectedFilter.value == "Last 7 Days") {

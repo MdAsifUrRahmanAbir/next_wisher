@@ -17,10 +17,10 @@ import '../../utils/strings.dart';
 import '../../widgets/drawer/drawer_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../book_now/pay_screen.dart';
-import '../bottom_nav/custom_bottom_nav_bar.dart';
+import '../bottom_nav/custom_bottom_nav_bar_next.dart';
 
-class TalentProfile extends StatelessWidget {
-  TalentProfile({super.key, this.showBTM = true});
+class TalentProfileNext extends StatelessWidget {
+  TalentProfileNext({super.key, this.showBTM = true});
 
   final bool showBTM;
   final controller = Get.find<DashboardController>();
@@ -51,7 +51,7 @@ class TalentProfile extends StatelessWidget {
             : _bodyWidget(context)),
         bottomNavigationBar: !showBTM
             ? const SizedBox.shrink()
-            : Obx(() => CustomBottomNavBar(
+            : Obx(() => CustomBottomNavBarNext(
                   selectedIndex:
                       Get.find<BottomNavController>().selectedIndex.value,
                   onItemTapped: Get.find<BottomNavController>().onItemTapped,

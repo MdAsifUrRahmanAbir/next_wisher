@@ -142,15 +142,14 @@ class Strings {
   static String moneyBackGuarantee  = "Money Back Guarantee";
 
   static String moneyBackGuaranteeDetails  = ''' 
-If your request for a personalized video could not be completed or expires, we will refund
-your money within 3-10 working days. Refunds can only be sent back to the original payment method used in a charge.  
+If your request for a personalized video could not be completed or expires, we will refund your money within 3-10 working days. Refunds can only be sent back to the original payment method used in a charge.  
   ''';
 
   static String search  = "Search";
   static String featuredCelebrities  = "Featured Celebrities";
   static String featuredVideos  = "Featured Videos";
   static String seeAll  = "See All";
-  static String guideline  = "Guidelines";
+  static String guideline  = "Guide";
   static String personalInformation  = "Personal Information";
 
   static String account  = "Account";
@@ -163,7 +162,7 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String mySelf  = "My Self";
   static String videoHint  = "Book me for a personalized video for any occasion and let's make it memorable.";
   static String personalizedVideo  = "Personalized video";
-  static String spokenLanguage  = "Spoken language(s): English, Français";
+  static String spokenLanguage  = "Spoken language(s): ";
   static String biography  = "Biography";
   static String selectPaymentMethod  = "Select Payment Method";
   static String creditCard = "Credit Card";
@@ -191,11 +190,11 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
   static String uploaded  = "Uploaded";
   static String enterYourBiography  = "Enter Your Biography";
 
-  static String enterAmount = "Enter Amount";
+  static String enterAmount = "Enter amount";
 
-  static String requestPayment  = "Request Payment";
+  static String requestPayment  = "Request payment";
 
-  static String phoneNumber = "Phone Number";
+  static String phoneNumber = "Phone number";
 
 
   static String list  = "List";
@@ -208,15 +207,15 @@ your money within 3-10 working days. Refunds can only be sent back to the origin
 
   static String tipsLimit  = "Tips Limit is €10 ~ €500";
   static String wishLimit  = "Wish Limit is €30 ~ €2500";
-  static String previewProfile  = "Preview Profile";
+  static String previewProfile  = "Preview profile";
   static String no  = "No";
   static String yes  = "Yes";
   static String activate  = "Activate";
   static String updateAndSave  = "Update/Save";
   static String wishTitle  = "Please setup an amount to charge for Wish Request";
-  static String wishRequest  = "Wish Request";
-  static String themeChange  = "Theme Change";
+  static String wishRequest  = "Wish request";
+  static String themeChange  = "Theme change";
   static String tipsTitle  = "Please activate the Tips option to receive tips from your fans or followers";
-  static String selectLanguage  = "Select Language";
+  static String selectLanguage  = "Select language";
   static String gui  = "";
 }

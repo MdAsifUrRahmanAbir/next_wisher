@@ -85,7 +85,7 @@ class DashboardController extends GetxController with DashboardService {
 
 
   ///* Get CategoryModel in process
-  Future<CategoryModel> categoryModelProcess(String tag) async {
+  Future<CategoryModel> categoryModelProcess(String tag, String name) async {
     _isCategoryLoading.value = true;
     update();
     await categoryModelProcessApi(tag: tag).then((value) {
@@ -93,7 +93,7 @@ class DashboardController extends GetxController with DashboardService {
       // searchController.text = tag;
       talentList.value = _categoryModel.data.talents;
       Get.find<BottomNavController>().selectedIndex.value = 5;
-      Get.to(FeaturedCelebritiesScreen(showSearchBar: false, appTitle: tag,));
+      Get.to(FeaturedCelebritiesScreen(showSearchBar: false, appTitle: name));
       _isCategoryLoading.value = false;
       update();
     }).catchError((onError) {
@@ -133,7 +133,7 @@ class DashboardController extends GetxController with DashboardService {
         // aspectRatio: 1,
         videoPlayerController: videoPlayerController,
         autoPlay: false,
-        looping: true,
+        looping: false,
       );
 
       debugPrint(_talentsModel.data.talent.videoPath);

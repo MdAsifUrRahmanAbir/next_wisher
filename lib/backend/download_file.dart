@@ -94,6 +94,7 @@ mixin DownloadFile {
                 'File downloaded successfully at ${file.path}!');
             debugPrint(file.path);
             onSuccess();
+
           });
         } catch (e, s) {
           debugPrint("Save ->>>   Error");

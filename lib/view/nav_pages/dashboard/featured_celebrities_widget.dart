@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:next_wisher/backend/utils/no_data_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../backend/services/dashboard/home_model.dart';
 import '../../../controller/bottom_nav/bottom_nav_controller.dart';
@@ -58,12 +60,28 @@ class FeaturedCelebritiesWidget extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(data.profileImage),
-                              fit: BoxFit.cover),
-                          color: Theme.of(context).primaryColor,
+                          // image: DecorationImage(
+                          //     image: NetworkImage(data.profileImage),
+                          //     fit: BoxFit.cover),
+                          color: Colors.transparent,
                           borderRadius:
                               BorderRadius.circular(Dimensions.radius * .4)),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                        imageUrl: data.profileImage,
+                        placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: Colors.white,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
                     ),
                   ),
                   TitleHeading3Widget(

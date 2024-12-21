@@ -114,7 +114,7 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
                 : widget.data.talentName,
         fontWeight: FontWeight.bold,
       ),
-      subtitle: TitleHeading5Widget(text: widget.data.instructions),
+      subtitle: TitleHeading5Widget(text: widget.data.instructions, maxLines: 2, textOverflow: TextOverflow.ellipsis),
       trailing: FittedBox(
         child: Column(
           crossAxisAlignment: crossEnd,

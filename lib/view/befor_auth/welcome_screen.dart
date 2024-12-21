@@ -2,7 +2,6 @@ import '../../helper/notification_helper.dart';
 import '../../language/language_controller.dart';
 import '../../routes/routes.dart';
 import '../../utils/basic_screen_imports.dart';
-import '../../utils/strings.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../bottom_nav/language_selection_bottom_sheet.dart';
 

@@ -47,8 +47,10 @@ class EarningController extends GetxController with EarningService {
         }
         else {
           earningFilterProcess(inputBody: {
-            'start_date': DateFormat('dd MMMM, yyyy').format(startDate.value),
-            'end_date': DateFormat('dd MMMM, yyyy').format(startDate.value),
+            'start_date': DateFormat('yyyy-MM-dd').format(startDate.value.toUtc()),
+            // 'start_date': DateFormat('dd MMMM, yyyy').format(startDate.value),
+            'end_date': DateFormat('yyyy-MM-dd').format(endDate.value.toUtc()),
+            // 'end_date': DateFormat('dd MMMM, yyyy').format(endDate.value),
           });
         }
       }

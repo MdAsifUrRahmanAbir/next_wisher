@@ -14,6 +14,7 @@ class PaymentInfoModel {
 
 class Data {
   final double commission;
+  final double maintainanceCharge;
   final String orderCode;
   final Talent talent;
   final Earning earning;
@@ -22,6 +23,7 @@ class Data {
 
   Data({
     required this.commission,
+    required this.maintainanceCharge,
     required this.orderCode,
     required this.talent,
     required this.earning,
@@ -31,6 +33,7 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     commission: json["commission"].toDouble(),
+    maintainanceCharge: json["maintenance_charge"].toDouble(),
     orderCode: json["order_code"],
     talent: Talent.fromJson(json["talent"]),
     earning: Earning.fromJson(json["earning"]),

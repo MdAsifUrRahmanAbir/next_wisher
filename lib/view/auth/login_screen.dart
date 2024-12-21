@@ -6,7 +6,6 @@ import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
 import '../../widgets/buttons/secondary_button.dart';
 import '../../widgets/inputs/password_input_widget.dart';
-import '../../widgets/others/rich_text_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import 'forgot_password_dialog.dart';
 

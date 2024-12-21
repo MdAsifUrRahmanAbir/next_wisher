@@ -23,7 +23,7 @@ class CategoriesWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: (){
-            controller.categoryModelProcess(controller.categoriesList[index].slug);
+            controller.categoryModelProcess(controller.categoriesList[index].slug, controller.categoriesList[index].name);
           },
           child: Column(
             children: [

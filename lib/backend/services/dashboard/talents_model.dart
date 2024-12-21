@@ -26,7 +26,7 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     talent: Talent.fromJson(json["talent"]),
     wish: Tips.fromJson(json["wish"]),
-    tips: Tips.fromJson(json["tips"]),
+    tips: Tips.fromJson(json["tips"] ?? {}),
     mylife: json["mylife"],
   );
 }
@@ -41,6 +41,7 @@ class Talent {
   final String role;
   final String videoPath;
   final String verificationVideo;
+  final String supportedLanguages;
   final Category category;
   final Category subcategory;
   final List<Rating> rating;
@@ -53,6 +54,7 @@ class Talent {
     required this.role,
     required this.videoPath,
     required this.verificationVideo,
+    required this.supportedLanguages,
     required this.category,
     required this.subcategory,
     required this.totalRating,
@@ -69,6 +71,7 @@ class Talent {
     videoPath: json["video_path"],
     verificationVideo: json["verification_video"],
     totalRating: json["total_rating"],
+    supportedLanguages: json["supported_languages"] ?? "",
     ratingPercent: json["rating_percent"].toDouble(),
     category: Category.fromJson(json["category"]),
     subcategory: Category.fromJson(json["subcategory"]),
@@ -138,10 +141,10 @@ class Tips {
   });
 
   factory Tips.fromJson(Map<String, dynamic> json) => Tips(
-    id: json["id"],
-    userId: json["user_id"],
-    type: json["type"],
-    status: json["status"],
-    amount: json["amount"].toDouble(),
+    id: json["id"] ?? 0,
+    userId: json["user_id"] ?? 0,
+    type: json["type"] ?? "",
+    status: json["status"] ?? false,
+    amount: (json["amount"] ?? 0).toDouble(),
   );
 }

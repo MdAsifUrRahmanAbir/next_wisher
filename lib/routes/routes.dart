@@ -12,6 +12,7 @@ class Routes {
 
   static const String btmScreen = '/btmScreen';
   static const String talentProfile = '/talentProfile';
+  static const String talentProfileNext = '/talentProfileNext';
   static const String changePasswordScreen = '/ChangePasswordScreen';
   static const String guidelineScreen = '/GuidelineScreen';
   static const String accountScreen = '/AccountScreen';

@@ -132,7 +132,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          controller.isLoading
+          (controller.profileController.isLoading || controller.isLoading)
               ? const CustomLoadingAPI()
               : InkWell(
                   borderRadius: BorderRadius.circular(Dimensions.radius),
@@ -218,7 +218,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
   _buildStep2() {
     return Center(
-      child: Obx(() => controller.isLoading
+      child: Obx(() => (controller.profileController.isLoading || controller.isLoading)
           ? const CustomLoadingAPI()
           : Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -341,54 +341,67 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   }
 
   _buildStep4() {
-
-
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: crossStart,
-        children: [
-          const TitleHeading4Widget(
-              text:
-                  'Please select all languages in which you can respond to a request'),
-          const SizedBox(height: 20),
-          Wrap(
-            spacing: 8.0,
-            children: controller.languages.map((language) {
-              return Obx(() => FilterChip(
-                label: TitleHeading4Widget(
-                  text: language,
-                  color: controller.selectedLanguages.toString().contains(language) ? Colors.green : null,
-                  fontWeight:
-                  controller.selectedLanguages.toString().contains(language) ? FontWeight.bold : FontWeight.normal,
+      child: (controller.profileController.isLoading || controller.isLoading)
+          ? const CustomLoadingAPI()
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: crossStart,
+              children: [
+                const TitleHeading4Widget(
+                    text:
+                        'Please select all languages in which you can respond to a request'),
+                const SizedBox(height: 20),
+                Wrap(
+                  spacing: 8.0,
+                  children: controller.languages.map((language) {
+                    return Obx(() => FilterChip(
+                          label: TitleHeading4Widget(
+                            text: language,
+                            color: controller.selectedLanguages
+                                    .toString()
+                                    .contains(language)
+                                ? Colors.green
+                                : null,
+                            fontWeight: controller.selectedLanguages
+                                    .toString()
+                                    .contains(language)
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                          selected: controller.selectedLanguages
+                              .toString()
+                              .contains(language),
+                          onSelected: (selected) {
+                            setState(() {
+                              if (selected) {
+                                if (!controller.selectedLanguages
+                                    .toString()
+                                    .contains(language)) {
+                                  controller.selectedLanguages.add(language);
+                                }
+                              } else {
+                                controller.selectedLanguages.remove(language);
+                              }
+                              debugPrint(language);
+                              debugPrint(selected.toString());
+                              debugPrint(controller.selectedLanguages
+                                  .toString()
+                                  .contains(language)
+                                  .toString());
+                            });
+                          },
+                        ));
+                  }).toList(),
                 ),
-                selected: controller.selectedLanguages.toString().contains(language),
-                onSelected: (selected) {
-                  setState(() {
-                    if (selected) {
-                      if(!controller.selectedLanguages.toString().contains(language)) {
-                        controller.selectedLanguages.add(language);
-                      }
-                    } else {
-                      controller.selectedLanguages.remove(language);
-                    }
-                    debugPrint(language);
-                    debugPrint(selected.toString());
-                    debugPrint(controller.selectedLanguages.toString().contains(language).toString());
-                  });
-                },
-              ));
-            }).toList(),
-          ),
-          verticalSpace(Dimensions.marginBetweenInputBox),
-          PrimaryButton(
-              title: Strings.update,
-              onPressed: () {
-
-                controller.talentSupportedLanguageProcess();
-              })
-        ],
-      ),
+                verticalSpace(Dimensions.marginBetweenInputBox),
+                PrimaryButton(
+                    title: Strings.update,
+                    onPressed: () {
+                      controller.talentSupportedLanguageProcess();
+                    })
+              ],
+            ),
     );
   }
 }

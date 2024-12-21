@@ -102,7 +102,7 @@ class PayScreen extends StatelessWidget {
                           fontWeight: FontWeight.normal),
                       TitleHeading3Widget(
                           text:
-                              "€${((isBook ? amount : controller.tipsValue.value) * (model.commission / 100)).toStringAsFixed(2)}",
+                              "€${((isBook ? amount : controller.tipsValue.value) * (model.maintainanceCharge / 100)).toStringAsFixed(2)}",
                           fontWeight: FontWeight.bold),
                     ],
                   ),
@@ -187,13 +187,18 @@ class PayScreen extends StatelessWidget {
                     title: "Continue to payment",
                     prefix: "💳",
                     suffix:
-                        "€${((isBook
+                        "€${
+                            (         ///   tipsValue.value + (tipsValue.value * (paymentInfoModel.data.commission / 100))
+                                (isBook
                             ? amount
                             : controller.tipsValue.value) +
                             ((isBook ? amount : controller.tipsValue.value) *
-                                (model.commission / 100))).toStringAsFixed(2)}",
+                                (model.maintainanceCharge / 100))
+                            ).toStringAsFixed(2)
+                        }",
                     backgroundColor: CustomColor.secondaryLightColor,
                     onPressed: () {
+
                       debugPrint(">> $isBook");
                       debugPrint(">> ${controller.tipsValue.value}");
                       debugPrint(">> ${((!isBook) && (controller.tipsValue.value.isGreaterThan(500) || controller.tipsValue.value.isLowerThan(10)))}");
@@ -204,7 +209,7 @@ class PayScreen extends StatelessWidget {
                         CustomSnackBar.error(Strings.tipsLimit);
                         return;
                       }
-                      debugPrint("1111111");
+                      debugPrint("1111111");   /// tipsValue.value + (tipsValue.value * (paymentInfoModel.data.commission / 100))
                       if (controller.paymentType.value == "credit-card") {
                         controller.payment(
                             data.id.toString(), isBook ? "wish" : "tips");
@@ -221,7 +226,7 @@ class PayScreen extends StatelessWidget {
                                   ? amount
                                   : controller.tipsValue.value) +
                               ((isBook ? amount : controller.tipsValue.value) *
-                                  (model.commission / 100)), // Example Amount
+                                  (model.maintainanceCharge / 100)), // Example Amount
                         );
                       }
                     })),

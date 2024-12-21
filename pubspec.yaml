@@ -46,6 +46,7 @@ dependencies:
   firebase_messaging:
   uuid:
   flutter_local_notifications:
+  shimmer:
 
 dev_dependencies:
   flutter_test:
@@ -63,4 +64,5 @@ flutter:
     - assets/
     - assets/categories/
     - assets/country/
+    - assets/playstore.png
 
