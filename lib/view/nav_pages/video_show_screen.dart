@@ -20,6 +20,13 @@ class _VideoShowScreenState extends State<VideoShowScreen> {
   late ChewieController chewieController;
 
   @override
+  void dispose() {
+    videoPlayerController.dispose();
+    chewieController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     _initVideo();
     super.initState();

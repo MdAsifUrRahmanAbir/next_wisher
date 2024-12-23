@@ -7,14 +7,13 @@ nextwisher.com
 App Testing Credentials
 
 Talent: 
-abubakkar@gmail.com
-appdevs23
+1. abubakkar@gmail.com   -   appdevs23   (ABS)
+2. Winnaprod@gmail.com   -   Tidiane16  (Live)
 
 
 User:
-bokkor3279789976@gmail.com
-12345678
+1. bokkor3279789976@gmail.com   -  12345678    (ABS)
+2. bibte00@gmail.com            -  Password    (Live)
 
 
-after book redirect to msg,
-for tips, redirect to talent profile
+If your request for a personalized video could not be completed or expires, we will refund your money within 3-10 working days. Refunds can only be sent back to the original payment method used in a charge.

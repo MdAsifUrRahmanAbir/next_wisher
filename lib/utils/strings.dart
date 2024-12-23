@@ -167,7 +167,7 @@ If your request for a personalized video could not be completed or expires, we w
   static String selectPaymentMethod  = "Select Payment Method";
   static String creditCard = "Credit Card";
   static String mobilePayment = "Mobile Payment";
-  static String tip  = "Tip";
+  static String tip  = "Tips";
   static String serviceFee  = "Service Fee";
   static String successfullyPaymentDone  = "Payment Successfully Done";
   static String somethingWentWrong  = "Something Went Wrong";
@@ -213,7 +213,7 @@ If your request for a personalized video could not be completed or expires, we w
   static String activate  = "Activate";
   static String updateAndSave  = "Update/Save";
   static String wishTitle  = "Please setup an amount to charge for Wish Request";
-  static String wishRequest  = "Wish request";
+  static String wishRequest  = "Wish Request";
   static String themeChange  = "Theme change";
   static String tipsTitle  = "Please activate the Tips option to receive tips from your fans or followers";
   static String selectLanguage  = "Select language";

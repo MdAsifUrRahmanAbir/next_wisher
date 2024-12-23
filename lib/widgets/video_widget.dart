@@ -36,8 +36,12 @@ class VideoWidgetState extends State<VideoWidget> {
       videoPlayerController: _videoPlayerController,
       autoPlay: true, // Auto-play the video
       looping: false, // Disable looping by default
+      placeholder: CustomLoadingAPI(),
+      errorBuilder: (context, url) => Icon(Icons.error),
+      allowFullScreen: false,
+      zoomAndPan: false,
+      fullScreenByDefault: false,
       aspectRatio: 16 / 9, // Adjust the aspect ratio
-      allowFullScreen: true, // Allow fullscreen
     );
   }
 

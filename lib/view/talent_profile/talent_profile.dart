@@ -87,10 +87,20 @@ class TalentProfile extends StatelessWidget {
                   showRatingsDialog(context, controller.talentsModel.data.talent.rating);
                 },
               ),
-              TitleHeading3Widget(
-                  text: " ${controller.talentsModel.data.talent.ratingPercent.toStringAsFixed(1)} ", fontWeight: FontWeight.bold),
-              TitleHeading5Widget(
-                  text: "(${controller.talentsModel.data.talent.totalRating})", fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor,),
+              InkWell(
+                onTap: (){
+                  showRatingsDialog(context, controller.talentsModel.data.talent.rating);
+                },
+                child: TitleHeading3Widget(
+                    text: " ${controller.talentsModel.data.talent.ratingPercent.toStringAsFixed(1)} ", fontWeight: FontWeight.bold),
+              ),
+              InkWell(
+                onTap: (){
+                  showRatingsDialog(context, controller.talentsModel.data.talent.rating);
+                },
+                child: TitleHeading5Widget(
+                    text: "(${controller.talentsModel.data.talent.totalRating})", fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor,),
+              ),
             ],
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .2),
@@ -100,10 +110,9 @@ class TalentProfile extends StatelessWidget {
           TitleHeading4Widget(
               text: data.talent.bio, fontWeight: FontWeight.bold),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
-          Container(
-            height: 500,
-            width: 300,
-            color: Colors.black,
+          SizedBox(
+            height: 350,
+            width: double.infinity,
             child: Chewie(
               controller: controller.chewieController,
             ),

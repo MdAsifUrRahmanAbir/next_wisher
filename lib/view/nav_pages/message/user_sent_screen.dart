@@ -13,9 +13,11 @@ import '../../../utils/strings.dart';
 import '../../../widgets/text_labels/title_heading5_widget.dart';
 
 class UserSentScreen extends StatefulWidget {
-  const UserSentScreen({super.key, required this.data});
+  const UserSentScreen(
+      {super.key, required this.data, required this.isFiveDaysPass});
 
   final Email data;
+  final bool isFiveDaysPass;
 
   @override
   State<UserSentScreen> createState() => _UserSentScreenState();
@@ -65,8 +67,10 @@ class _UserSentScreenState extends State<UserSentScreen> {
             verticalSpace(Dimensions.paddingSizeVertical * .2),
             _row(Strings.instruction, widget.data.instructions),
             verticalSpace(Dimensions.paddingSizeVertical * .8),
-            Visibility(
-                visible: (!LocalStorage.isUser() && widget.data.attachment.isEmpty),
+
+            widget.isFiveDaysPass ? SizedBox.shrink(): Visibility(
+                visible:
+                    (!LocalStorage.isUser() && widget.data.attachment.isEmpty),
                 child: Column(
                   crossAxisAlignment: crossStart,
                   children: [

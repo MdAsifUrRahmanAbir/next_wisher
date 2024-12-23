@@ -147,7 +147,7 @@ class FeaturedCelebritiesScreen extends StatelessWidget {
                                 )
                               : TitleHeading3Widget(
                                   text:
-                                      "\$${data.amount.first.amount.toStringAsFixed(2)}",
+                                      "€${data.amount.first.amount.toStringAsFixed(2)}",
                                   fontWeight: FontWeight.bold),
                         ],
                       ),

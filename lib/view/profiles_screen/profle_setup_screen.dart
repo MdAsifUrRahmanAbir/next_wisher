@@ -6,6 +6,7 @@ import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import '../../backend/services/profile/talent_profile_model.dart';
 import '../../controller/profile/profile_controller.dart';
 import '../../controller/profile/profile_setup_controller.dart';
+import '../../language/language_controller.dart';
 import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
@@ -71,12 +72,12 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
         ),
         title: TitleHeading3Widget(
           text: _currentStep == 0
-              ? "Add Profile Picture"
+              ? languageSettingController.getTranslation("Add Profile Picture")
               : _currentStep == 1
-                  ? "Add Profile Video"
+                  ? languageSettingController.getTranslation("Add Profile Video")
                   : _currentStep == 2
-                      ? "Add Biography"
-                      : "Select Languages",
+                      ? languageSettingController.getTranslation("Add Biography")
+                      : languageSettingController.getTranslation("Select Languages"),
         ),
       ),
       body: Obx(() => Padding(
@@ -100,7 +101,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
             if (_currentStep > 0) // Show Back button from Step 2 onward
               TextButton(
                 onPressed: _previousStep,
-                child: const Text('Back'),
+                child: const TitleHeading4Widget(text: 'Back'),
               ),
             const Spacer(),
             if (_currentStep < 3) // Show Next button for all but last step
@@ -118,7 +119,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         _currentStep == 3,
                     child: TextButton(
                       onPressed: _nextStep,
-                      child: const Text('Next'),
+                      child: TitleHeading4Widget(text:'Next'),
                     ),
                   )),
           ],
@@ -199,7 +200,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                   .profileImage
                   .isNotEmpty
               ? PrimaryButton(
-                  title: Strings.updateProfilePicture,
+                  title: "Update",
                   onPressed: () {
                     ImagePickerDialog.pickImage(context, onPicked: (File file) {
                       controller.imageFile.value = file.path;
@@ -217,6 +218,12 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   }
 
   _buildStep2() {
+    debugPrint("VIDEO >>");
+    debugPrint(Get.find<ProfileController>()
+        .talentProfileModelModel
+        .data
+        .userInfo
+        .videoPath);
     return Center(
       child: Obx(() => (controller.profileController.isLoading || controller.isLoading)
           ? const CustomLoadingAPI()
@@ -235,8 +242,11 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     });
                   },
                   child: Container(
-                    width: MediaQuery.sizeOf(context).width * .7,
-                    height: MediaQuery.sizeOf(context).height * .5,
+                    margin: EdgeInsets.symmetric(
+                      horizontal: Dimensions.paddingSizeHorizontal
+                    ),
+                    width: double.infinity,
+                    height: 350,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(Dimensions.radius),

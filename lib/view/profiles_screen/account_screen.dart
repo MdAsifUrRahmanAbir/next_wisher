@@ -61,17 +61,17 @@ class AccountScreen extends StatelessWidget {
             const SizedBox(height: 16),
             PasswordInputWidget(
                 controller: controller.currentPasswordController,
-                hint: Strings.enterPassword,
+                hint: "",
                 labelText: Strings.oldPassword),
             SizedBox(height: Dimensions.paddingSizeVertical * .6),
             PasswordInputWidget(
                 controller: controller.newPasswordController,
-                hint: Strings.enterPassword,
+                hint: "",
                 labelText: Strings.newPassword),
             SizedBox(height: Dimensions.paddingSizeVertical * .6),
             PasswordInputWidget(
                 controller: controller.confirmPasswordController,
-                hint: Strings.enterPassword,
+                hint: "",
                 labelText: Strings.confirmPassword),
             const SizedBox(height: 16),
         Obx(() => controller.isChangeLoading ? const CustomLoadingAPI(): PrimaryButton(
@@ -103,7 +103,7 @@ class AccountScreen extends StatelessWidget {
             PrimaryTextInputWidget(
                 controller: controller.nameController,
                 labelText: Strings.name,
-                hint: Strings.enterName),
+                hint: ""),
             SizedBox(height: Dimensions.paddingSizeVertical * .6),
             PrimaryTextInputWidget(
                 controller: controller.emailController,
@@ -134,11 +134,11 @@ class AccountScreen extends StatelessWidget {
         children: [
           Obx(() => controller.isDeleteLoading ? const CustomLoadingAPI(): PrimaryButton(
               backgroundColor: CustomColor.redColor,
-              title: Strings.delete,
+              title: "Delete Your Account",
               onPressed: () {
                 DialogHelper.showAlertDialog(Get.context!,
-                    title: Strings.delete,
-                    content: Strings.areYouSure,
+                    title: "Delete Your Account",
+                    content: "",
                     onTap: () {
                   Get.close(1);
                   controller.deleteAccountProcess();

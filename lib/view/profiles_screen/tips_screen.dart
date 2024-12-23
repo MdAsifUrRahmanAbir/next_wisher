@@ -113,7 +113,7 @@ class TipsScreenState extends State<TipsScreen> {
                 Get.to(TalentProfile(showBTM: false));
                 debugPrint("Preview Profile clicked");
               },
-              title: Strings.previewProfile,
+              title: "Preview Profile",
             ),
           ),
         ],

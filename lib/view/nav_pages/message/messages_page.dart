@@ -70,6 +70,11 @@ class MessagePage extends StatelessWidget {
 
                     debugPrint(">> Name: ${data.name} >> Role: ${data.role}");
 
+                    debugPrint("--------------------------------------");
+                    debugPrint(data.expirationDate.isAfter(DateTime.now()).toString());
+                    debugPrint(" Expiration Date: ${data.expirationDate}");
+                    debugPrint(" Now Date: ${DateTime.now()}");
+
                     return MessageTileWidget(
                       onTap: () {
                         if (data.seen == 0) {
@@ -81,7 +86,9 @@ class MessagePage extends StatelessWidget {
                           debugPrint(LocalStorage.isUser().toString());
                           controller.ratingCheckModelProcess(userId: data.userId.toString(), earningId: data.talentEarningId.toString());
                         }
-                        LocalStorage.isUser() ? Get.to(UserInboxScreen(data: data)) : Get.to(UserSentScreen(data: data));
+                        LocalStorage.isUser() ? Get.to(UserInboxScreen(data: data)) : Get.to(UserSentScreen(data: data,
+                            isFiveDaysPass: !data.expirationDate.isAfter(DateTime.now())
+                        ));
                       },
                       data: data,
                     );
@@ -100,13 +107,17 @@ class MessagePage extends StatelessWidget {
 
                     debugPrint(">> Name: ${data.name} >> Role: ${data.role}");
 
+                    debugPrint("--------------------------------------");
+                    debugPrint(data.expirationDate.isAfter(DateTime.now()).toString());
+                    debugPrint(" Expiration Date: ${data.expirationDate}");
+                    debugPrint(" Now Date: ${DateTime.now()}");
                     return MessageTileWidget(
                         onTap: () {
                           if (data.seen == 0) {
                             debugPrint(data.seen.toString());
                             controller.mailSeenProcess(data.id.toString());
                           }
-                          !LocalStorage.isUser() ? Get.to(UserInboxScreen(data: data)) : Get.to(UserSentScreen(data: data));
+                          !LocalStorage.isUser() ? Get.to(UserInboxScreen(data: data)) : Get.to(UserSentScreen(data: data, isFiveDaysPass: !data.expirationDate.isAfter(DateTime.now())));
                         },
                         data: data);
                   },

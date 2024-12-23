@@ -15,7 +15,7 @@ class DialogHelper {
       builder: (context) {
         return AlertDialog(
           title: TitleHeading3Widget(text: title),
-          content: TitleHeading4Widget(text: content, opacity: .6),
+          content: content.isEmpty ? null: TitleHeading4Widget(text: content, opacity: .6),
           actions: <Widget>[
             TextButton(
               onPressed: () {

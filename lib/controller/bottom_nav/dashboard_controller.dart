@@ -1,6 +1,8 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:next_wisher/backend/utils/custom_loading_api.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../backend/services/dashboard/category_model.dart';
@@ -125,6 +127,7 @@ class DashboardController extends GetxController with DashboardService {
       _talentsModel = value!;
       videoPlayerController = VideoPlayerController.networkUrl(
           Uri.parse(_talentsModel.data.talent.videoPath)
+          // Uri.parse("https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4")
           // "https://next-wisher.skyflightbd.com/public/uploads/1730566102.mp4"),
           )
         ..initialize();
@@ -132,8 +135,14 @@ class DashboardController extends GetxController with DashboardService {
       chewieController = ChewieController(
         // aspectRatio: 1,
         videoPlayerController: videoPlayerController,
-        autoPlay: false,
-        looping: false,
+        autoPlay: true, // Auto-play the video
+        looping: false, // Disable looping by default
+        aspectRatio: 16/9,
+        placeholder: CustomLoadingAPI(),
+        errorBuilder: (context, url) => Icon(Icons.error),
+        allowFullScreen: false,
+        zoomAndPan: false,
+        fullScreenByDefault: false
       );
 
       debugPrint(_talentsModel.data.talent.videoPath);

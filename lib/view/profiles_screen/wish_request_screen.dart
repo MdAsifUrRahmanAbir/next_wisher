@@ -5,6 +5,7 @@ import '../../backend/local_storage/local_storage.dart';
 import '../../backend/utils/custom_snackbar.dart';
 import '../../controller/bottom_nav/dashboard_controller.dart';
 import '../../controller/profile/wish_and_tips_controller.dart';
+import '../../language/language_controller.dart';
 import '../../utils/strings.dart';
 import '../talent_profile/talent_profile.dart';
 
@@ -22,7 +23,7 @@ class WishRequestState extends State<WishRequest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PrimaryAppBar(
-        title: Strings.wishRequest
+        title: languageSettingController.getTranslation(Strings.wishRequest)
       ),
       body: Obx(() =>
           controller.isLoading ? const CustomLoadingAPI() : _bodyWidget()),
@@ -39,7 +40,7 @@ class WishRequestState extends State<WishRequest> {
           ),
           const SizedBox(height: 20),
           TitleHeading3Widget(text:
-            Strings.enterAmount,
+            "Enter Amount",
               fontWeight: FontWeight.bold
           ),
           const SizedBox(height: 10),
@@ -54,7 +55,7 @@ class WishRequestState extends State<WishRequest> {
                       controller.amount.value = double.parse(value);
                     }
                   },
-                  labelText: Strings.enterAmount,
+                  labelText: "Enter Amount",
                   hint: '',
                 ),
               ),
@@ -144,7 +145,7 @@ class WishRequestState extends State<WishRequest> {
                 Get.to(TalentProfile(showBTM: false,));
                 debugPrint("Preview Profile clicked");
               },
-              title: Strings.previewProfile,
+              title: "Preview Profile",
             ),
           ),
         ],

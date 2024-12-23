@@ -127,7 +127,7 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
               verticalSpace(Dimensions.paddingSizeVertical * .2),
               _row(Strings.message, widget.data.instructions),
               Visibility(
-                visible: widget.data.downloadStatus || isDownloaded.value,
+                visible: (widget.data.downloadStatus || isDownloaded.value) && LocalStorage.isUser(),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimensions.paddingSizeHorizontal * .6,
@@ -237,9 +237,10 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
     setState(() {
       // isVideoReady = true;
     });
+    debugPrint("Message Video >> ${widget.data.attachment}");
     videoPlayerController = VideoPlayerController.networkUrl(
         Uri.parse(widget.data.attachment)
-        // Uri.parse("https://next-wisher.skyflightbd.com/public/uploads/1730566102.mp4"),
+        // Uri.parse("https://nextwisher.com/uploads/1725639128.mov"),
         )
       ..initialize();
 
