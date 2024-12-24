@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 
 import '../../controller/auth/login_controller.dart';
@@ -18,25 +17,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final controller = Get.put(LoginController());
-  String? _deviceToken;
-
-  @override
-  void initState() {
-    super.initState();
-    _getDeviceToken();
-  }
-
-  Future<void> _getDeviceToken() async {
-    try {
-      String? token = await FirebaseMessaging.instance.getToken();
-      setState(() {
-        _deviceToken = token;
-      });
-      debugPrint("Device Token: $_deviceToken");
-    } catch (e) {
-      debugPrint("Error getting device token: $e");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   : PrimaryButton(
                       title: "Sign in",
                       onPressed: () {
-                        controller.login(_deviceToken ?? "");
+                        controller.login();
                       })),
               verticalSpace(Dimensions.marginSizeVertical),
               // _richTextWidget()

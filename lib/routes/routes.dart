@@ -23,5 +23,6 @@ class Routes {
   static const String paymentScreen = '/PaymentScreen';
   static const String historyScreen = '/HistoryScreen';
   static const String themeChangeScreen = '/themeChangeScreen';
+  static const String emailVerificationScreen = '/EmailVerificationScreen';
 
 }

@@ -46,6 +46,7 @@ class UserInfo {
   final String bio;
   final String email;
   final String role;
+  final String emailVerified;
   final int status;
   final int fileAccess;
   final int isFeatured;
@@ -61,6 +62,7 @@ class UserInfo {
     required this.fileAccess,
     required this.isFeatured,
     required this.balance,
+    required this.emailVerified,
   });
 
   factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
@@ -72,6 +74,7 @@ class UserInfo {
     status: json["status"],
     fileAccess: json["file_access"],
     isFeatured: json["is_featured"],
+    emailVerified: json["email_verified_at"] ?? "",
     balance: json["balance"].toDouble(),
   );
 }

@@ -7,7 +7,9 @@ import '../../../controller/profile/profile_controller.dart';
 import '../../../routes/routes.dart';
 import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
- import '../../profiles_screen/earnings_screen.dart';
+import '../../../widgets/text_labels/title_heading5_widget.dart';
+import '../../dynamic_webview_screen.dart';
+import '../../profiles_screen/earnings_screen.dart';
 import 'menu_button_widget.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -48,46 +50,119 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          // mainAxisAlignment: mainCenter,
-          children: [
-            verticalSpace(Dimensions.buttonHeight),
-            MenuButton(
-              title: Strings.guideline,
-              onTap: () {
-                Get.toNamed(Routes.guidelineScreen);
-              },
-            ),
-            const Divider(height: 1, thickness: 1),
-            MenuButton(
-              title: Strings.account,
-              onTap: onAccountTap,
-            ),
-            _talentSitesWidget(),
-            const Divider(height: 1, thickness: 1),
-            MenuButton(
-              title: Strings.themeChange,
-              onTap: (){
-                Get.toNamed(Routes.themeChangeScreen);
-              },
-            ),
-            const Divider(height: 1, thickness: 1),
-            Obx(() => Get.find<BottomNavController>().isLogoutLoading
-                ? const CustomLoadingAPI()
-                : MenuButton(
-                    title: Strings.logout,
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  // verticalSpace(Dimensions.buttonHeight),
+                  MenuButton(
+                    title: Strings.guideline,
                     onTap: () {
-                      DialogHelper.showAlertDialog(context,
-                          title: Strings.logout,
-                          content: Strings.logOutContent, onTap: () {
-                        Get.find<BottomNavController>().logoutProcess();
-                      });
+                      Get.toNamed(Routes.guidelineScreen);
                     },
-                  )),
-          ],
-        ),
+                  ),
+                  const Divider(height: 1, thickness: 1),
+                  MenuButton(
+                    title: Strings.account,
+                    onTap: onAccountTap,
+                  ),
+                  _talentSitesWidget(),
+                  const Divider(height: 1, thickness: 1),
+                  MenuButton(
+                    title: Strings.themeChange,
+                    onTap: () {
+                      Get.toNamed(Routes.themeChangeScreen);
+                    },
+                  ),
+                  const Divider(height: 1, thickness: 1),
+                  Obx(() => Get.find<BottomNavController>().isLogoutLoading
+                      ? const CustomLoadingAPI()
+                      : MenuButton(
+                          title: Strings.logout,
+                          onTap: () {
+                            DialogHelper.showAlertDialog(context,
+                                title: Strings.logout,
+                                content: Strings.logOutContent, onTap: () {
+                              Get.find<BottomNavController>().logoutProcess();
+                            });
+                          },
+                        )),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: 250,
+            color: Colors.black,
+            child: Column(
+              children: [
+                Image.asset(
+                  "assets/logo.png",
+                  height: 150,
+                  fit: BoxFit.contain,
+                ),
+                Row(
+                  mainAxisAlignment: mainSpaceBet,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Get.to(WebViewScreen(
+                            link: 'https://nextwisher.com/pages/privacy-policy',
+                            appTitle: 'Privacy Policy',
+                          ));
+                        },
+                        child: TitleHeading5Widget(
+                          text: "Privacy Policy",
+                          color: Colors.white,
+                        )),
+                    TextButton(
+                        onPressed: () {
+                          Get.to(WebViewScreen(
+                            link:
+                                'https://nextwisher.com/pages/terms-of-service',
+                            appTitle: 'Terms of service',
+                          ));
+                        },
+                        child: TitleHeading5Widget(
+                          text: "Terms of service",
+                          color: Colors.white,
+                        )),
+                    TextButton(
+                        onPressed: () {
+                          Get.to(WebViewScreen(
+                            link: 'https://nextwisher.com/pages/faq',
+                            appTitle: 'FAQ',
+                          ));
+                        },
+                        child: TitleHeading5Widget(
+                          text: "FAQ",
+                          color: Colors.white,
+                        )),
+                    TextButton(
+                        onPressed: () {
+                          Get.to(WebViewScreen(
+                            link: 'https://nextwisher.com/pages/contact',
+                            appTitle: 'Contact',
+                          ));
+                        },
+                        child: TitleHeading5Widget(
+                          text: "Contact",
+                          color: Colors.white,
+                        )),
+                  ],
+                ),
+                TitleHeading4Widget(
+                  text: "© 2024 Nextwisher",
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

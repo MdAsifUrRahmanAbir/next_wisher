@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../binding/dashboard_binding.dart';
 import '../binding/splash_binding.dart';
+import '../view/auth/email_verification_screen.dart';
 import '../view/auth/login_screen.dart';
 import '../view/auth/talent_registration_screen.dart';
 import '../view/auth/user_registration_screen.dart';
@@ -108,6 +109,10 @@ class Pages{
     GetPage(
       name: Routes.themeChangeScreen,
       page: () =>  const ThemeChangeScreen(),
+    ),
+    GetPage(
+      name: Routes.emailVerificationScreen,
+      page: () =>  const EmailVerificationScreen(),
     ),
   ];
 }

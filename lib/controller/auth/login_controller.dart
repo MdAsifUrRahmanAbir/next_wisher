@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
 import 'package:next_wisher/backend/model/common/common_success_model.dart';
 import 'package:next_wisher/backend/utils/custom_snackbar.dart';
@@ -25,9 +26,28 @@ class LoginController extends GetxController with AuthService {
     super.dispose();
   }
 
-  void login(String deviceToken) async {
+
+  RxString deviceToken = "".obs;
+
+  @override
+  void onInit() {
+    _getDeviceToken();
+    super.onInit();
+  }
+
+  Future<void> _getDeviceToken() async {
+    try {
+      String? token = await FirebaseMessaging.instance.getToken();
+        deviceToken.value = token!;
+      debugPrint("Device Token: ${deviceToken.value}");
+    } catch (e) {
+      debugPrint("Error getting device token: $e");
+    }
+  }
+
+  void login() async {
     if (formKey.currentState!.validate()) {
-      await loginProcess(deviceToken);
+      await loginProcess(true);
     }
   }
 
@@ -54,18 +74,20 @@ class LoginController extends GetxController with AuthService {
   LoginModel get loginModel => _loginModel;
 
   ///* Login in process
-  Future<LoginModel> loginProcess(String deviceToken) async {
+  Future<LoginModel> loginProcess(bool isVerified) async {
     _isLoading.value = true;
     update();
     Map<String, dynamic> inputBody = {
       'email': emailController.text,
       'password': passwordController.text,
-      'fcm_token': deviceToken
+      'fcm_token': deviceToken.value
     };
     await loginProcessApi(body: inputBody).then((value) {
       _loginModel = value!;
-      if(_loginModel.data.userInfo.status == 1){
-        LocalStorage.saveToken(token: _loginModel.data.token);
+
+      debugPrint(_loginModel.data.userInfo.emailVerified.isNotEmpty.toString());
+      LocalStorage.saveToken(token: _loginModel.data.token);
+      if(_loginModel.data.userInfo.emailVerified.isNotEmpty){
         LocalStorage.saveId(id: _loginModel.data.userInfo.id.toString());
         LocalStorage.isLoginSuccess(isLoggedIn: rememberMe.value);
         LocalStorage.isUserSave(
@@ -76,6 +98,9 @@ class LoginController extends GetxController with AuthService {
         debugPrint(" - >> Role is user? ${LocalStorage.isUser()}");
         Get.offAllNamed(Routes.btmScreen);
       }else{
+        if(isVerified) {
+          Get.toNamed(Routes.emailVerificationScreen);
+        }
         CustomSnackBar.error("You need to verify email first.");
       }
       _isLoading.value = false;
@@ -89,9 +114,34 @@ class LoginController extends GetxController with AuthService {
   }
 
 
+  /// ------------------------------------- >>
+
+  final _isResendEmailLoading = false.obs;
+  bool get isResendEmailLoading => _isResendEmailLoading.value;
 
 
+  late CommonSuccessModel _resendEmailModel;
+  CommonSuccessModel get resendEmailModel => _resendEmailModel;
 
+
+  ///* ForgotPassword in process
+  Future<CommonSuccessModel> resendEmailProcess() async {
+    _isResendEmailLoading.value = true;
+    update();
+    Map<String, dynamic> inputBody = {};
+
+    await resendEmailApi(body: inputBody).then((value) {
+      _resendEmailModel = value!;
+
+      _isResendEmailLoading.value = false;
+      update();
+    }).catchError((onError) {
+      log.e(onError);
+    });
+    _isResendEmailLoading.value = false;
+    update();
+    return _resendEmailModel;
+  }
 
   /// ------------------------------------- >>
   final _isForgotLoading = false.obs;
