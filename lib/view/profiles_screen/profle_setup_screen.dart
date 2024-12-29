@@ -12,6 +12,7 @@ import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
 import '../../widgets/others/image_picker_dialog.dart';
 import '../../widgets/video_widget.dart';
+import '../video_from_web.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
   const ProfileSetupScreen({super.key});
@@ -246,7 +247,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                       horizontal: Dimensions.paddingSizeHorizontal
                     ),
                     width: double.infinity,
-                    height: 350,
+                    height: 400,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(Dimensions.radius),
@@ -262,7 +263,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                 .userInfo
                                 .videoPath
                                 .isNotEmpty
-                            ? VideoWidget(
+                            ? VideoPlayerScreen(
                                 videoUrl: Get.find<ProfileController>()
                                     .talentProfileModelModel
                                     .data

@@ -1,14 +1,17 @@
+// import 'package:chewie/chewie.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:next_wisher/backend/utils/custom_loading_api.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
+// import 'package:next_wisher/backend/utils/custom_loading_api.dart';
+// import 'package:shimmer/shimmer.dart';
+// import 'package:video_player/video_player.dart';
 
 import '../../backend/services/dashboard/category_model.dart';
 import '../../backend/services/dashboard/dashboard_service.dart';
 import '../../backend/services/dashboard/home_model.dart';
 import '../../backend/services/dashboard/talents_model.dart';
+import '../../backend/utils/custom_loading_api.dart';
 import '../../view/nav_pages/dashboard/featured_celebrities_screen.dart';
 import 'bottom_nav_controller.dart';
 
@@ -125,25 +128,27 @@ class DashboardController extends GetxController with DashboardService {
     update();
     await talentsProcessApi(id).then((value) {
       _talentsModel = value!;
-      videoPlayerController = VideoPlayerController.networkUrl(
-          Uri.parse(_talentsModel.data.talent.videoPath)
-          // Uri.parse("https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4")
-          // "https://next-wisher.skyflightbd.com/public/uploads/1730566102.mp4"),
-          )
-        ..initialize();
-
-      chewieController = ChewieController(
-        // aspectRatio: 1,
-        videoPlayerController: videoPlayerController,
-        autoPlay: true, // Auto-play the video
-        looping: false, // Disable looping by default
-        aspectRatio: 16/9,
-        placeholder: CustomLoadingAPI(),
-        errorBuilder: (context, url) => Icon(Icons.error),
-        allowFullScreen: false,
-        zoomAndPan: false,
-        fullScreenByDefault: false
-      );
+      // videoPlayerController = VideoPlayerController.networkUrl(
+      //     Uri.parse(_talentsModel.data.talent.videoPath)
+      //     // Uri.parse("https://nextwisher.com/uploads/1734898560.mp4")
+      //     )
+      //   ..initialize();
+      //
+      // chewieController = ChewieController(
+      //   aspectRatio: 4/5,
+      //   maxScale: 1,
+      //   videoPlayerController: videoPlayerController,
+      //   autoPlay: true, // Auto-play the video
+      //   looping: false, // Disable looping by default
+      //   // aspectRatio: 16/9,
+      //   placeholder: CustomLoadingAPI(),
+      //   errorBuilder: (context, url) => Icon(Icons.error),
+      //
+      //
+      //   allowFullScreen: true,
+      //   zoomAndPan: false,
+      //   fullScreenByDefault: false
+      // );
 
       debugPrint(_talentsModel.data.talent.videoPath);
       _isTalentLoading.value = false;
@@ -158,8 +163,8 @@ class DashboardController extends GetxController with DashboardService {
 
   @override
   void dispose() {
-    videoPlayerController.dispose();
-    chewieController.dispose();
+    // videoPlayerController.dispose();
+    // chewieController.dispose();
     super.dispose();
   }
 }

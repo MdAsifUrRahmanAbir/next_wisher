@@ -34,15 +34,20 @@ class VideoWidgetState extends State<VideoWidget> {
     // Initialize ChewieController with additional options
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
-      autoPlay: true, // Auto-play the video
+      autoPlay: false, // Auto-play the video
       looping: false, // Disable looping by default
       placeholder: CustomLoadingAPI(),
       errorBuilder: (context, url) => Icon(Icons.error),
-      allowFullScreen: false,
+
+      allowFullScreen: true,
       zoomAndPan: false,
-      fullScreenByDefault: false,
+      fullScreenByDefault: true,
       aspectRatio: 16 / 9, // Adjust the aspect ratio
     );
+
+    setState(() {
+
+    });
   }
 
   @override

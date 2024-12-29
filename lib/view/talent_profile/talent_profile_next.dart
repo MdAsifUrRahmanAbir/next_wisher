@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:chewie/chewie.dart';
+// import 'package:chewie/chewie.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:intl/intl.dart';
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
@@ -18,6 +18,7 @@ import '../../widgets/drawer/drawer_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../book_now/pay_screen.dart';
 import '../bottom_nav/custom_bottom_nav_bar_next.dart';
+import '../video_from_web.dart';
 
 class TalentProfileNext extends StatelessWidget {
   TalentProfileNext({super.key, this.showBTM = true});
@@ -31,7 +32,7 @@ class TalentProfileNext extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: ()async{
-        controller.chewieController.pause();
+        // controller.chewieController.pause();
         Get.find<BottomNavController>().selectedIndex.value = showBTM ? 0 : 4;
         Navigator.pop(context);
         return true;
@@ -100,13 +101,8 @@ class TalentProfileNext extends StatelessWidget {
           TitleHeading4Widget(
               text: data.talent.bio, fontWeight: FontWeight.bold),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
-          Container(
-            height: 500,
-            width: 300,
-            color: Colors.black,
-            child: Chewie(
-              controller: controller.chewieController,
-            ),
+          VideoPlayerScreen(
+            videoUrl: controller.talentsModel.data.talent.videoPath,
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
           data.talent.supportedLanguages.isEmpty ? SizedBox.shrink() : Row(
@@ -154,7 +150,7 @@ class TalentProfileNext extends StatelessWidget {
                 child: PrimaryButton(
                     title: Strings.book,
                     onPressed: () {
-                      controller.chewieController.pause();
+                      // controller.chewieController.pause();
                       if (LocalStorage.isUser()) {
                         bookNowController.paymentInfoProcess(data.talent.id);
                         Get.toNamed(Routes.bookNowScreen);
@@ -170,7 +166,7 @@ class TalentProfileNext extends StatelessWidget {
                     title: Strings.sendTip,
                     backgroundColor: CustomColor.secondaryLightColor,
                     onPressed: () {
-                      controller.chewieController.pause();
+                      // controller.chewieController.pause();
                       if (LocalStorage.isUser()) {
                         bookNowController.paymentInfoProcess(data.talent.id);
                         Get.to(PayScreen(isBook: false));

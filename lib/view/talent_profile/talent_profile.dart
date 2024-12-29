@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:chewie/chewie.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:intl/intl.dart';
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
@@ -18,6 +17,7 @@ import '../../widgets/drawer/drawer_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../book_now/pay_screen.dart';
 import '../bottom_nav/custom_bottom_nav_bar.dart';
+import '../video_from_web.dart';
 
 class TalentProfile extends StatelessWidget {
   TalentProfile({super.key, this.showBTM = true});
@@ -30,15 +30,15 @@ class TalentProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async{
-        controller.chewieController.pause();
+      onWillPop: () async {
+        // controller.chewieController.pause();
         Get.find<BottomNavController>().selectedIndex.value = showBTM ? 0 : 4;
         Navigator.pop(context);
         return true;
       },
       child: Scaffold(
         // appBar: const PrimaryAppBar(),
-      
+
         //    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
         key: _scaffoldKey,
         drawer: DrawerWidget(),
@@ -65,169 +65,189 @@ class TalentProfile extends StatelessWidget {
   _bodyWidget(BuildContext context) {
     var data = controller.talentsModel.data;
     return SafeArea(
-      child: ListView(
-        padding: const EdgeInsets.all(12),
+      child: Column(
         children: [
-          TitleHeading2Widget(
-              text: data.talent.name, fontWeight: FontWeight.bold),
-          verticalSpace(Dimensions.paddingSizeVertical * .2),
-          TitleHeading3Widget(
-            text:
-                "${data.talent.category.name} / ${data.talent.subcategory.name}",
-            opacity: .5,
-          ),
-          verticalSpace(Dimensions.paddingSizeVertical * .5),
-          Row(
-            children: [
-              StarRating(
-                mainAxisAlignment: mainStart,
-                rating: controller.talentsModel.data.talent.ratingPercent,
-                allowHalfRating: false,
-                onRatingChanged: (rating) {
-                  showRatingsDialog(context, controller.talentsModel.data.talent.rating);
-                },
-              ),
-              InkWell(
-                onTap: (){
-                  showRatingsDialog(context, controller.talentsModel.data.talent.rating);
-                },
-                child: TitleHeading3Widget(
-                    text: " ${controller.talentsModel.data.talent.ratingPercent.toStringAsFixed(1)} ", fontWeight: FontWeight.bold),
-              ),
-              InkWell(
-                onTap: (){
-                  showRatingsDialog(context, controller.talentsModel.data.talent.rating);
-                },
-                child: TitleHeading5Widget(
-                    text: "(${controller.talentsModel.data.talent.totalRating})", fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor,),
-              ),
-            ],
-          ),
-          verticalSpace(Dimensions.paddingSizeVertical * .2),
-          TitleHeading3Widget(
-              text: Strings.biography, fontWeight: FontWeight.bold),
-          verticalSpace(Dimensions.paddingSizeVertical * .2),
-          TitleHeading4Widget(
-              text: data.talent.bio, fontWeight: FontWeight.bold),
-          verticalSpace(Dimensions.paddingSizeVertical * .5),
-          SizedBox(
-            height: 350,
-            width: double.infinity,
-            child: Chewie(
-              controller: controller.chewieController,
-            ),
-          ),
-          verticalSpace(Dimensions.paddingSizeVertical * .5),
-          data.talent.supportedLanguages.isEmpty ? SizedBox.shrink() : Row(
-            children: [
-              TitleHeading4Widget(text: Strings.spokenLanguage),
-              horizontalSpace(2),
-              TitleHeading4Widget(text: jsonDecode(data.talent.supportedLanguages).join(", ")),
-            ],
-          ),
-          verticalSpace(Dimensions.paddingSizeVertical * .3),
-          TitleHeading3Widget(text: Strings.personalizedVideo),
-          verticalSpace(Dimensions.paddingSizeVertical * .5),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: Dimensions.paddingSizeHorizontal,
-              vertical: Dimensions.paddingSizeVertical,
-            ),
-            decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(.1),
-                borderRadius: BorderRadius.circular(Dimensions.radius)),
-            child: Column(
+          // Expanded(
+          //   flex: 5,
+          //   child: Chewie(
+          //     controller: controller.chewieController,
+          //   ),
+          // ),
+          Expanded(
+            flex: 7,
+            child: ListView(
+              padding: const EdgeInsets.all(12),
               children: [
-                TitleHeading4Widget(opacity: .8, text: Strings.videoHint),
-                verticalSpace(Dimensions.paddingSizeVertical * .1),
+                TitleHeading2Widget(
+                    text: data.talent.name, fontWeight: FontWeight.bold),
+                verticalSpace(Dimensions.paddingSizeVertical * .2),
+                TitleHeading3Widget(
+                  text:
+                      "${data.talent.category.name} / ${data.talent.subcategory.name}",
+                  opacity: .5,
+                ),
+                verticalSpace(Dimensions.paddingSizeVertical * .5),
+                Row(
+                  children: [
+                    StarRating(
+                      mainAxisAlignment: mainStart,
+                      rating: controller.talentsModel.data.talent.ratingPercent,
+                      allowHalfRating: false,
+                      onRatingChanged: (rating) {
+                        showRatingsDialog(
+                            context, controller.talentsModel.data.talent.rating);
+                      },
+                    ),
+                    InkWell(
+                      onTap: () {
+                        showRatingsDialog(
+                            context, controller.talentsModel.data.talent.rating);
+                      },
+                      child: TitleHeading3Widget(
+                          text:
+                              " ${controller.talentsModel.data.talent.ratingPercent.toStringAsFixed(1)} ",
+                          fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        showRatingsDialog(
+                            context, controller.talentsModel.data.talent.rating);
+                      },
+                      child: TitleHeading5Widget(
+                        text: "(${controller.talentsModel.data.talent.totalRating})",
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+                verticalSpace(Dimensions.paddingSizeVertical * .2),
+                TitleHeading3Widget(
+                    text: Strings.biography, fontWeight: FontWeight.bold),
+                verticalSpace(Dimensions.paddingSizeVertical * .2),
+                TitleHeading4Widget(
+                    text: data.talent.bio, fontWeight: FontWeight.bold),
+                verticalSpace(Dimensions.paddingSizeVertical * .5),
+                VideoPlayerScreen(
+                  videoUrl: controller.talentsModel.data.talent.videoPath,
+                ),
+                verticalSpace(Dimensions.paddingSizeVertical * .5),
+                data.talent.supportedLanguages.isEmpty
+                    ? SizedBox.shrink()
+                    : Row(
+                        children: [
+                          TitleHeading4Widget(text: Strings.spokenLanguage),
+                          horizontalSpace(2),
+                          TitleHeading4Widget(
+                              text: jsonDecode(data.talent.supportedLanguages)
+                                  .join(", ")),
+                        ],
+                      ),
+                verticalSpace(Dimensions.paddingSizeVertical * .3),
+                TitleHeading3Widget(text: Strings.personalizedVideo),
+                verticalSpace(Dimensions.paddingSizeVertical * .5),
                 Container(
                   padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.paddingSizeHorizontal,
-                      vertical: Dimensions.paddingSizeVertical * .4),
+                    horizontal: Dimensions.paddingSizeHorizontal,
+                    vertical: Dimensions.paddingSizeVertical,
+                  ),
                   decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(Dimensions.radius * 2),
-                      color: Theme.of(context).primaryColor),
-                  child: TitleHeading4Widget(
-                      text: "€${data.wish.amount.toStringAsFixed(2)}",
-                      color: CustomColor.whiteColor),
-                )
+                      color: Theme.of(context).primaryColor.withOpacity(.1),
+                      borderRadius: BorderRadius.circular(Dimensions.radius)),
+                  child: Column(
+                    children: [
+                      TitleHeading4Widget(opacity: .8, text: Strings.videoHint),
+                      verticalSpace(Dimensions.paddingSizeVertical * .1),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.paddingSizeHorizontal,
+                            vertical: Dimensions.paddingSizeVertical * .4),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(Dimensions.radius * 2),
+                            color: Theme.of(context).primaryColor),
+                        child: TitleHeading4Widget(
+                            text: "€${data.wish.amount.toStringAsFixed(2)}",
+                            color: CustomColor.whiteColor),
+                      )
+                    ],
+                  ),
+                ),
+                verticalSpace(Dimensions.paddingSizeVertical * .5),
+                Column(
+                  children: [
+                    Visibility(
+                      visible: data.wish.status,
+                      child: PrimaryButton(
+                          title: Strings.book,
+                          onPressed: () {
+                            // controller.chewieController.pause();
+                            if (LocalStorage.isUser()) {
+                              bookNowController.paymentInfoProcess(data.talent.id);
+                              Get.toNamed(Routes.bookNowScreen);
+                            } else {
+                              CustomSnackBar.error(Strings.errorTalentUser);
+                            }
+                          }),
+                    ),
+                    verticalSpace(Dimensions.paddingSizeVertical * .5),
+                    Visibility(
+                      visible: data.tips.status,
+                      child: PrimaryButton(
+                          title: Strings.sendTip,
+                          backgroundColor: CustomColor.secondaryLightColor,
+                          onPressed: () {
+                            // controller.chewieController.pause();
+                            if (LocalStorage.isUser()) {
+                              bookNowController.paymentInfoProcess(data.talent.id);
+                              Get.to(PayScreen(isBook: false));
+                            } else {
+                              CustomSnackBar.error(Strings.errorTalentUser);
+                            }
+                          }),
+                    ),
+                    verticalSpace(Dimensions.paddingSizeVertical * .5),
+                  ],
+                ),
+                Card(
+                  color: Get.isDarkMode ? Colors.black : CustomColor.whiteColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        verticalSpace(Dimensions.paddingSizeVertical * .2),
+                        Row(
+                          children: [
+                            const Icon(Icons.check_box_outlined, color: Colors.green),
+                            horizontalSpace(Dimensions.paddingSizeHorizontal * .4),
+                            TitleHeading4Widget(
+                                text: Strings.moneyBackGuarantee,
+                                fontWeight: FontWeight.bold),
+                          ],
+                        ),
+
+                        verticalSpace(Dimensions.paddingSizeVertical * .2),
+
+                        TitleHeading5Widget(text: Strings.moneyBackGuaranteeDetails),
+                        verticalSpace(Dimensions.paddingSizeVertical * .2),
+
+                        // Row(
+                        //   children: [
+                        //
+                        //   ],
+                        // )
+                      ],
+                    ),
+                  ),
+                ),
+                verticalSpace(Dimensions.paddingSizeVertical * 1),
               ],
             ),
           ),
-          verticalSpace(Dimensions.paddingSizeVertical * .5),
-          Column(
-            children: [
-              Visibility(
-                visible: data.wish.status,
-                child: PrimaryButton(
-                    title: Strings.book,
-                    onPressed: () {
-                      controller.chewieController.pause();
-                      if (LocalStorage.isUser()) {
-                        bookNowController.paymentInfoProcess(data.talent.id);
-                        Get.toNamed(Routes.bookNowScreen);
-                      }else{
-                        CustomSnackBar.error(Strings.errorTalentUser);
-                      }
-                    }),
-              ),
-              verticalSpace(Dimensions.paddingSizeVertical * .5),
-              Visibility(
-                visible: data.tips.status,
-                child: PrimaryButton(
-                    title: Strings.sendTip,
-                    backgroundColor: CustomColor.secondaryLightColor,
-                    onPressed: () {
-                      controller.chewieController.pause();
-                      if (LocalStorage.isUser()) {
-                        bookNowController.paymentInfoProcess(data.talent.id);
-                        Get.to(PayScreen(isBook: false));
-                      }else{
-                        CustomSnackBar.error(Strings.errorTalentUser);
-                      }
-                    }),
-              ),
-              verticalSpace(Dimensions.paddingSizeVertical * .5),
-            ],
-          ),
-          Card(
-            color: Get.isDarkMode ? Colors.black: CustomColor.whiteColor,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  verticalSpace(Dimensions.paddingSizeVertical * .2),
-                  Row(
-                    children: [
-                      const Icon(Icons.check_box_outlined, color: Colors.green),
-                      horizontalSpace(Dimensions.paddingSizeHorizontal * .4),
-                      TitleHeading4Widget(
-                          text: Strings.moneyBackGuarantee,
-                          fontWeight: FontWeight.bold),
-                    ],
-                  ),
-
-                  verticalSpace(Dimensions.paddingSizeVertical * .2),
-
-                  TitleHeading5Widget(text: Strings.moneyBackGuaranteeDetails),
-                  verticalSpace(Dimensions.paddingSizeVertical * .2),
-
-                  // Row(
-                  //   children: [
-                  //
-                  //   ],
-                  // )
-                ],
-              ),
-            ),
-          ),
-          verticalSpace(Dimensions.paddingSizeVertical * 1),
         ],
       ),
     );
   }
-
 
   // Dialog Widget
   void showRatingsDialog(BuildContext context, List<Rating> ratings) {
@@ -258,7 +278,8 @@ class TalentProfile extends StatelessWidget {
                       color: Colors.yellow,
                       child: Text(
                         averageRating.toStringAsFixed(1),
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(width: 8),
@@ -274,19 +295,25 @@ class TalentProfile extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: LinearProgressIndicator(
-                          value: ratings.isNotEmpty ? entry.value / ratings.length : 0,
+                          value: ratings.isNotEmpty
+                              ? entry.value / ratings.length
+                              : 0,
                           backgroundColor: Colors.grey.shade300,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.yellow),
                         ),
                       ),
                       SizedBox(width: 8),
-                      Text(entry.value.toString(), style: TextStyle(fontSize: 16)),
+                      Text(entry.value.toString(),
+                          style: TextStyle(fontSize: 16)),
                     ],
                   );
                 }),
                 SizedBox(height: 16),
                 // Individual Ratings
-                Text("User Reviews", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text("User Reviews",
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
                 ...ratings.map((r) {
                   return Column(
@@ -297,9 +324,11 @@ class TalentProfile extends StatelessWidget {
                           Row(
                             children: List.generate(
                               5,
-                                  (index) => Icon(
+                              (index) => Icon(
                                 Icons.star,
-                                color: index < r.rating ? Colors.yellow : Colors.grey,
+                                color: index < r.rating
+                                    ? Colors.yellow
+                                    : Colors.grey,
                                 size: 20,
                               ),
                             ),
