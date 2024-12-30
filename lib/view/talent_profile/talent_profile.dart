@@ -17,7 +17,7 @@ import '../../widgets/drawer/drawer_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../book_now/pay_screen.dart';
 import '../bottom_nav/custom_bottom_nav_bar.dart';
-import '../video_from_web.dart';
+import '../web_video_widget.dart';
 
 class TalentProfile extends StatelessWidget {
   TalentProfile({super.key, this.showBTM = true});
@@ -128,9 +128,22 @@ class TalentProfile extends StatelessWidget {
                 TitleHeading4Widget(
                     text: data.talent.bio, fontWeight: FontWeight.bold),
                 verticalSpace(Dimensions.paddingSizeVertical * .5),
-                VideoPlayerScreen(
-                  videoUrl: controller.talentsModel.data.talent.videoPath,
+                // !controller.talentsModel.data.talent.videoPath.contains("mov") ? VideoPlayerScreen(
+                //   videoUrl: controller.talentsModel.data.talent.videoPath,
+                // ) :
+
+                InkWell(
+                  onTap: (){
+                    Get.to(WebVideoWidget(link: controller.talentsModel.data.talent.videoPathWeb));
+                  },
+                  child: Container(
+                    height: 300,
+                    alignment: Alignment.center,
+                    color: Colors.black,
+                    child: Icon(Icons.play_arrow_outlined, size: 40, color: Colors.white),
+                  ),
                 ),
+
                 verticalSpace(Dimensions.paddingSizeVertical * .5),
                 data.talent.supportedLanguages.isEmpty
                     ? SizedBox.shrink()

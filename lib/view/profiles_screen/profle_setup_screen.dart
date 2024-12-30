@@ -12,7 +12,7 @@ import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
 import '../../widgets/others/image_picker_dialog.dart';
 import '../../widgets/video_widget.dart';
-import '../video_from_web.dart';
+import '../web_video_widget.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
   const ProfileSetupScreen({super.key});
@@ -75,10 +75,13 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
           text: _currentStep == 0
               ? languageSettingController.getTranslation("Add Profile Picture")
               : _currentStep == 1
-                  ? languageSettingController.getTranslation("Add Profile Video")
+                  ? languageSettingController
+                      .getTranslation("Add Profile Video")
                   : _currentStep == 2
-                      ? languageSettingController.getTranslation("Add Biography")
-                      : languageSettingController.getTranslation("Select Languages"),
+                      ? languageSettingController
+                          .getTranslation("Add Biography")
+                      : languageSettingController
+                          .getTranslation("Select Languages"),
         ),
       ),
       body: Obx(() => Padding(
@@ -120,7 +123,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         _currentStep == 3,
                     child: TextButton(
                       onPressed: _nextStep,
-                      child: TitleHeading4Widget(text:'Next'),
+                      child: TitleHeading4Widget(text: 'Next'),
                     ),
                   )),
           ],
@@ -226,11 +229,17 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
         .userInfo
         .videoPath);
     return Center(
-      child: Obx(() => (controller.profileController.isLoading || controller.isLoading)
+      child: Obx(() => (controller.profileController.isLoading ||
+              controller.isLoading)
           ? const CustomLoadingAPI()
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+          : ListView(
+              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                TitleHeading3Widget(text: "Profile Video", color: Colors.red),
+                TitleHeading4Widget(
+                    text:
+                        "Present yourself and always mention the platform (Nextwisher). Feel free to personalize your presentation message. The video should not exceed 50 MB"),
+                verticalSpace(5),
                 InkWell(
                   borderRadius: BorderRadius.circular(Dimensions.radius),
                   onTap: () {
@@ -244,8 +253,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                   },
                   child: Container(
                     margin: EdgeInsets.symmetric(
-                      horizontal: Dimensions.paddingSizeHorizontal
-                    ),
+                        horizontal: Dimensions.paddingSizeHorizontal),
                     width: double.infinity,
                     height: 400,
                     alignment: Alignment.center,
@@ -263,12 +271,29 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                 .userInfo
                                 .videoPath
                                 .isNotEmpty
-                            ? VideoPlayerScreen(
-                                videoUrl: Get.find<ProfileController>()
-                                    .talentProfileModelModel
-                                    .data
-                                    .userInfo
-                                    .videoPath)
+                            ? InkWell(
+                                onTap: () {
+                                  Get.to(WebVideoWidget(
+                                      link: Get.find<ProfileController>()
+                                          .talentProfileModelModel
+                                          .data
+                                          .userInfo
+                                          .videoPath));
+                                },
+                                child: Container(
+                                  height: 300,
+                                  alignment: Alignment.center,
+                                  color: Colors.black,
+                                  child: Icon(Icons.play_arrow_outlined,
+                                      size: 40, color: Colors.white),
+                                ),
+                              )
+                            // VideoPlayerScreen(
+                            //             videoUrl: Get.find<ProfileController>()
+                            //                 .talentProfileModelModel
+                            //                 .data
+                            //                 .userInfo
+                            //                 .videoPath)
                             : TitleHeading3Widget(
                                 text: controller.uploadVideo.value
                                     ? Strings.uploaded

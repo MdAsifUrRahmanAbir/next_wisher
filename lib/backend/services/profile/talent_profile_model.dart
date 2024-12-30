@@ -115,6 +115,7 @@ class UserInfo {
   final String profileImage;
   final String verificationVideo;
   final String videoPath;
+  final String videoPathWebPlay;
   final String bio;
   final String supportedLanguages;
 
@@ -133,6 +134,7 @@ class UserInfo {
     required this.profileImage,
     required this.verificationVideo,
     required this.videoPath,
+    required this.videoPathWebPlay,
     required this.bio,
     required this.supportedLanguages,
   });
@@ -152,6 +154,7 @@ class UserInfo {
     profileImage: json["profile_image"] ?? "",
     verificationVideo: json["verification_video"],
     videoPath: json["video_path"] ?? "",
+    videoPathWebPlay: json["video_path_web_play"] ?? "",
     bio: json["bio"],
     supportedLanguages: json["supported_languages"] ?? "[]",
   );

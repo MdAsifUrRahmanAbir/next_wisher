@@ -40,6 +40,7 @@ class Talent {
   final String bio;
   final String role;
   final String videoPath;
+  final String videoPathWeb;
   final String verificationVideo;
   final String supportedLanguages;
   final Category category;
@@ -53,6 +54,7 @@ class Talent {
     required this.bio,
     required this.role,
     required this.videoPath,
+    required this.videoPathWeb,
     required this.verificationVideo,
     required this.supportedLanguages,
     required this.category,
@@ -69,6 +71,7 @@ class Talent {
     bio: json["bio"],
     role: json["role"],
     videoPath: json["video_path"],
+    videoPathWeb: json["video_path_web_play"],
     verificationVideo: json["verification_video"],
     totalRating: json["total_rating"],
     supportedLanguages: json["supported_languages"] ?? "",
