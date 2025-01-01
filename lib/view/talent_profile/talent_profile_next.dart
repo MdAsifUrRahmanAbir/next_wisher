@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 // import 'package:chewie/chewie.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:intl/intl.dart';
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/backend/utils/custom_snackbar.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../backend/services/dashboard/talents_model.dart';
 import '../../controller/book_now/book_now_controller.dart';
@@ -18,7 +20,6 @@ import '../../widgets/drawer/drawer_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../book_now/pay_screen.dart';
 import '../bottom_nav/custom_bottom_nav_bar_next.dart';
-import '../video_widget_test.dart';
 import '../web_video_widget.dart';
 
 class TalentProfileNext extends StatelessWidget {
@@ -106,22 +107,59 @@ class TalentProfileNext extends StatelessWidget {
           //   videoUrl: controller.talentsModel.data.talent.videoPath,
           // ),
 
+          // InkWell(
+          //   onTap: (){
+          //     Get.to(WebVideoWidget(link: controller.talentsModel.data.talent.videoPathWeb));
+          //   },
+          //   child: Container(
+          //     height: 300,
+          //     alignment: Alignment.center,
+          //     decoration: BoxDecoration(
+          //       image: DecorationImage(image: NetworkImage(data.talent.profileImage))
+          //     ),
+          //     child: CircleAvatar(
+          //         radius: 25,
+          //         backgroundColor: Colors.red,
+          //         child: Icon(Icons.play_arrow_outlined,
+          //             size: 44, color: Colors.white)),
+          //   ),
+          // ),
+
           InkWell(
-            onTap: (){
-              Get.to(WebVideoWidget(link: controller.talentsModel.data.talent.videoPathWeb));
-            },
-            child: Container(
-              height: 300,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                image: DecorationImage(image: NetworkImage(data.talent.profileImage))
-              ),
-              child: CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.red,
-                  child: Icon(Icons.play_arrow_outlined,
-                      size: 44, color: Colors.white)),
-            ),
+              onTap: () {
+                Get.to(WebVideoWidget(
+                    link:
+                    controller.talentsModel.data.talent.videoPathWeb));
+              },
+              child: SizedBox(
+                height: 300,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      // width: double.infinity,
+                      height: double.infinity,
+                      imageUrl: data.talent.profileImage,
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                    CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.red,
+                        child: Icon(Icons.play_arrow_outlined,
+                            size: 44, color: Colors.white))
+                  ],
+                ),
+              )
           ),
 
           verticalSpace(Dimensions.paddingSizeVertical * .5),

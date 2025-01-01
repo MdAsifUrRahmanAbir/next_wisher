@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
-import '../../backend/utils/custom_loading_api.dart';
 import '../../utils/dimensions.dart';
 
 class CustomCachedNetworkImage extends StatelessWidget {
@@ -43,8 +43,16 @@ class CustomCachedNetworkImage extends StatelessWidget {
         ),
       ),
       // fit: BoxFit.fitWidth,
-      placeholder: (context, url) => placeHolder ?? const CustomLoadingAPI(),
-      errorWidget: (context, url, error) => placeHolder ?? const CustomLoadingAPI(),
+      placeholder: (context, url) => Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.white,
+        ),
+      ),
+      errorWidget: (context, url, error) => Icon(Icons.error),
     );
   }
 }
