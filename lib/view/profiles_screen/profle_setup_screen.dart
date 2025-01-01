@@ -11,6 +11,7 @@ import '../../utils/basic_screen_imports.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
 import '../../widgets/others/image_picker_dialog.dart';
+import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../../widgets/video_widget.dart';
 import '../web_video_widget.dart';
 
@@ -284,8 +285,17 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                   height: 300,
                                   alignment: Alignment.center,
                                   color: Colors.black,
-                                  child: Icon(Icons.play_arrow_outlined,
-                                      size: 40, color: Colors.white),
+                                  child: Column(
+                                    mainAxisAlignment: mainCenter,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Icon(Icons.play_arrow_outlined,
+                                            size: 40, color: Colors.white),
+                                      ),
+                                      TitleHeading3Widget(text: "Click here to open video", color: Colors.white)
+                                    ],
+                                  ),
                                 ),
                               )
                             // VideoPlayerScreen(

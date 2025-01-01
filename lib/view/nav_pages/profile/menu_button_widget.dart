@@ -13,10 +13,9 @@ class MenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      dense: true,
       title: TitleHeading3Widget(
         text: title,
-        fontSize: 18.0,
+        fontSize: 16.0,
         fontWeight: FontWeight.bold,
       ),
     );

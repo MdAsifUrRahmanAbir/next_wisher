@@ -31,7 +31,6 @@ class TalentProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // controller.chewieController.pause();
         Get.find<BottomNavController>().selectedIndex.value = showBTM ? 0 : 4;
         Navigator.pop(context);
         return true;
@@ -94,14 +93,14 @@ class TalentProfile extends StatelessWidget {
                       rating: controller.talentsModel.data.talent.ratingPercent,
                       allowHalfRating: false,
                       onRatingChanged: (rating) {
-                        showRatingsDialog(
-                            context, controller.talentsModel.data.talent.rating);
+                        showRatingsDialog(context,
+                            controller.talentsModel.data.talent.rating);
                       },
                     ),
                     InkWell(
                       onTap: () {
-                        showRatingsDialog(
-                            context, controller.talentsModel.data.talent.rating);
+                        showRatingsDialog(context,
+                            controller.talentsModel.data.talent.rating);
                       },
                       child: TitleHeading3Widget(
                           text:
@@ -110,11 +109,12 @@ class TalentProfile extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        showRatingsDialog(
-                            context, controller.talentsModel.data.talent.rating);
+                        showRatingsDialog(context,
+                            controller.talentsModel.data.talent.rating);
                       },
                       child: TitleHeading5Widget(
-                        text: "(${controller.talentsModel.data.talent.totalRating})",
+                        text:
+                            "(${controller.talentsModel.data.talent.totalRating})",
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
                       ),
@@ -133,14 +133,22 @@ class TalentProfile extends StatelessWidget {
                 // ) :
 
                 InkWell(
-                  onTap: (){
-                    Get.to(WebVideoWidget(link: controller.talentsModel.data.talent.videoPathWeb));
+                  onTap: () {
+                    Get.to(WebVideoWidget(
+                        link:
+                            controller.talentsModel.data.talent.videoPathWeb));
                   },
                   child: Container(
-                    height: 300,
+                    height: 250,
                     alignment: Alignment.center,
-                    color: Colors.black,
-                    child: Icon(Icons.play_arrow_outlined, size: 40, color: Colors.white),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(data.talent.profileImage))),
+                    child: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.red,
+                        child: Icon(Icons.play_arrow_outlined,
+                            size: 44, color: Colors.white)),
                   ),
                 ),
 
@@ -196,7 +204,8 @@ class TalentProfile extends StatelessWidget {
                           onPressed: () {
                             // controller.chewieController.pause();
                             if (LocalStorage.isUser()) {
-                              bookNowController.paymentInfoProcess(data.talent.id);
+                              bookNowController
+                                  .paymentInfoProcess(data.talent.id);
                               Get.toNamed(Routes.bookNowScreen);
                             } else {
                               CustomSnackBar.error(Strings.errorTalentUser);
@@ -212,7 +221,8 @@ class TalentProfile extends StatelessWidget {
                           onPressed: () {
                             // controller.chewieController.pause();
                             if (LocalStorage.isUser()) {
-                              bookNowController.paymentInfoProcess(data.talent.id);
+                              bookNowController
+                                  .paymentInfoProcess(data.talent.id);
                               Get.to(PayScreen(isBook: false));
                             } else {
                               CustomSnackBar.error(Strings.errorTalentUser);
@@ -231,8 +241,10 @@ class TalentProfile extends StatelessWidget {
                         verticalSpace(Dimensions.paddingSizeVertical * .2),
                         Row(
                           children: [
-                            const Icon(Icons.check_box_outlined, color: Colors.green),
-                            horizontalSpace(Dimensions.paddingSizeHorizontal * .4),
+                            const Icon(Icons.check_box_outlined,
+                                color: Colors.green),
+                            horizontalSpace(
+                                Dimensions.paddingSizeHorizontal * .4),
                             TitleHeading4Widget(
                                 text: Strings.moneyBackGuarantee,
                                 fontWeight: FontWeight.bold),
@@ -241,7 +253,10 @@ class TalentProfile extends StatelessWidget {
 
                         verticalSpace(Dimensions.paddingSizeVertical * .2),
 
-                        TitleHeading5Widget(text: Strings.moneyBackGuaranteeDetails),
+                        TitleHeading5Widget(
+                            text: Strings.moneyBackGuaranteeDetails),
+                        TitleHeading5Widget(
+                            text: Strings.moneyBackGuaranteeDetails2),
                         verticalSpace(Dimensions.paddingSizeVertical * .2),
 
                         // Row(

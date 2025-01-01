@@ -113,8 +113,14 @@ class TalentProfileNext extends StatelessWidget {
             child: Container(
               height: 300,
               alignment: Alignment.center,
-              color: Colors.black,
-              child: Icon(Icons.play_arrow_outlined, size: 40, color: Colors.white),
+              decoration: BoxDecoration(
+                image: DecorationImage(image: NetworkImage(data.talent.profileImage))
+              ),
+              child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.red,
+                  child: Icon(Icons.play_arrow_outlined,
+                      size: 44, color: Colors.white)),
             ),
           ),
 
@@ -212,6 +218,7 @@ class TalentProfileNext extends StatelessWidget {
                   verticalSpace(Dimensions.paddingSizeVertical * .2),
 
                   TitleHeading5Widget(text: Strings.moneyBackGuaranteeDetails),
+                  TitleHeading5Widget(text: Strings.moneyBackGuaranteeDetails2),
                   verticalSpace(Dimensions.paddingSizeVertical * .2),
 
                   // Row(

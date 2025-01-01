@@ -141,9 +141,8 @@ class Strings {
   static String continueToPayment  = "Continue to payment";
   static String moneyBackGuarantee  = "Money Back Guarantee";
 
-  static String moneyBackGuaranteeDetails  = ''' 
-If your request for a personalized video could not be completed or expires, we will refund your money within 3-10 working days. Refunds can only be sent back to the original payment method used in a charge.  
-  ''';
+  static String moneyBackGuaranteeDetails  = 'If your request for a personalized video could not be completed or expires, we will refund your money within 3-10 working days.';
+  static String moneyBackGuaranteeDetails2  = 'Refunds can only be sent back to the original payment method used in a charge.';
 
   static String search  = "Search";
   static String featuredCelebrities  = "Featured Celebrities";
