@@ -84,6 +84,7 @@ mixin ProfileService {
     try {
       mapResponse = await ApiMethod(isBasic: false).delete(
         ApiEndpoint.userProfileDeleteURL,
+
       );
       if (mapResponse != null) {
         CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);

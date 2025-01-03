@@ -1,4 +1,4 @@
-package com.example.next_wisher
+package com.nextwisher.app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -507,7 +507,7 @@ class ApiMethod {
 
   // Delete method
   Future<Map<String, dynamic>?> delete(String url,
-      {int code = 202,
+      {int code = 200,
       bool isLogout = false,
       int duration = 120,
       bool showResult = false}) async {
@@ -545,7 +545,7 @@ class ApiMethod {
       log.i(
           '|📒📒📒|----------------- [[ DELETE ]] method response start-----------------|📒📒📒|');
 
-      if (response.statusCode == code) {
+      if (response.statusCode == code || response.statusCode == 202 || response.statusCode == 201) {
         return jsonDecode(response.body);
       } else if (response.statusCode == 500) {
       } else {

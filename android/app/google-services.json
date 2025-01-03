@@ -1,87 +1,26 @@
 {
   "project_info": {
-    "project_number": "49411779568",
-    "project_id": "fir-demo-c5451",
-    "storage_bucket": "fir-demo-c5451.appspot.com"
+    "project_number": "725477097574",
+    "project_id": "nextwisher-app",
+    "storage_bucket": "nextwisher-app.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:49411779568:android:041c1ee3fccdf37d6ecb35",
+        "mobilesdk_app_id": "1:725477097574:android:77a1e80d6c34a1f5c7eda7",
         "android_client_info": {
-          "package_name": "com.example.firebase_practice"
+          "package_name": "com.nextwisher.app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "49411779568-vqlril76skkp7a0shf52m9a862d78r4a.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.firebase_practice",
-            "certificate_hash": "37d5e3622776a493daadbc9f806e8f9b551606f8"
-          }
-        },
-        {
-          "client_id": "49411779568-lbkqcjd3n36rmfc8b7kh6aal3vcrk5hl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBmQS2Vl-8NAQYo5Q3aXCObLUqH-r4FNKM"
+          "current_key": "AIzaSyDandxscGcSdhDM5GJ9w_WIFJBDtpJl-iM"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "49411779568-a966hs0d8uatoolivbtk80h0ajapeehb.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "49411779568-9v5tkj3ce347un27pjp96bd16ar24f64.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.firebasePractice"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:49411779568:android:8497bdc506ec0c866ecb35",
-        "android_client_info": {
-          "package_name": "com.example.next_wisher"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "49411779568-lbkqcjd3n36rmfc8b7kh6aal3vcrk5hl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBmQS2Vl-8NAQYo5Q3aXCObLUqH-r4FNKM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "49411779568-a966hs0d8uatoolivbtk80h0ajapeehb.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "49411779568-9v5tkj3ce347un27pjp96bd16ar24f64.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.firebasePractice"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

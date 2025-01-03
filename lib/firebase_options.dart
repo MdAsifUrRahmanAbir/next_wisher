@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBmQS2Vl-8NAQYo5Q3aXCObLUqH-r4FNKM',
-    appId: '1:49411779568:android:8497bdc506ec0c866ecb35',
-    messagingSenderId: '49411779568',
-    projectId: 'fir-demo-c5451',
-    storageBucket: 'fir-demo-c5451.appspot.com',
+    apiKey: 'AIzaSyDandxscGcSdhDM5GJ9w_WIFJBDtpJl-iM',
+    appId: '1:725477097574:android:77a1e80d6c34a1f5c7eda7',
+    messagingSenderId: '725477097574',
+    projectId: 'nextwisher-app',
+    storageBucket: 'nextwisher-app.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC2sd83p9-lgZugLsYILZT8Pz6lK-VSnK8',
-    appId: '1:49411779568:ios:9e0c94671658ca056ecb35',
-    messagingSenderId: '49411779568',
-    projectId: 'fir-demo-c5451',
-    storageBucket: 'fir-demo-c5451.appspot.com',
-    androidClientId: '49411779568-vqlril76skkp7a0shf52m9a862d78r4a.apps.googleusercontent.com',
-    iosClientId: '49411779568-bopgrn16jg8445jimq0lmau3ukhnthel.apps.googleusercontent.com',
-    iosBundleId: 'com.example.nextWisher',
+    apiKey: 'AIzaSyANbcR2YctQ8qhPWAHIg4dAzZcnH_3HSDM',
+    appId: '1:725477097574:ios:2b22e973b81905bcc7eda7',
+    messagingSenderId: '725477097574',
+    projectId: 'nextwisher-app',
+    storageBucket: 'nextwisher-app.firebasestorage.app',
+    iosBundleId: 'com.nextwisher.app',
   );
+
 }

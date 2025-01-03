@@ -120,7 +120,7 @@ class ProfilePage extends StatelessWidget {
                     title: "FAQ",
                     onTap: () {
                       Get.to(WebViewScreen(
-                        link: 'https://nextwisher.com/pages/faq',
+                        link: 'https://nextwisher.com/faq',
                         appTitle: 'FAQ',
                       ));
                     },
@@ -131,7 +131,7 @@ class ProfilePage extends StatelessWidget {
                     title: "Contact",
                     onTap: () {
                       Get.to(WebViewScreen(
-                        link: 'https://nextwisher.com/pages/contact',
+                        link: 'https://nextwisher.com/contact',
                         appTitle: 'Contact',
                       ));
                     },
