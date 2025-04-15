@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../language/language_controller.dart';
 import '../../utils/basic_screen_imports.dart';
 
 class CustomVideoPicketWidget extends StatefulWidget {
@@ -22,7 +23,7 @@ class CustomVideoPicketWidgetState extends State<CustomVideoPicketWidget> {
       return true;
     } else {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
-        const SnackBar(content: Text('Storage permission is required to upload a video.')),
+         SnackBar(content: Text(languageSettingController.getTranslation('Storage permission is required to upload a video.'))),
       );
       return false;
     }
@@ -50,8 +51,8 @@ class CustomVideoPicketWidgetState extends State<CustomVideoPicketWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Verification: Please upload a video of your face. 10 seconds maximum",
+        Text(
+    languageSettingController.getTranslation("Verification: Please upload a video of your face. 10 seconds maximum"),
           style: TextStyle(fontSize: 16),
         ),
         const SizedBox(height: 8),
@@ -66,12 +67,12 @@ class CustomVideoPicketWidgetState extends State<CustomVideoPicketWidget> {
             children: [
               TextButton(
                 onPressed: _pickFile,
-                child: const Text("Choose File"),
+                child: Text(languageSettingController.getTranslation("Choose File")),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  _fileName ?? "No file chosen",
+                  _fileName ?? languageSettingController.getTranslation("No file chosen"),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

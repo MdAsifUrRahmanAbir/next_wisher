@@ -3,6 +3,7 @@ import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../controller/profile/earning_controller.dart';
+import '../../language/language_controller.dart';
 import '../../routes/routes.dart';
 import '../../utils/strings.dart';
 
@@ -102,7 +103,8 @@ class EarningScreenState extends State<EarningScreen> {
     return Obx(() => Column(
           crossAxisAlignment: crossStart,
           children: [
-            const Text('Start Date'),
+            Text(languageSettingController
+        .getTranslation('Start Date')),
             const SizedBox(height: 8),
             GestureDetector(
               onTap: () => controller.selectDate(context, true),
@@ -119,7 +121,8 @@ class EarningScreenState extends State<EarningScreen> {
                     Text(
                       controller.startDateSelect.value
                           ? controller.formatDate(controller.startDate.value)
-                          : 'Select start date',
+                          : languageSettingController
+                          .getTranslation('Select start date'),
                     ),
                     const Icon(Icons.calendar_today),
                   ],
@@ -127,7 +130,8 @@ class EarningScreenState extends State<EarningScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text('End Date'),
+            Text(languageSettingController
+                .getTranslation('End Date')),
             const SizedBox(height: 8),
             GestureDetector(
               onTap: () => controller.selectDate(context, false),
@@ -144,7 +148,8 @@ class EarningScreenState extends State<EarningScreen> {
                     Text(
                       controller.endDateSelect.value
                           ? controller.formatDate(controller.endDate.value)
-                          : 'Select end date',
+                          : languageSettingController
+                          .getTranslation('Select end date'),
                     ),
                     const Icon(Icons.calendar_today),
                   ],
@@ -152,7 +157,8 @@ class EarningScreenState extends State<EarningScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text('Filter'),
+            Text(languageSettingController
+                .getTranslation('Filter')),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
               value: controller.selectedFilter.value,
@@ -285,7 +291,8 @@ class EarningCardWidget extends StatelessWidget {
               children: [
                 const SizedBox(),
                 Text(
-                  title,
+                  languageSettingController
+                      .getTranslation(title),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,

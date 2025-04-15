@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '../../../utils/basic_screen_imports.dart';
+import '../../language/language_controller.dart';
 
 abstract class DropdownModel {
   String get title;
@@ -155,7 +156,7 @@ class _CustomDropDownState<T extends DropdownModel>
                     horizontalSpace(9),
                     Text(
                       // value.title,
-                      value.title == "" ? widget.customTitle : value.title,
+                      languageSettingController.getTranslation(value.title == "" ? widget.customTitle : value.title),
                       style: CustomStyle.darkHeading3TextStyle.copyWith(
                         fontSize: Dimensions.headingTextSize3,
                         fontWeight: FontWeight.w500,

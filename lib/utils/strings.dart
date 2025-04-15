@@ -1,7 +1,7 @@
 class Strings {
   static String appName = "Nextwisher";
 
-  static String pleaseFillOutTheField = "Please FillOut The Field";
+  static String pleaseFillOutTheField = "*";
 
   static String welcomeText= "Personalized videos from your favorite celebrities.";
   static String signIn= "Sign in";
@@ -18,7 +18,8 @@ class Strings {
 
 
   static String createUserAccount = "Create User Account";
-  static String createTalentAccount = "Create Talent Account";
+  // static String createTalentAccount = "Create Talent Account";
+  static String createTalentAccount = "Create Your Account as Talent";
 
   static String email = "Email";
   static String enterEmail = "Enter Email";
@@ -191,7 +192,7 @@ class Strings {
 
   static String enterAmount = "Enter amount";
 
-  static String requestPayment  = "Request payment";
+  static String requestPayment  = "Request Payout";
 
   static String phoneNumber = "Phone number";
 
@@ -200,7 +201,7 @@ class Strings {
   static String menu  = "Menu";
   static String history  = "History";
 
-  static String errorTalentUser  = "Access Denied! You are talent user!";
+  static String errorTalentUser  = "A talent cannot book a video or send a tip to another talent. If you wish to do so please create a user account. Thank you";
   static String accepted  = "Accepted";
   static String declined  = "Declined";
 

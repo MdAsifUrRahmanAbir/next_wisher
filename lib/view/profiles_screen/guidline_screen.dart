@@ -1,4 +1,5 @@
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
+import 'package:next_wisher/language/language_controller.dart';
 
 import '../../../utils/basic_screen_imports.dart';
 
@@ -25,7 +26,13 @@ class GuidelineScreen extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          HtmlWidget(controller.guidDataModel.data.guideData.description)
+          HtmlWidget(languageSettingController.selectedLanguage.value == "english"
+              ? controller.guidDataModel.data.guideData.description
+              : languageSettingController.selectedLanguage.value == "french"
+                ? controller.guidDataModel.data.guideData.french
+                : languageSettingController.selectedLanguage.value == "portugues"
+                  ? controller.guidDataModel.data.guideData.purtugues
+                  : controller.guidDataModel.data.guideData.spanish)
         ],
       ),
     );

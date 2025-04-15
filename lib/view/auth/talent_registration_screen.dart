@@ -162,7 +162,7 @@ class TalentRegistrationScreen extends StatelessWidget {
                     textAlign: TextAlign.start,
                     text: TextSpan(
                       text: languageSettingController
-                          .getTranslation('I certify that I am at least 18 years old. I have read and agree to the'),
+                          .getTranslation('I certify that I am at least 18 years old. I have read and I agree to the'),
                       style: TextStyle(fontSize: 14, color: Get.isDarkMode ? Colors.white : Colors.black),
                       children: [
                         TextSpan(

@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../utils/custom_color.dart';
+import '../../language/language_controller.dart';
 import '../../utils/dimensions.dart';
 
 class CustomSnackBar {
   static success(String message) {
     return Get.snackbar(
-      'Success',
-      // Get.find<LanguageController>().getTranslation(message),
-      (message),
+      languageSettingController
+          .getTranslation('Success'),
+        languageSettingController
+        .getTranslation(message),
+      // (message),
       margin: EdgeInsets.symmetric(
           horizontal: Dimensions.paddingSizeHorizontal * 0.5,
           vertical: Dimensions.paddingSizeVertical * 0.5),
@@ -25,8 +28,9 @@ class CustomSnackBar {
         onPressed: () {
           Get.closeCurrentSnackbar();
         },
-        child: const Text(
-          "Dismiss",
+        child: Text(
+          languageSettingController
+              .getTranslation("Dismiss"),
           style: TextStyle(color: CustomColor.whiteColor),
         ),
       ),
@@ -39,9 +43,11 @@ class CustomSnackBar {
 
   static error(String message) {
     return Get.snackbar(
-        'Alert',
+        languageSettingController
+            .getTranslation('Alert'),
         // Get.find<LanguageController>().getTranslation(message),
-        (message),
+        languageSettingController
+            .getTranslation(message),
         margin: EdgeInsets.symmetric(
             horizontal: Dimensions.paddingSizeHorizontal * 0.5,
             vertical: Dimensions.paddingSizeVertical * 0.5),
@@ -57,8 +63,9 @@ class CustomSnackBar {
           onPressed: () {
             Get.closeCurrentSnackbar();
           },
-          child: const Text(
-            "Dismiss",
+          child: Text(
+            languageSettingController
+                .getTranslation("Dismiss"),
             style: TextStyle(color: CustomColor.whiteColor),
           ),
         ),

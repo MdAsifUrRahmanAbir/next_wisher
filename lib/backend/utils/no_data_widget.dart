@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../utils/dimensions.dart';
 import '../../utils/size.dart';
@@ -16,12 +17,9 @@ class NoDataWidget extends StatelessWidget {
         children: [
           Lottie.asset('assets/empty_animation.json',
               height: Dimensions.buttonHeight * 3),
-          Text(
-            "No records found",
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: Theme.of(context).primaryColor),
+          TitleHeading3Widget(
+            text: "No result found",
+            color: Theme.of(context).primaryColor,
           )
         ],
       ),

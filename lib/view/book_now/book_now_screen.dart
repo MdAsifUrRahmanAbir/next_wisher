@@ -6,6 +6,7 @@ import '../../backend/services/wish/payment_info_model.dart';
 import '../../controller/book_now/book_now_controller.dart';
 import '../../utils/strings.dart';
 import '../../widgets/custom_dropdown_widget/custom_dropdown_widget.dart';
+import '../../widgets/text_labels/title_heading5_widget.dart';
 
 class BookNowScreen extends StatelessWidget {
   BookNowScreen({super.key});
@@ -22,6 +23,8 @@ class BookNowScreen extends StatelessWidget {
   }
 
   _bodyWidget() {
+    RxBool occassion = false.obs;
+    RxBool gender = false.obs;
     var data = controller.paymentInfoModel.data.talent;
     return SafeArea(
       child: Form(
@@ -96,54 +99,70 @@ class BookNowScreen extends StatelessWidget {
                 child: PrimaryTextInputWidget(
                     controller: controller.nameController,
                     labelText: "Enter your name",
+                    error: "name is required",
                     hint: "")),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
             TitleHeading3Widget(
                 text: Strings.gender, fontWeight: FontWeight.bold),
-            Row(
+            Column(
+              crossAxisAlignment: crossStart,
               children: [
                 Row(
                   children: [
-                    Radio<String>(
-                      value: "Female",
-                      groupValue: controller.selectedGender.value,
-                      onChanged: (String? value) {
-                        controller.selectedGender.value = value!;
-                      },
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: "Female",
+                          groupValue: controller.selectedGender.value,
+                          onChanged: (String? value) {
+                            gender.value = true;
+                            controller.selectedGender.value = value!;
+                          },
+                        ),
+                        TitleHeading3Widget(
+                            text: Strings.female, fontWeight: FontWeight.bold),
+                      ],
                     ),
-                    TitleHeading3Widget(
-                        text: Strings.female, fontWeight: FontWeight.bold),
+                    horizontalSpace(Dimensions.paddingSizeHorizontal * .5),
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: "Male",
+                          groupValue: controller.selectedGender.value,
+                          onChanged: (String? value) {
+                            gender.value = true;
+                            controller.selectedGender.value = value!;
+                          },
+                        ),
+                        TitleHeading3Widget(
+                            text: Strings.male, fontWeight: FontWeight.bold)
+                      ],
+                    ),
                   ],
                 ),
-                horizontalSpace(Dimensions.paddingSizeHorizontal * .5),
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: "Male",
-                      groupValue: controller.selectedGender.value,
-                      onChanged: (String? value) {
-                        controller.selectedGender.value = value!;
-                      },
-                    ),
-                    TitleHeading3Widget(
-                        text: Strings.male, fontWeight: FontWeight.bold)
-                  ],
-                ),
+                gender.value ? SizedBox.shrink(): TitleHeading5Widget(text: "gender is required", color: Colors.red)
               ],
             ),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
             TitleHeading3Widget(
                 text: "Occasion", fontWeight: FontWeight.bold),
             verticalSpace(Dimensions.paddingSizeVertical * .2),
-            Obx(() => CustomDropDown<Ocasion>(
-                  items: controller.paymentInfoModel.data.ocasions,
-                  onChanged: (value) {
-                    controller.isOccasionSelect.value = true;
-                    controller.selectedOcasion.value = value!;
-                  },
-                  hint: controller.isOccasionSelect.value ? controller.selectedOcasion.value.name : "Select Occasion",
-                  title: "Select Occasion",
-                )),
+            Obx(() => Column(
+              crossAxisAlignment: crossStart,
+              children: [
+                CustomDropDown<Ocasion>(
+                      items: controller.paymentInfoModel.data.ocasions,
+                      onChanged: (value) {
+                        controller.isOccasionSelect.value = true;
+                        occassion.value = true;
+                        controller.selectedOcasion.value = value!;
+                      },
+                      hint: controller.isOccasionSelect.value ? controller.selectedOcasion.value.name : "Select Occasion",
+                      title: "Select Occasion",
+                    ),
+                occassion.value ? SizedBox.shrink(): TitleHeading5Widget(text: "occassion id is required", color: Colors.red)
+              ],
+            )),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
 
             TitleHeading3Widget(
@@ -155,6 +174,7 @@ class BookNowScreen extends StatelessWidget {
               labelText: "Write Instructions",
               hint: "",
               maxLine: 3,
+              error: "instruction is required",
             ),
             verticalSpace(Dimensions.paddingSizeVertical * 1.5),
             PrimaryButton(
@@ -162,9 +182,15 @@ class BookNowScreen extends StatelessWidget {
                 backgroundColor: CustomColor.redColor,
                 onPressed: () {
                   if (controller.selectedGender.value.isNotEmpty) {
-                    controller.pay();
+                    debugPrint(controller.isOccasionSelect.value.toString());
+                    if(controller.isOccasionSelect.value){
+                      controller.pay();
+                    }else{
+                      // CustomSnackBar.error("occassion id is required");
+                    }
                   } else {
-                    CustomSnackBar.error("Please Select Gender First");
+                    // CustomSnackBar.error("gender is required");
+
                   }
                 }),
             verticalSpace(Dimensions.paddingSizeVertical * 1),

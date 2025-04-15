@@ -41,7 +41,8 @@ class PayScreen extends StatelessWidget {
             TitleHeading2Widget(text: data.name, fontWeight: FontWeight.bold),
             verticalSpace(Dimensions.paddingSizeVertical * .2),
             TitleHeading3Widget(
-              text: "${languageSettingController.getTranslation(data.category.name)}/${languageSettingController.getTranslation(data.subcategory.name)}",
+              text:
+                  "${languageSettingController.getTranslation(data.category.name)}/${languageSettingController.getTranslation(data.subcategory.name)}",
               opacity: .5,
             ),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
@@ -56,7 +57,6 @@ class PayScreen extends StatelessWidget {
                     opacity: .5,
                   ),
                   verticalSpace(Dimensions.paddingSizeVertical * .3),
-
                   PrimaryTextInputWidget(
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
@@ -66,9 +66,7 @@ class PayScreen extends StatelessWidget {
                       },
                       controller: controller.tipsController,
                       labelText: Strings.tip),
-
                   verticalSpace(Dimensions.paddingSizeVertical * .8),
-
                 ],
               ),
             ),
@@ -120,44 +118,38 @@ class PayScreen extends StatelessWidget {
             verticalSpace(Dimensions.paddingSizeVertical * .2),
 
             Obx(() => Column(
-              children: [
-                Row(
                   children: [
-                    Radio<String>(
-                      value: "credit-card",
-                      groupValue: controller.paymentType.value,
-                      onChanged: (String? value) {
-                        controller.paymentType.value = value!;
-                      },
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: "credit-card",
+                          groupValue: controller.paymentType.value,
+                          onChanged: (String? value) {
+                            controller.paymentType.value = value!;
+                          },
+                        ),
+                        TitleHeading3Widget(
+                            text: "Credit card", fontWeight: FontWeight.bold),
+                      ],
                     ),
-                    TitleHeading3Widget(
-                        text: "Credit card",
-                        fontWeight: FontWeight.bold),
-                  ],
-                ),
-                horizontalSpace(Dimensions.paddingSizeHorizontal * .5),
-
-
-
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: "mobile-bank",
-                      groupValue: controller.paymentType.value,
-                      onChanged: (String? value) {
-                        controller.paymentType.value = value!;
-                      },
+                    horizontalSpace(Dimensions.paddingSizeHorizontal * .5),
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: "mobile-bank",
+                          groupValue: controller.paymentType.value,
+                          onChanged: (String? value) {
+                            controller.paymentType.value = value!;
+                          },
+                        ),
+                        TitleHeading3Widget(
+                            text: "Mobile payment", fontWeight: FontWeight.bold)
+                      ],
                     ),
-                    TitleHeading3Widget(
-                        text: "Mobile payment",
-                        fontWeight: FontWeight.bold)
                   ],
-                ),
-              ],
-            )),
+                )),
 
             // verticalSpace(Dimensions.paddingSizeVertical * .8),
-
 
             Obx(() => controller.paymentType.value == "credit-card"
                 ? const SizedBox.shrink()
@@ -186,35 +178,33 @@ class PayScreen extends StatelessWidget {
                 : PrimaryButton(
                     title: "Continue to payment",
                     prefix: "💳",
-                    suffix:
-                        "€${
-                            (         ///   tipsValue.value + (tipsValue.value * (paymentInfoModel.data.commission / 100))
-                                (isBook
-                            ? amount
-                            : controller.tipsValue.value) +
-                            ((isBook ? amount : controller.tipsValue.value) *
-                                (model.maintainanceCharge / 100))
-                            ).toStringAsFixed(2)
-                        }",
+                    suffix: "€${(
+
+                        ///   tipsValue.value + (tipsValue.value * (paymentInfoModel.data.commission / 100))
+                        (isBook ? amount : controller.tipsValue.value) + ((isBook ? amount : controller.tipsValue.value) * (model.maintainanceCharge / 100))).toStringAsFixed(2)}",
                     backgroundColor: CustomColor.secondaryLightColor,
                     onPressed: () {
-
                       debugPrint(">> $isBook");
                       debugPrint(">> ${controller.tipsValue.value}");
-                      debugPrint(">> ${((!isBook) && (controller.tipsValue.value.isGreaterThan(500) || controller.tipsValue.value.isLowerThan(10)))}");
-                      debugPrint(">> ${(controller.tipsValue.value.isGreaterThan(500) || controller.tipsValue.value.isLowerThan(10))}");
+                      debugPrint(
+                          ">> ${((!isBook) && (controller.tipsValue.value.isGreaterThan(500) || controller.tipsValue.value.isLowerThan(10)))}");
+                      debugPrint(
+                          ">> ${(controller.tipsValue.value.isGreaterThan(500) || controller.tipsValue.value.isLowerThan(10))}");
 
-                      if((!isBook) && (controller.tipsValue.value.isGreaterThan(500) || controller.tipsValue.value.isLowerThan(10))){
+                      if ((!isBook) &&
+                          (controller.tipsValue.value.isGreaterThan(500) ||
+                              controller.tipsValue.value.isLowerThan(10))) {
                         debugPrint("00000");
                         CustomSnackBar.error(Strings.tipsLimit);
                         return;
                       }
-                      debugPrint("1111111");   /// tipsValue.value + (tipsValue.value * (paymentInfoModel.data.commission / 100))
+                      debugPrint("1111111");
+
+                      /// tipsValue.value + (tipsValue.value * (paymentInfoModel.data.commission / 100))
                       if (controller.paymentType.value == "credit-card") {
                         controller.payment(
                             data.id.toString(), isBook ? "wish" : "tips");
-                      }
-                      else {
+                      } else {
                         showConversionBottomSheet(
                           Get.context!,
                           currencyCode: controller.selectedPawapayCountry.value
@@ -226,7 +216,8 @@ class PayScreen extends StatelessWidget {
                                   ? amount
                                   : controller.tipsValue.value) +
                               ((isBook ? amount : controller.tipsValue.value) *
-                                  (model.maintainanceCharge / 100)), // Example Amount
+                                  (model.maintainanceCharge /
+                                      100)), // Example Amount
                         );
                       }
                     })),
@@ -235,18 +226,14 @@ class PayScreen extends StatelessWidget {
           ],
         ),
       ),
-
     );
   }
 
-
-
-
   void showConversionBottomSheet(BuildContext context,
       {required String currencyCode,
-        required double currencyRate,
-        required data,
-        required double amount}) {
+      required double currencyRate,
+      required data,
+      required double amount}) {
     final double convertedAmount = amount * currencyRate;
     final double conversionFee = convertedAmount * 0.035;
     final double totalAmount = convertedAmount + conversionFee;
@@ -266,41 +253,54 @@ class PayScreen extends StatelessWidget {
             children: [
               const Icon(Icons.warning, size: 50, color: Colors.orange),
               const SizedBox(height: 16),
-              Text(
-                "The payment amount will be converted and processed in $currencyCode at the following rate:",
-                style: const TextStyle(fontSize: 16),
+              TitleHeading3Widget(
+                text:
+                    "The payment amount will be converted and processed in $currencyCode at the following rate:",
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              Text(
-                "€1 = $currencyRate $currencyCode",
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+              TitleHeading3Widget(
+                  text: "€1 = $currencyRate $currencyCode",
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
               const SizedBox(height: 8),
-              const Text(
-                "We also charge a 3.5% conversion fee",
-                style: TextStyle(fontSize: 14),
-              ),
+              TitleHeading3Widget(
+                  text: "We also charge a 3.5% conversion fee", fontSize: 14),
               const SizedBox(height: 16),
               Text(
                 "€$amount = ${convertedAmount.toStringAsFixed(2)} $currencyCode",
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const Text(
-                "All amounts are rounded up to the nearest decimal",
-                style: TextStyle(fontSize: 12, color: Colors.red),
+              const TitleHeading3Widget(
+                text: "All amounts are rounded up to the nearest decimal",
+                fontSize: 12,
+                color: Colors.red,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              Text(
-                "You will be charged $currencyCode ${totalAmount.toStringAsFixed(2)}",
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+              Row(
+                mainAxisAlignment: mainCenter,
+                children: [
+                  TitleHeading3Widget(
+                    text: "You will be charged",
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.center,
+                  ),
+                  TitleHeading3Widget(
+                    text: " $currencyCode ${totalAmount.toStringAsFixed(2)}",
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-              Text(
-                "${convertedAmount.toStringAsFixed(2)} + ${conversionFee.toStringAsFixed(2)} conversion fee",
-                style: const TextStyle(fontSize: 14, color: Colors.black54),
-              ),
+              TitleHeading3Widget(
+                  text:
+                      "${convertedAmount.toStringAsFixed(2)} + ${conversionFee.toStringAsFixed(2)} conversion fee",
+                  fontSize: 14,
+                  color: Colors.black54),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
@@ -314,9 +314,17 @@ class PayScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text(
-                  "Pay Now: $currencyCode ${totalAmount.toStringAsFixed(2)}",
-                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                child: Row(
+                  mainAxisAlignment: mainCenter,
+                  children: [
+                    TitleHeading3Widget(
+                        text: "Pay Now", fontSize: 16, color: Colors.white),
+                    TitleHeading3Widget(
+                        text:
+                            ": $currencyCode ${totalAmount.toStringAsFixed(2)}",
+                        fontSize: 16,
+                        color: Colors.white),
+                  ],
                 ),
               ),
               const SizedBox(height: 16),
