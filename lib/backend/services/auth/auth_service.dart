@@ -162,7 +162,7 @@ mixin AuthService{
       );
       if (mapResponse != null) {
         CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
-        CustomSnackBar.success(result.message.success.first.toString());
+        // CustomSnackBar.success(result.message.success.first.toString());
         return result;
       }
     } catch (e) {

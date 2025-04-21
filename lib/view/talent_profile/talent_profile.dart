@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/backend/utils/custom_snackbar.dart';
+import 'package:next_wisher/language/language_controller.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -84,7 +85,7 @@ class TalentProfile extends StatelessWidget {
                 verticalSpace(Dimensions.paddingSizeVertical * .2),
                 TitleHeading3Widget(
                   text:
-                      "${data.talent.category.name} / ${data.talent.subcategory.name}",
+                      "${languageSettingController.getTranslation(data.talent.category.name)} / ${languageSettingController.getTranslation(data.talent.subcategory.name)}",
                   opacity: .5,
                 ),
                 verticalSpace(Dimensions.paddingSizeVertical * .5),

@@ -5,6 +5,7 @@ import 'package:next_wisher/utils/basic_screen_imports.dart';
 import '../../backend/services/earning/earning_filter_model.dart';
 import '../../backend/services/earning/earning_model.dart';
 import '../../backend/services/earning/earning_service.dart';
+import '../../language/language_controller.dart';
 
 class EarningController extends GetxController with EarningService {
   @override
@@ -65,14 +66,14 @@ class EarningController extends GetxController with EarningService {
   RxString selectedFilter = 'All time'.obs;
 
   final List<String> filterOptions = [
-    'All time',
-    'Today',
-    'Yesterday',
-    'Last 7 Days',
-    'Last 30 Days',
-    'Last 60 Days',
-    'Last 90 Days',
-    'Last 365 Days',
+    languageSettingController.getTranslation('All time'),
+    languageSettingController.getTranslation('Today'),
+    languageSettingController.getTranslation('Yesterday'),
+    languageSettingController.getTranslation('Last 7 Days'),
+  languageSettingController.getTranslation('Last 30 Days'),
+  languageSettingController.getTranslation('Last 60 Days'),
+  languageSettingController.getTranslation('Last 90 Days'),
+  languageSettingController.getTranslation('Last 365 Days'),
   ];
 
   /// ------------------------------------- >>

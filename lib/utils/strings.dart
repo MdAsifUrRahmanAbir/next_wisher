@@ -190,7 +190,7 @@ class Strings {
   static String uploaded  = "Uploaded";
   static String enterYourBiography  = "Enter Your Biography";
 
-  static String enterAmount = "Enter amount";
+  static String enterAmount = "Enter Amount";
 
   static String requestPayment  = "Request Payout";
 
@@ -205,8 +205,10 @@ class Strings {
   static String accepted  = "Accepted";
   static String declined  = "Declined";
 
-  static String tipsLimit  = "Tips Limit is €10 ~ €500";
-  static String wishLimit  = "Wish Limit is €30 ~ €2500";
+  static String tipsLimit1  = "Minimum €10";
+  static String tipsLimit2  = "Maximum €500";
+  static String wishLimit1  = "Minimum €30";
+  static String wishLimit2  = "Maximum €2500";
   static String previewProfile  = "Preview profile";
   static String no  = "No";
   static String yes  = "Yes";

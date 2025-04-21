@@ -195,7 +195,7 @@ class PayScreen extends StatelessWidget {
                           (controller.tipsValue.value.isGreaterThan(500) ||
                               controller.tipsValue.value.isLowerThan(10))) {
                         debugPrint("00000");
-                        CustomSnackBar.error(Strings.tipsLimit);
+                        CustomSnackBar.error("${languageSettingController.getTranslation(Strings.tipsLimit1)}${languageSettingController.getTranslation(Strings.tipsLimit2)}" );
                         return;
                       }
                       debugPrint("1111111");

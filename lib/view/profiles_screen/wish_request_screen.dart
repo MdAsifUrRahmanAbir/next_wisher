@@ -64,7 +64,7 @@ class WishRequestState extends State<WishRequest> {
                 child: PrimaryButton(
                     onPressed: () {
                       if(controller.amount.value.isLowerThan(30) || controller.amount.value.isGreaterThan(2500)){
-                        CustomSnackBar.error(Strings.wishLimit);
+                        CustomSnackBar.error("${languageSettingController.getTranslation(Strings.wishLimit1)} ${languageSettingController.getTranslation(Strings.wishLimit2)}");
                         return;
                       }
                       controller.wishSaveProcess();

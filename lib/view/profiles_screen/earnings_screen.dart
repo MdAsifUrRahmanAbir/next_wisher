@@ -161,7 +161,7 @@ class EarningScreenState extends State<EarningScreen> {
                 .getTranslation('Filter')),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: controller.selectedFilter.value,
+              value: languageSettingController.getTranslation(controller.selectedFilter.value),
               onChanged: (String? newValue) {
                 DateTime today = DateTime.now();
                 setState(() {
@@ -235,7 +235,7 @@ class EarningScreenState extends State<EarningScreen> {
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(languageSettingController.getTranslation(value)),
                 );
               }).toList(),
               decoration: InputDecoration(

@@ -81,7 +81,14 @@ class HistoryScreenState extends State<HistoryScreen> {
                             data.stripeEmail.isEmpty
                                 ? const SizedBox.shrink()
                                 : TitleHeading5Widget(text: data.stripeEmail),
-                            TitleHeading5Widget(text: data.bankType),
+                            Row(
+                              children: [
+                                TitleHeading5Widget(text: data.bankType),
+                                TitleHeading5Widget(text: " / "),
+                                TitleHeading5Widget(text: data.bankType),
+
+                              ],
+                            ),
                           ],
                         ),
                       ),

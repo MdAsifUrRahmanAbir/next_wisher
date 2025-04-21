@@ -1,5 +1,6 @@
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/backend/utils/custom_snackbar.dart';
+import 'package:next_wisher/language/language_controller.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../backend/services/wish/payment_info_model.dart';
@@ -35,7 +36,7 @@ class BookNowScreen extends StatelessWidget {
             TitleHeading2Widget(text: data.name, fontWeight: FontWeight.bold),
             verticalSpace(Dimensions.paddingSizeVertical * .2),
             TitleHeading3Widget(
-              text: "${data.category.name}/${data.subcategory.name}",
+              text: "${languageSettingController.getTranslation(data.category.name)} / ${languageSettingController.getTranslation(data.subcategory.name)}",
               opacity: .5,
             ),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
