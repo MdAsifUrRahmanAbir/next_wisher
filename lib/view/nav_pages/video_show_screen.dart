@@ -1,9 +1,5 @@
-import 'package:chewie/chewie.dart';
-import 'package:next_wisher/backend/utils/custom_loading_api.dart';
-import 'package:next_wisher/widgets/appbar/back_button.dart';
-import 'package:video_player/video_player.dart';
-
-import '../../utils/basic_screen_imports.dart';
+import 'package:flutter/material.dart';
+import 'package:next_wisher/widgets/tiktok_style_video_widget.dart';
 
 class VideoShowScreen extends StatefulWidget {
   const VideoShowScreen({super.key, required this.url});
@@ -15,68 +11,30 @@ class VideoShowScreen extends StatefulWidget {
 }
 
 class _VideoShowScreenState extends State<VideoShowScreen> {
-  RxBool loading = true.obs;
-  late VideoPlayerController videoPlayerController;
-  late ChewieController chewieController;
-
-  @override
-  void dispose() {
-    videoPlayerController.dispose();
-    chewieController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    _initVideo();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: const PrimaryAppBar(
-      //
-      // ),
-      body: Obx(() => loading.value
-          ? const CustomLoadingAPI()
-          : Stack(
-              children: [
-                Container(
-                  // height: MediaQuery.sizeOf(context).height * .3,
-                  color: Theme.of(context).primaryColor.withOpacity(.6),
-                  child: Chewie(
-                    controller: chewieController,
-                  ),
-                ),
-                Positioned(
-                  top: 50,
-                  left: 10,
-                  child: BackButtonWidget(onTap: () {
-                    Navigator.pop(context);
-                  }),
-                )
-              ],
-            )),
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Center(
+        child: TikTokStyleVideoWidget(
+          videoUrl: widget.url,
+          thumbnailUrl: "https://placehold.co/600x400/000000/FFFFFF/png?text=Video",
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          borderRadius: BorderRadius.zero,
+          showFullscreenOption: false,
+        ),
+      ),
     );
-  }
-
-  void _initVideo() {
-      loading.value = true;
-
-    videoPlayerController = VideoPlayerController.networkUrl(
-        Uri.parse(widget.url)
-        // Uri.parse("https://next-wisher.skyflightbd.com/public/uploads/1730566102.mp4"),
-        )
-      ..initialize();
-
-    chewieController = ChewieController(
-      // aspectRatio: 1,
-      videoPlayerController: videoPlayerController,
-      autoPlay: false,
-      looping: true,
-    );
-
-      loading.value = false;
   }
 }

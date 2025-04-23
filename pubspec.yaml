@@ -51,10 +51,33 @@ dependencies:
   shimmer:
 
 dev_dependencies:
+  icons_launcher: ^3.0.1
   flutter_test:
     sdk: flutter
+icons_launcher:
+    image_path: 'assets/andriodappicon.jpg'
+    platforms:
+      android:
+        enable: true
+        image_path: 'assets/andriodappicon.jpg'
+        notification_image: "assets/andriodappicon.jpg"
+        # adaptive_background_color: '#ffffff'
+        adaptive_background_image: 'assets/andriodappicon.jpg'
+        adaptive_foreground_image: 'assets/andriodappicon.jpg'
+        adaptive_round_image: 'assets/andriodappicon.jpg'
+        adaptive_monochrome_image: 'assets/andriodappicon.jpg'
+      ios:
+        enable: true
+        image_path: 'assets/iosappicon.jpg'
+        # For iOS 18+ (support dark and tinted)
+        dark_path: "assets/iosappicon.jpg"
+        tinted_path: "assets/iosappicon.jpg"
+      web:
+        enable: true
+        image_path: 'assets/andriodappicon.jpg'
+        favicon_path: 'assets/andriodappicon.jpg'
 
-  flutter_lints:
+flutter_lints:
   change_app_package_name: ^1.4.0
 #  com.example.next_wisher => com.nextwisher.app
 

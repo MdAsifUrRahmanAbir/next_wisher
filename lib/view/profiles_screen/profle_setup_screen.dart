@@ -14,6 +14,9 @@ import '../../widgets/others/image_picker_dialog.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../../widgets/video_widget.dart';
 import '../web_video_widget.dart';
+import '../../widgets/inline_video_player.dart';
+import '../nav_pages/video_show_screen.dart';
+import '../../widgets/tiktok_style_video_widget.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
   const ProfileSetupScreen({super.key});
@@ -274,36 +277,37 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                 .isNotEmpty
                             ? InkWell(
                                 onTap: () {
-                                  Get.to(WebVideoWidget(
-                                      link: Get.find<ProfileController>()
+                                  // Tapping the container no longer needed with the TikTokStyleVideoWidget
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width * 0.7, // 70% of screen width
+                                  height: MediaQuery.of(context).size.width * 1.3, // 16:9 portrait aspect ratio
+                                  color: Colors.transparent,
+                                  child: Center(
+                                    child: TikTokStyleVideoWidget(
+                                      videoUrl: Get.find<ProfileController>()
                                           .talentProfileModelModel
                                           .data
                                           .userInfo
-                                          .videoPath));
-                                },
-                                child: Container(
-                                  height: 300,
-                                  alignment: Alignment.center,
-                                  color: Colors.black,
-                                  child: Column(
-                                    mainAxisAlignment: mainCenter,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Icon(Icons.play_arrow_outlined,
-                                            size: 40, color: Colors.white),
-                                      ),
-                                      TitleHeading3Widget(text: "Click here to open video", color: Colors.white)
-                                    ],
+                                          .videoPath,
+                                      thumbnailUrl: Get.find<ProfileController>()
+                                          .talentProfileModelModel
+                                          .data
+                                          .userInfo
+                                          .profileImage.isNotEmpty 
+                                              ? Get.find<ProfileController>()
+                                                  .talentProfileModelModel
+                                                  .data
+                                                  .userInfo
+                                                  .profileImage
+                                              : "https://placehold.co/600x400/000000/FFFFFF/png?text=Video+Preview",
+                                      width: MediaQuery.of(context).size.width * 0.7,
+                                      height: MediaQuery.of(context).size.width * 1.3,
+                                      borderRadius: BorderRadius.zero,
+                                    ),
                                   ),
                                 ),
                               )
-                            // VideoPlayerScreen(
-                            //             videoUrl: Get.find<ProfileController>()
-                            //                 .talentProfileModelModel
-                            //                 .data
-                            //                 .userInfo
-                            //                 .videoPath)
                             : TitleHeading3Widget(
                                 text: controller.uploadVideo.value
                                     ? Strings.uploaded

@@ -60,15 +60,16 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias'];
-            keyPassword keystoreProperties['keyPassword'];
-            storeFile file(keystoreProperties['storeFile']);
-            storePassword keystoreProperties['storePassword'];
+            storeFile file("../../upload-keystore.jks")
+            storePassword "nextwisher2024"
+            keyAlias "upload"
+            keyPassword "nextwisher2024"
         }
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            // Use debug signing for release builds as a temporary workaround
+            signingConfig signingConfigs.debug
         }
     }
 
