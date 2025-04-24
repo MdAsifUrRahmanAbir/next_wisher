@@ -68,10 +68,10 @@ icons_launcher:
         adaptive_monochrome_image: 'assets/andriodappicon.jpg'
       ios:
         enable: true
-        image_path: 'assets/andriodappicon.jpg'
+        image_path: 'assets/iosappicon.jpg'
         # For iOS 18+ (support dark and tinted)
-        dark_path: "assets/andriodappicon.jpg"
-        tinted_path: "assets/andriodappicon.jpg"
+        dark_path: "assets/iosappicon.jpg"
+        tinted_path: "assets/iosappicon.jpg"
       web:
         enable: true
         image_path: 'assets/andriodappicon.jpg'
