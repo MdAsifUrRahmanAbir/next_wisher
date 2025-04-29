@@ -64,6 +64,7 @@ flutter:
     - assets/
     - assets/categories/
     - assets/country/
+    - assets/country/paypal.png
     - assets/email_verification.png
     - assets/playstore.png
 

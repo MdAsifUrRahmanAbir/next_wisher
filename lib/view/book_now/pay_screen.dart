@@ -195,7 +195,8 @@ class PayScreen extends StatelessWidget {
                           (controller.tipsValue.value.isGreaterThan(500) ||
                               controller.tipsValue.value.isLowerThan(10))) {
                         debugPrint("00000");
-                        CustomSnackBar.error("${languageSettingController.getTranslation(Strings.tipsLimit1)}${languageSettingController.getTranslation(Strings.tipsLimit2)}" );
+                        CustomSnackBar.error(
+                            "${languageSettingController.getTranslation(Strings.tipsLimit1)}${languageSettingController.getTranslation(Strings.tipsLimit2)}");
                         return;
                       }
                       debugPrint("1111111");
@@ -253,10 +254,40 @@ class PayScreen extends StatelessWidget {
             children: [
               const Icon(Icons.warning, size: 50, color: Colors.orange),
               const SizedBox(height: 16),
-              TitleHeading3Widget(
-                text:
-                    "The payment amount will be converted and processed in $currencyCode at the following rate:",
-                textAlign: TextAlign.center,
+              RichText(
+                text: TextSpan(
+                  // text: languageSettingController.getTranslation('The payment amount will be converted and processed in'),
+                  style: TextStyle(
+                      fontSize: Dimensions.headingTextSize3,
+                      fontWeight: FontWeight.w700,
+                      color: CustomColor.primaryLightTextColor),
+                  children: [
+                    TextSpan(
+                      text: languageSettingController.getTranslation(
+                          "The payment amount will be converted and processed in"),
+                      style: TextStyle(
+                          fontSize: Dimensions.headingTextSize3,
+                          fontWeight: FontWeight.w700,
+                          color: CustomColor.primaryLightTextColor),
+                    ),
+                    TextSpan(
+                      text: languageSettingController
+                          .getTranslation(" $currencyCode "),
+                      style: TextStyle(
+                          fontSize: Dimensions.headingTextSize3,
+                          fontWeight: FontWeight.w700,
+                          color: CustomColor.primaryLightTextColor),
+                    ),
+                    TextSpan(
+                      text: languageSettingController
+                          .getTranslation('at the following rate:'),
+                      style: TextStyle(
+                          fontSize: Dimensions.headingTextSize3,
+                          fontWeight: FontWeight.w700,
+                          color: CustomColor.primaryLightTextColor),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
               TitleHeading3Widget(

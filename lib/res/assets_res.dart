@@ -8,6 +8,7 @@ class AssetsRes {
 
   static const String PROJECT_NAME = 'next_wisher';
   static const String PROJECT_VERSION = '1.1.0+5';
+  static const String PAYPAL = 'assets/country/paypal.png';
   static const String EMAIL_VERIFICATION = 'assets/email_verification.png';
   static const String PLAYSTORE = 'assets/playstore.png';
 }
