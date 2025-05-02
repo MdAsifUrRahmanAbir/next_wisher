@@ -1,4 +1,3 @@
-
 import '../../utils/basic_screen_imports.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -12,7 +11,12 @@ class SplashScreen extends StatelessWidget {
         mainAxisAlignment: mainCenter,
         children: [
           Image.asset(
-              "assets/logo.png",
+            "assets/bg.png",
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
+          ),
+          Image.asset(
+            "assets/logo.png",
             fit: BoxFit.cover,
             alignment: Alignment.center,
           ),

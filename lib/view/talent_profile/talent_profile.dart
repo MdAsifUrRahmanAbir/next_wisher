@@ -21,6 +21,9 @@ import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../book_now/pay_screen.dart';
 import '../bottom_nav/custom_bottom_nav_bar.dart';
 import '../web_video_widget.dart';
+import '../../widgets/inline_video_player.dart';
+import '../nav_pages/video_show_screen.dart';
+import '../../widgets/tiktok_style_video_widget.dart';
 
 class TalentProfile extends StatelessWidget {
   TalentProfile({super.key, this.showBTM = true});
@@ -156,37 +159,20 @@ class TalentProfile extends StatelessWidget {
                 // ),
                 InkWell(
                   onTap: () {
-                    Get.to(WebVideoWidget(
-                        link:
-                            controller.talentsModel.data.talent.videoPathWeb));
+                    // Tapping the container no longer needed with the TikTokStyleVideoWidget
                   },
-                  child: SizedBox(
-                    height: 300,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          // width: double.infinity,
-                          height: double.infinity,
-                          imageUrl: data.talent.profileImage,
-                          placeholder: (context, url) => Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              color: Colors.white,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
-                        ),
-                        CircleAvatar(
-                            radius: 25,
-                            backgroundColor: Colors.red,
-                            child: Icon(Icons.play_arrow_outlined,
-                                size: 44, color: Colors.white))
-                      ],
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.7, // 70% of screen width
+                    height: MediaQuery.of(context).size.width * 1.3, // 16:9 portrait aspect ratio
+                    color: Colors.transparent,
+                    child: Center(
+                      child: TikTokStyleVideoWidget(
+                        videoUrl: controller.talentsModel.data.talent.videoPathWeb,
+                        thumbnailUrl: data.talent.profileImage,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: MediaQuery.of(context).size.width * 1.3,
+                        borderRadius: BorderRadius.zero,
+                      ),
                     ),
                   )
                 ),

@@ -2,6 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:video_player/video_player.dart';
+import 'package:next_wisher/widgets/tiktok_style_video_widget.dart';
 
 import '../../../backend/download_file.dart';
 import '../../../backend/local_storage/local_storage.dart';
@@ -22,12 +23,8 @@ class UserInboxScreen extends StatefulWidget with DownloadFile {
 }
 
 class _UserInboxScreenState extends State<UserInboxScreen> {
-  late VideoPlayerController videoPlayerController;
-  late ChewieController chewieController;
-
   @override
   void initState() {
-    _initVideo();
     super.initState();
   }
 
@@ -37,13 +34,11 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async{
-        chewieController.pause();
         Navigator.pop(context);
         return true;
       },
       child: Scaffold(
           appBar: PrimaryAppBar(onTap: (){
-            chewieController.pause();
             Navigator.pop(context);
           },),
           body: SafeArea(
@@ -101,8 +96,11 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
                           )
                         ],
                       )
-                    : isVideoReady ? CustomLoadingAPI(): Chewie(
-                        controller: chewieController,
+                    : TikTokStyleVideoWidget(
+                        videoUrl: widget.data.attachment,
+                        thumbnailUrl: "https://placehold.co/600x400/000000/FFFFFF/png?text=Video",
+                        height: MediaQuery.sizeOf(context).height * .6,
+                        borderRadius: BorderRadius.circular(Dimensions.radius * .5),
                       ),
               ),
               verticalSpace(10),
@@ -230,29 +228,5 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
         )),
       ],
     );
-  }
-
-  bool isVideoReady = true;
-  void _initVideo() {
-    setState(() {
-      // isVideoReady = true;
-    });
-    debugPrint("Message Video >> ${widget.data.attachment}");
-    videoPlayerController = VideoPlayerController.networkUrl(
-        Uri.parse(widget.data.attachment)
-        // Uri.parse("https://nextwisher.com/uploads/1725639128.mov"),
-        )
-      ..initialize();
-
-    chewieController = ChewieController(
-      // aspectRatio: 1,
-      videoPlayerController: videoPlayerController,
-      autoPlay: false,
-      looping: false,
-    );
-
-    setState(() {
-      isVideoReady = false;
-    });
   }
 }
