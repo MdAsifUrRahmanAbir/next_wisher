@@ -1,4 +1,5 @@
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
+import 'package:next_wisher/language/language_controller.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
 import '../../backend/services/api_endpoint.dart';
@@ -16,6 +17,8 @@ class PaymentScreen extends StatefulWidget {
 class PaymentScreenState extends State<PaymentScreen> {
   final controller = Get.put(PaymentController());
   int selectedTab = 0;
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,69 +40,76 @@ class PaymentScreenState extends State<PaymentScreen> {
   _bodyWidget() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Payment method options
-          Expanded(
-            flex: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildPaymentMethod(
-                  icon: Icons.account_balance_wallet,
-                  label: 'PayPal',
-                  isSelected: controller.selectedMethod.value == 'PayPal',
-                  onTap: () {
-                    setState(() {
-                      controller.selectedMethod.value = 'PayPal';
-                    });
-                  },
-                ),
-                _buildPaymentMethod(
-                  icon: Icons.phone_android,
-                  label: 'Mobile',
-                  isSelected: controller.selectedMethod.value == 'Mobile',
-                  onTap: () {
-                    setState(() {
-                      controller.selectedMethod.value = 'Mobile';
-                    });
-                  },
-                ),
-                _buildPaymentMethod(
-                  icon: Icons.account_balance,
-                  label: 'Bank',
-                  isSelected: controller.selectedMethod.value == 'Bank',
-                  onTap: () {
-                    setState(() {
-                      controller.selectedMethod.value = 'Bank';
-                    });
-                  },
-                ),
-              ],
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Payment method options
+            Expanded(
+              flex: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildPaymentMethod(
+                    icon: Icons.account_balance_wallet,
+                    label: 'PayPal',
+                    isSelected: controller.selectedMethod.value == 'PayPal',
+                    onTap: () {
+                      setState(() {
+                        controller.payoutAmountController.clear();
+                        controller.confirmEmailController.clear();
+                        controller.emailController.clear();
+                        controller.accountHolderController.clear();
+                        controller.selectedMethod.value = 'PayPal';
+                      });
+                    },
+                  ),
+                  _buildPaymentMethod(
+                    icon: Icons.phone_android,
+                    label: 'Mobile',
+                    isSelected: controller.selectedMethod.value == 'Mobile',
+                    onTap: () {
+                      setState(() {
+                        controller.selectedMethod.value = 'Mobile';
+                      });
+                    },
+                  ),
+                  _buildPaymentMethod(
+                    icon: Icons.account_balance,
+                    label: 'Bank',
+                    isSelected: controller.selectedMethod.value == 'Bank',
+                    onTap: () {
+                      setState(() {
+                        controller.selectedMethod.value = 'Bank';
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-          const Center(
-            child: Text(
-              "Fees may apply",
-              textAlign: TextAlign.start,
-              style: TextStyle(color: Colors.grey),
+            Center(
+              child: Text(
+                languageSettingController.getTranslation("Fees may apply"),
+                textAlign: TextAlign.start,
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          // Info message
-          controller.selectedMethod.value == 'PayPal'
-              ? _paypalWidget()
-              : const SizedBox.shrink(),
-          controller.selectedMethod.value == 'Mobile'
-              ? _mobileWidget()
-              : const SizedBox.shrink(),
-          controller.selectedMethod.value == 'Bank'
-              ? _bankWidget()
-              : const SizedBox.shrink(),
-        ],
+            const SizedBox(height: 10),
+            // Info message
+            controller.selectedMethod.value == 'PayPal'
+                ? _paypalWidget()
+                : const SizedBox.shrink(),
+            controller.selectedMethod.value == 'Mobile'
+                ? _mobileWidget()
+                : const SizedBox.shrink(),
+            controller.selectedMethod.value == 'Bank'
+                ? _bankWidget()
+                : const SizedBox.shrink(),
+          ],
+        ),
       ),
     );
   }
@@ -116,8 +126,9 @@ class PaymentScreenState extends State<PaymentScreen> {
               color: Colors.blue[50],
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Text(
-              'The minimum to withdraw is €25 and the maximum to withdraw per day is €2500',
+            child: Text(
+              languageSettingController.getTranslation(
+                  'The minimum to withdraw is €25 and the maximum to withdraw per day is €2500'),
               style: TextStyle(color: Colors.black, fontSize: 14),
               textAlign: TextAlign.center,
             ),
@@ -127,22 +138,24 @@ class PaymentScreenState extends State<PaymentScreen> {
           PrimaryTextInputWidget(
             controller: controller.payoutAmountController,
             keyboardType: TextInputType.number,
-            labelText: Strings.enterAmount,
+            labelText: "Enter Payout Amount",
+            error: "The amount field is required.",
             hint: "0.0",
           ),
           const SizedBox(height: 16),
           PrimaryTextInputWidget(
             controller: controller.emailController,
             keyboardType: TextInputType.emailAddress,
-            labelText: Strings.enterEmail,
-            hint: "Paypal Email",
+            error: "The paypal email field is required",
+            labelText: "Paypal Email",
+            hint: "",
           ),
           const SizedBox(height: 16),
           PrimaryTextInputWidget(
             controller: controller.confirmEmailController,
             keyboardType: TextInputType.emailAddress,
-            labelText: Strings.enterConfirmEmail,
-            hint: "Paypal Email",
+            labelText: "Confirm Paypal Email",
+            hint: "",
           ),
           const SizedBox(height: 26),
           // Confirm button
@@ -155,25 +168,28 @@ class PaymentScreenState extends State<PaymentScreen> {
               debugPrint(
                   'Confirm Email: ${controller.confirmEmailController.text}');
               debugPrint('Payment Method: ${controller.selectedMethod}');
-              controller.paymentProcess(
-                  endpoint: ApiEndpoint.talentPayoutRequestURL,
-                  inputBody: {
-                    "amount": controller.payoutAmountController.text,
-                    "stripe_email": controller.emailController.text,
-                    "stripe_email_confirmation":
-                        controller.confirmEmailController.text,
-                    "bank_type": "paypal",
-                  },
-                  onConfirm: () {
-                    _showSuccessDialog(
-                        'Payout request has been successfully submitted.');
-                  });
+
+              if (formKey.currentState!.validate()) {
+                controller.paymentProcess(
+                    endpoint: ApiEndpoint.talentPayoutRequestURL,
+                    inputBody: {
+                      "amount": controller.payoutAmountController.text,
+                      "stripe_email": controller.emailController.text,
+                      "stripe_email_confirmation":
+                          controller.confirmEmailController.text,
+                      "bank_type": "paypal",
+                    },
+                    onConfirm: () {
+                      _showSuccessDialog(
+                          'Payout request sent');
+                    });
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
               padding: const EdgeInsets.symmetric(vertical: 16),
             ),
-            child: const Text('Confirm'),
+            child: Text(languageSettingController.getTranslation('Confirm')),
           ),
         ],
       ),
@@ -191,8 +207,9 @@ class PaymentScreenState extends State<PaymentScreen> {
               color: Colors.blue[50],
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Text(
-              "The minimum to withdraw is €25 and the maximum to withdraw per day is €1000",
+            child: Text(
+              languageSettingController.getTranslation(
+                  "The minimum to withdraw is €25 and the maximum to withdraw per day is €1000"),
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.black),
             ),
@@ -205,33 +222,39 @@ class PaymentScreenState extends State<PaymentScreen> {
                 children: List.generate(
                     controller.payoutInfoModel.data.mobilepayCountries.length,
                     (index) {
-                      return Padding(
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () {
+                        controller.selectedCountry.value = controller
+                            .payoutInfoModel.data.mobilepayCountries[index];
+                        controller.selectedSim.value =
+                            controller.selectedCountry.value.sim.first;
+                      },
+                      child: Container(
                         padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: (){
-                            controller.selectedCountry.value = controller.payoutInfoModel.data.mobilepayCountries[index];
-                            controller.selectedSim.value = controller.selectedCountry.value.sim.first;
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: controller.selectedCountry.value == controller.payoutInfoModel.data.mobilepayCountries[index] ? Theme.of(context).primaryColor : null
-                            ),
-                            child: CircleAvatar(
-                              radius: Dimensions.radius * (3.2),
-                              backgroundImage: AssetImage("assets/country/${controller.payoutInfoModel.data.mobilepayCountries[index].flag}.jpeg"),
-                            ),
-                          ),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: controller.selectedCountry.value ==
+                                    controller.payoutInfoModel.data
+                                        .mobilepayCountries[index]
+                                ? Theme.of(context).primaryColor
+                                : null),
+                        child: CircleAvatar(
+                          radius: Dimensions.radius * (3.2),
+                          backgroundImage: AssetImage(
+                              "assets/country/${controller.payoutInfoModel.data.mobilepayCountries[index].flag}.jpeg"),
                         ),
-                      );
-                    }),
+                      ),
+                    ),
+                  );
+                }),
               ),
             ),
           ),
           const SizedBox(height: 20),
-          const Text(
-            "Select Network",
+          Text(
+            languageSettingController.getTranslation("Select Network"),
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
@@ -271,6 +294,7 @@ class PaymentScreenState extends State<PaymentScreen> {
             // ),
             keyboardType: TextInputType.phone,
             labelText: Strings.phoneNumber,
+            error: "The phone number field is required",
             hint: "xx xxxx xxx",
             prefixIcon: const Text(""),
           ),
@@ -278,6 +302,7 @@ class PaymentScreenState extends State<PaymentScreen> {
           PrimaryTextInputWidget(
             controller: controller.confirmEmailController,
             keyboardType: TextInputType.phone,
+            error: "The confirm phone number field is required",
             labelText: Strings.phoneNumber,
             hint: "xx xxxx xxx",
           ),
@@ -285,12 +310,14 @@ class PaymentScreenState extends State<PaymentScreen> {
           PrimaryTextInputWidget(
             controller: controller.payoutAmountController,
             labelText: Strings.enterAmount,
+            error: "The amount field is required.",
             hint: "0.0 ",
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: 20),
-          const Text(
-            "Please make sure you have enough room on your wallet to receive your payment.",
+          Text(
+            languageSettingController.getTranslation(
+                "Please make sure you have enough room on your wallet to receive your payment."),
             style: TextStyle(color: Colors.grey),
           ),
           const SizedBox(height: 20),
@@ -306,41 +333,43 @@ class PaymentScreenState extends State<PaymentScreen> {
               final payoutAmount =
                   controller.payoutAmountController.text.trim();
 
-              if (phoneNumber.isEmpty ||
-                  confirmPhoneNumber.isEmpty ||
-                  payoutAmount.isEmpty) {
-                _showErrorDialog('All fields are required.');
-                return;
-              }
+              if (formKey.currentState!.validate()) {
+                if (phoneNumber.isEmpty ||
+                    confirmPhoneNumber.isEmpty ||
+                    payoutAmount.isEmpty) {
+                  _showErrorDialog('All fields are required.');
+                  return;
+                }
 
-              if (phoneNumber != confirmPhoneNumber) {
-                _showErrorDialog('Phone numbers do not match.');
-                return;
-              }
+                if (phoneNumber != confirmPhoneNumber) {
+                  _showErrorDialog('Phone numbers do not match.');
+                  return;
+                }
 
-              // Add more validation if necessary...
+                // Add more validation if necessary...
 
-              controller.paymentProcess(
-                  endpoint: ApiEndpoint.mobilePayoutRequestURL,
-                  inputBody: {
-                    "amount": controller.payoutAmountController.text,
-                    "stripe_email": controller.emailController,
-                    "stripe_email_confirmation":
-                        controller.confirmEmailController,
-                    "bank_type": "mobile",
-                    "settings": {
-                      /// todo
-                      "country": "senegal",
-                      "prefix": "221",
-                      "sim": "Free"
+                controller.paymentProcess(
+                    endpoint: ApiEndpoint.mobilePayoutRequestURL,
+                    inputBody: {
+                      "amount": controller.payoutAmountController.text,
+                      "stripe_email": controller.emailController,
+                      "stripe_email_confirmation":
+                          controller.confirmEmailController,
+                      "bank_type": "mobile",
+                      "settings": {
+                        /// todo
+                        "country": "senegal",
+                        "prefix": "221",
+                        "sim": "Free"
+                      },
                     },
-                  },
-                  onConfirm: () {
-                    _showSuccessDialog(
-                        'Payout request has been successfully submitted.');
-                  });
+                    onConfirm: () {
+                      _showSuccessDialog(
+                          'Payout request sent');
+                    });
+              }
             },
-            child: const Text('Confirm'),
+            child: Text(languageSettingController.getTranslation('Confirm')),
           ),
         ],
       ),
@@ -359,6 +388,8 @@ class PaymentScreenState extends State<PaymentScreen> {
       child: Column(
         children: [
           Container(
+            height: 60,
+            width: 100,
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               border: isSelected
@@ -366,20 +397,28 @@ class PaymentScreenState extends State<PaymentScreen> {
                   : Border.all(color: Colors.grey[300]!),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(
-              icon,
-              color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
-              size: 40,
-            ),
+            child: label == "PayPal"
+                ? Image.asset(
+                    "assets/country/paypal.png",
+                    height: 60,
+                    width: 100,
+                  )
+                : Icon(
+                    icon,
+                    color: isSelected
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey,
+                    size: 40,
+                  ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
+          // const SizedBox(height: 8),
+          // Text(
+          //   label,
+          //   style: TextStyle(
+          //     fontSize: 14,
+          //     fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          //   ),
+          // ),
         ],
       ),
     );
@@ -433,16 +472,18 @@ class PaymentScreenState extends State<PaymentScreen> {
 
   void _showSuccessDialog(String message) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Success'),
-        content: Text(message),
+
+        title: Text(languageSettingController.getTranslation('Success')),
+        content: Text(languageSettingController.getTranslation(message)),
         actions: [
           TextButton(
             onPressed: () {
               Get.offAllNamed(Routes.btmScreen);
             },
-            child: const Text('OK'),
+            child: Text(languageSettingController.getTranslation('OK')),
           ),
         ],
       ),
@@ -514,38 +555,44 @@ class PaymentScreenState extends State<PaymentScreen> {
   _buildCanadaTab() {
     return Column(
       children: [
+        _buildTextField("Enter Payout Amount", "The amount field is required.",
+            controller.payoutAmountController),
         _buildTextField(
-            "Enter Payout Amount", controller.payoutAmountController),
-        _buildTextField(
-            "Full Name of Account Holder", controller.accountHolderController),
-        _buildTextField("Interac Registered Email", controller.emailController),
+            "Full name of account holder",
+            "The full name field is required.",
+            controller.accountHolderController),
+        _buildTextField("Interac registered email",
+            "The email field is required.", controller.emailController),
         _buildTextField("Confirm Interac Registered Email",
-            controller.confirmEmailController),
+            "The email field is required.", controller.confirmEmailController),
         const SizedBox(height: 20),
         Row(
           children: [
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  controller.paymentProcess(
-                      endpoint: ApiEndpoint.bankPayoutCanadaURL,
-                      inputBody: {
-                        "amount": controller.payoutAmountController.text,
-                        "email": controller.emailController.text,
-                        "email_confirmation":
-                            controller.confirmEmailController.text,
-                        "full_name": controller.accountHolderController.text,
-                      },
-                      onConfirm: () {
-                        _showSuccessDialog(
-                            'Payout request has been successfully submitted.');
-                      });
+                  if (formKey.currentState!.validate()) {
+                    controller.paymentProcess(
+                        endpoint: ApiEndpoint.bankPayoutCanadaURL,
+                        inputBody: {
+                          "amount": controller.payoutAmountController.text,
+                          "email": controller.emailController.text,
+                          "email_confirmation":
+                              controller.confirmEmailController.text,
+                          "full_name": controller.accountHolderController.text,
+                        },
+                        onConfirm: () {
+                          _showSuccessDialog(
+                              'Payout request sent');
+                        });
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('Confirm'),
+                child:
+                    Text(languageSettingController.getTranslation('Confirm')),
               ),
             ),
           ],
@@ -557,37 +604,42 @@ class PaymentScreenState extends State<PaymentScreen> {
   _buildEuropeTab() {
     return Column(
       children: [
+        _buildTextField("Enter Payout Amount", "The amount field is required.",
+            controller.payoutAmountController),
         _buildTextField(
-            "Enter Payout Amount", controller.payoutAmountController),
-        _buildTextField(
-            "Full Name of Account Holder", controller.accountHolderController),
-        _buildTextField("IBAN", controller.emailController),
-        _buildTextField("Confirm IBAN", controller.confirmEmailController),
+            "Full name of account holder",
+            "The full name field is required.",
+            controller.accountHolderController),
+        _buildTextField("IBAN", "*", controller.emailController),
+        _buildTextField("Confirm IBAN", "*", controller.confirmEmailController),
         const SizedBox(height: 20),
         Row(
           children: [
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  controller.paymentProcess(
-                      endpoint: ApiEndpoint.bankPayoutEuropeURL,
-                      inputBody: {
-                        "amount": controller.payoutAmountController.text,
-                        "iban": controller.emailController.text,
-                        "iban_confirmation":
-                            controller.confirmEmailController.text,
-                        "full_name": controller.accountHolderController.text,
-                      },
-                      onConfirm: () {
-                        _showSuccessDialog(
-                            'Payout request has been successfully submitted.');
-                      });
+                  if (formKey.currentState!.validate()) {
+                    controller.paymentProcess(
+                        endpoint: ApiEndpoint.bankPayoutEuropeURL,
+                        inputBody: {
+                          "amount": controller.payoutAmountController.text,
+                          "iban": controller.emailController.text,
+                          "iban_confirmation":
+                              controller.confirmEmailController.text,
+                          "full_name": controller.accountHolderController.text,
+                        },
+                        onConfirm: () {
+                          _showSuccessDialog(
+                              'Payout request sent');
+                        });
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('Confirm'),
+                child:
+                    Text(languageSettingController.getTranslation('Confirm')),
               ),
             ),
           ],
@@ -599,44 +651,55 @@ class PaymentScreenState extends State<PaymentScreen> {
   _buildOutsideEuropeTab() {
     return Column(
       children: [
-        const Text(
-          "View the list to see if your country is listed",
+        Text(
+          languageSettingController
+              .getTranslation("View the list to see if your country is listed"),
           style: TextStyle(color: Colors.grey),
         ),
+        _buildTextField("Enter Payout Amount", "The amount field is required.",
+            controller.payoutAmountController),
         _buildTextField(
-            "Enter Payout Amount", controller.payoutAmountController),
+            "Full name of account holder",
+            "The amount field is required.",
+            controller.accountHolderController),
+        _buildTextField("SWIFT/BIC Code", "*", controller.swiftController),
         _buildTextField(
-            "Full Name of Account Holder", controller.accountHolderController),
-        _buildTextField("SWIFT/BIC Code", controller.swiftController),
-        _buildTextField("Account Number", controller.emailController),
+            "Account number",
+            "The account number field is required.",
+            controller.emailController),
         _buildTextField(
-            "Confirm Account Number", controller.confirmEmailController),
+            "Confirm account number",
+            "The account number field is required.",
+            controller.confirmEmailController),
         const SizedBox(height: 20),
         Row(
           children: [
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  controller.paymentProcess(
-                      endpoint: ApiEndpoint.bankPayoutOutsideURL,
-                      inputBody: {
-                        "amount": controller.payoutAmountController.text,
-                        "account_number": controller.emailController.text,
-                        "account_number_confirmation":
-                            controller.confirmEmailController.text,
-                        "swift": controller.swiftController.text,
-                        "full_name": controller.accountHolderController.text,
-                      },
-                      onConfirm: () {
-                        _showSuccessDialog(
-                            'Payout request has been successfully submitted.');
-                      });
+                  if (formKey.currentState!.validate()) {
+                    controller.paymentProcess(
+                        endpoint: ApiEndpoint.bankPayoutOutsideURL,
+                        inputBody: {
+                          "amount": controller.payoutAmountController.text,
+                          "account_number": controller.emailController.text,
+                          "account_number_confirmation":
+                              controller.confirmEmailController.text,
+                          "swift": controller.swiftController.text,
+                          "full_name": controller.accountHolderController.text,
+                        },
+                        onConfirm: () {
+                          _showSuccessDialog(
+                              'Payout request sent');
+                        });
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('Confirm'),
+                child:
+                    Text(languageSettingController.getTranslation('Confirm')),
               ),
             ),
           ],
@@ -645,13 +708,15 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  _buildTextField(String label, TextEditingController controller) {
+  _buildTextField(
+      String label, String error, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: PrimaryTextInputWidget(
         labelText: label,
         controller: controller,
         hint: "",
+        error: error,
       ),
     );
   }

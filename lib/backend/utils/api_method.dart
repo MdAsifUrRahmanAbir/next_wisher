@@ -176,7 +176,7 @@ class ApiMethod {
 
         ErrorResponse res = ErrorResponse.fromJson(jsonDecode(response.body));
 
-        CustomSnackBar.error(res.message.error.toString());
+        // CustomSnackBar.error(res.message.error.toString());
 
         return null;
       }

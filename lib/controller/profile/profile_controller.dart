@@ -153,6 +153,9 @@ class ProfileController extends GetxController with ProfileService{
     await changePasswordProcessApi(body: inputBody).then((value) {
       _changePasswordModel = value!;
       _isChangeLoading.value = false;
+      currentPasswordController.clear();
+      newPasswordController.clear();
+      confirmPasswordController.clear();
       update();
     }).catchError((onError) {
       log.e(onError);
