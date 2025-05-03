@@ -85,9 +85,13 @@ flutter:
 
   assets:
     - assets/
+    - assets/andriodappicon.jpg
+    - assets/bg.png
+    - assets/bg_search.png
     - assets/categories/
     - assets/country/
     - assets/country/paypal.png
     - assets/email_verification.png
+    - assets/iosappicon.jpg
     - assets/playstore.png
 

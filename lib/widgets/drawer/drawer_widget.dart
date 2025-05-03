@@ -3,6 +3,7 @@ import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/controller/bottom_nav/dashboard_controller.dart';
 import '../../utils/basic_widget_imports.dart';
 import '../../utils/strings.dart';
+import '../../view/more_screen/more_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
   DrawerWidget({super.key});
@@ -75,7 +76,9 @@ class DrawerWidget extends StatelessWidget {
             children: [
               SizedBox(width: 20,),
               TitleHeading3Widget(text: Strings.menu, color: Colors.white),
-              IconButton(onPressed: (){}, icon: Icon(Icons.info_outline, color: Colors.white)),
+              IconButton(onPressed: (){
+                Get.to(MoreScreen());
+              }, icon: Icon(Icons.info_outline, color: Colors.white)),
             ],
           ),
         ),

@@ -189,7 +189,7 @@ class EarningScreenState extends State<EarningScreen> {
                       'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value.toUtc()),
                     });
                   }
-                  else if(controller.selectedFilter.value == "Last 7 Days") {
+                  else if(controller.selectedFilter.value == "Last 7Days") {
                     controller.startDate.value = today.subtract(const Duration(days: 7));
                     controller.endDate.value = today;
                     controller.earningFilterProcess(inputBody: {
@@ -197,7 +197,7 @@ class EarningScreenState extends State<EarningScreen> {
                       'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
                     });
                   }
-                  else if(controller.selectedFilter.value == "Last 30 Days") {
+                  else if(controller.selectedFilter.value == "Last 30Days") {
                     controller.startDate.value = today.subtract(const Duration(days: 30));
                     controller.endDate.value = today;
                     controller.earningFilterProcess(inputBody: {
@@ -205,7 +205,7 @@ class EarningScreenState extends State<EarningScreen> {
                       'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
                     });
                   }
-                  else if(controller.selectedFilter.value == "Last 60 Days") {
+                  else if(controller.selectedFilter.value == "Last 60Days") {
                     controller.startDate.value = today.subtract(const Duration(days: 30));
                     controller.endDate.value = today;
                     controller.earningFilterProcess(inputBody: {
@@ -213,7 +213,7 @@ class EarningScreenState extends State<EarningScreen> {
                       'end_date': DateFormat('yyyy-MM-dd').format(controller.endDate.value),
                     });
                   }
-                  else if(controller.selectedFilter.value == "Last 90 Days") {
+                  else if(controller.selectedFilter.value == "Last 90Days") {
                     controller.startDate.value = today.subtract(const Duration(days: 90));
                     controller.endDate.value = today;
                     controller.earningFilterProcess(inputBody: {
@@ -271,7 +271,7 @@ class EarningCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).primaryColor.withOpacity(.5),
+            color: Theme.of(context).primaryColor.withValues(alpha: .5),
             blurRadius: 1,
             spreadRadius: .1,
           )

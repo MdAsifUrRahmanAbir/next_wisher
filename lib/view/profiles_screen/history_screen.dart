@@ -17,7 +17,7 @@ class HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PrimaryAppBar(title:  Strings.history),
+      appBar: PrimaryAppBar(title: Strings.history),
       body: _bodyWidget(context),
     );
   }
@@ -45,83 +45,88 @@ class HistoryScreenState extends State<HistoryScreen> {
           itemBuilder: (context, index) {
             PaymentRequest data =
                 controller.earningModel.data.paymentRequests[index];
-            debugPrint("Amount:: ${data.amount.toStringAsFixed(2)}   >>   ${data.status}");
+            debugPrint(
+                "Amount:: ${data.amount.toStringAsFixed(2)}   >>   ${data.status}");
             return Column(
               children: [
                 ListTile(
-                  // onTap: () {
-                  //   controller.selectedIndex.value = index;
-                  // },
-                  leading: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(Dimensions.radius),
+                    // onTap: () {
+                    //   controller.selectedIndex.value = index;
+                    // },
+                    leading: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 1),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(Dimensions.radius),
+                      ),
+                      child: Column(
+                        children: [
+                          TitleHeading2Widget(
+                              text: data.createdAt.day.toString(),
+                              color: CustomColor.whiteColor),
+                          TitleHeading5Widget(
+                              text:
+                                  "${data.createdAt.month.toString()}/${data.createdAt.year.toString().substring(2)}",
+                              color: CustomColor.whiteColor),
+                        ],
+                      ),
                     ),
-                    child: Column(
+                    title: TitleHeading3Widget(text: "ID ${data.invoice}"),
+                    subtitle: Row(
                       children: [
-                        TitleHeading2Widget(
-                            text: data.createdAt.day.toString(),
-                            color: CustomColor.whiteColor),
-                        TitleHeading5Widget(
-                            text:
-                                "${data.createdAt.month.toString()}/${data.createdAt.year.toString().substring(2)}",
-                            color: CustomColor.whiteColor),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: crossStart,
+                            children: [
+                              data.stripeEmail.isEmpty
+                                  ? const SizedBox.shrink()
+                                  : TitleHeading5Widget(text: data.stripeEmail),
+                              Row(
+                                children: [
+                                  TitleHeading5Widget(text: data.bankType),
+                                  TitleHeading5Widget(text: " / "),
+                                  TitleHeading5Widget(text: data.bankType),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        data.stripeEmail.isEmpty
+                            ? InkWell(
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.radius * 4),
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        BankInfoDialog(data: data),
+                                  );
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                  child: Icon(Icons.remove_red_eye),
+                                ))
+                            : const SizedBox.shrink()
                       ],
                     ),
-                  ),
-                  title: TitleHeading3Widget(text: "ID ${data.invoice}"),
-                  subtitle: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: crossStart,
-                          children: [
-                            data.stripeEmail.isEmpty
-                                ? const SizedBox.shrink()
-                                : TitleHeading5Widget(text: data.stripeEmail),
-                            Row(
-                              children: [
-                                TitleHeading5Widget(text: data.bankType),
-                                TitleHeading5Widget(text: " / "),
-                                TitleHeading5Widget(text: data.bankType),
-
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      data.stripeEmail.isEmpty
-                          ? InkWell(
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.radius * 4),
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      BankInfoDialog(data: data),
-                                );
-                              },
-                              child: const Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: Icon(Icons.remove_red_eye),
-                              ))
-                          : const SizedBox.shrink()
-                    ],
-                  ),
-                  trailing: Column(
-                    children: [
+                    trailing: Column(children: [
                       TitleHeading4Widget(
                           text: "€${data.amount.toStringAsFixed(2)}"),
                       verticalSpace(3),
                       TitleHeading4Widget(
-                          text: data.status == 1 ? Strings.accepted: data.status == 0 ? "Pending": Strings.declined,
-                        color: data.status == 1 ? Colors.green : data.status == 0 ? Colors.orange: Colors.red,
+                        text: data.status == 1
+                            ? Strings.accepted
+                            : data.status == 0
+                                ? "Pending"
+                                : Strings.declined,
+                        color: data.status == 1
+                            ? Colors.green
+                            : data.status == 0
+                                ? Colors.orange
+                                : Colors.red,
                       ),
-                    ]
-                  )
-                ),
+                    ])),
                 Obx(() => Visibility(
                     visible: controller.selectedIndex.value == index,
                     child: const Column(
@@ -166,9 +171,36 @@ class BankInfoDialog extends StatelessWidget {
           const SizedBox(height: 8),
           InfoRow(label: "Account holder name:", value: data.bankInfo.fullName),
           const SizedBox(height: 8),
-          InfoRow(label: "SWIFT / BIC CODE:", value: data.bankInfo.swift),
-          const SizedBox(height: 8),
-          InfoRow(label: "Account number:", value: data.bankInfo.swift),
+          data.bankInfo.area == "outside"
+              ? Column(
+                  children: [
+                    InfoRow(
+                        label: "SWIFT / BIC CODE:", value: data.bankInfo.swift),
+                    const SizedBox(height: 8),
+                    InfoRow(
+                        label: "Account number:", value: data.bankInfo.swift),
+                  ],
+                )
+              : SizedBox.shrink(),
+
+          data.bankInfo.area == "europe"
+              ? Column(
+            children: [
+              InfoRow(
+                  label: "IBAN:", value: "NEED API"),
+            ],
+          )
+              : SizedBox.shrink(),
+
+          data.bankInfo.area == "canada"
+              ? Column(
+            children: [
+              InfoRow(
+                  label: "Email:", value: "NEED API"),
+
+            ],
+          )
+              : SizedBox.shrink(),
         ],
       ),
     );
@@ -187,10 +219,7 @@ class InfoRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: mainStart,
       children: [
-        TitleHeading4Widget(
-          text: label,
-            fontWeight: FontWeight.bold
-        ),
+        TitleHeading4Widget(text: label, fontWeight: FontWeight.bold),
         const SizedBox(width: 8),
         Expanded(
           child: TitleHeading4Widget(

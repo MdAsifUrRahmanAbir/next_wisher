@@ -7,7 +7,6 @@ import '../../../controller/profile/profile_controller.dart';
 import '../../../routes/routes.dart';
 import '../../../utils/basic_screen_imports.dart';
 import '../../../utils/strings.dart';
-import '../../dynamic_webview_screen.dart';
 import '../../profiles_screen/earnings_screen.dart';
 import 'menu_button_widget.dart';
 
@@ -93,49 +92,49 @@ class ProfilePage extends StatelessWidget {
                         )),
 
                   const Divider(height: 1, thickness: 1),
-                  MenuButton(
-                    title: "Privacy Policy",
-                    onTap: () {
-                      Get.to(WebViewScreen(
-                        link: 'https://nextwisher.com/pages/privacy-policy',
-                        appTitle: 'Privacy Policy',
-                      ));
-                    },
-                  ),
-
-                  const Divider(height: 1, thickness: 1),
-                  MenuButton(
-                    title: "Terms of service",
-                    onTap: () {
-                      Get.to(WebViewScreen(
-                        link:
-                        'https://nextwisher.com/pages/terms-of-service',
-                        appTitle: 'Terms of service',
-                      ));
-                    },
-                  ),
-
-                  const Divider(height: 1, thickness: 1),
-                  MenuButton(
-                    title: "FAQ",
-                    onTap: () {
-                      Get.to(WebViewScreen(
-                        link: 'https://nextwisher.com/faq',
-                        appTitle: 'FAQ',
-                      ));
-                    },
-                  ),
-
-                  const Divider(height: 1, thickness: 1),
-                  MenuButton(
-                    title: "Contact",
-                    onTap: () {
-                      Get.to(WebViewScreen(
-                        link: 'https://nextwisher.com/contact',
-                        appTitle: 'Contact',
-                      ));
-                    },
-                  ),
+                  // MenuButton(
+                  //   title: "Privacy Policy",
+                  //   onTap: () {
+                  //     Get.to(WebViewScreen(
+                  //       link: 'https://nextwisher.com/pages/privacy-policy',
+                  //       appTitle: 'Privacy Policy',
+                  //     ));
+                  //   },
+                  // ),
+                  //
+                  // const Divider(height: 1, thickness: 1),
+                  // MenuButton(
+                  //   title: "Terms of service",
+                  //   onTap: () {
+                  //     Get.to(WebViewScreen(
+                  //       link:
+                  //       'https://nextwisher.com/pages/terms-of-service',
+                  //       appTitle: 'Terms of service',
+                  //     ));
+                  //   },
+                  // ),
+                  //
+                  // const Divider(height: 1, thickness: 1),
+                  // MenuButton(
+                  //   title: "FAQ",
+                  //   onTap: () {
+                  //     Get.to(WebViewScreen(
+                  //       link: 'https://nextwisher.com/faq',
+                  //       appTitle: 'FAQ',
+                  //     ));
+                  //   },
+                  // ),
+                  //
+                  // const Divider(height: 1, thickness: 1),
+                  // MenuButton(
+                  //   title: "Contact",
+                  //   onTap: () {
+                  //     Get.to(WebViewScreen(
+                  //       link: 'https://nextwisher.com/contact',
+                  //       appTitle: 'Contact',
+                  //     ));
+                  //   },
+                  // ),
                 ],
               ),
             ),

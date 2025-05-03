@@ -69,11 +69,11 @@ class EarningController extends GetxController with EarningService {
     languageSettingController.getTranslation('All time'),
     languageSettingController.getTranslation('Today'),
     languageSettingController.getTranslation('Yesterday'),
-    languageSettingController.getTranslation('Last 7 Days'),
-  languageSettingController.getTranslation('Last 30 Days'),
-  languageSettingController.getTranslation('Last 60 Days'),
-  languageSettingController.getTranslation('Last 90 Days'),
-  languageSettingController.getTranslation('Last 365 Days'),
+    languageSettingController.getTranslation('Last 7Days'),
+  languageSettingController.getTranslation('Last 30Days'),
+  languageSettingController.getTranslation('Last 60Days'),
+  languageSettingController.getTranslation('Last 90Days'),
+  languageSettingController.getTranslation('Last 365Days'),
   ];
 
   /// ------------------------------------- >>
