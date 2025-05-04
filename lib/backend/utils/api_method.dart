@@ -39,6 +39,7 @@ class ApiMethod {
     int code = 200,
     int duration = 120,
     bool showResult = true,
+    bool errorMsgShow = true,
     VoidCallback? onTimeOut,
   }) async {
     log.i(
@@ -79,7 +80,7 @@ class ApiMethod {
 
         ErrorResponse res = ErrorResponse.fromJson(jsonDecode(response.body));
 
-        CustomSnackBar.error(res.message.error.toString());
+        if(errorMsgShow) CustomSnackBar.error(res.message.error.first.toString());
 
         return null;
       }
@@ -132,6 +133,7 @@ class ApiMethod {
     int code = 200,
     int duration = 120,
     bool showResult = true,
+    bool errorMsgShow = true,
     VoidCallback? onTimeOut,
   }) async {
     try {
@@ -176,7 +178,7 @@ class ApiMethod {
 
         ErrorResponse res = ErrorResponse.fromJson(jsonDecode(response.body));
 
-        // CustomSnackBar.error(res.message.error.toString());
+        if(errorMsgShow) CustomSnackBar.error(res.message.error.first.toString());
 
         return null;
       }

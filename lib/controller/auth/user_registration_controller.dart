@@ -30,10 +30,10 @@ class UserRegistrationController extends GetxController with AuthService{
         if(isChecked.value) {
           await registerProcess();
         } else{
-        CustomSnackBar.error("Agree with privacy policy.");
+        CustomSnackBar.error("Agree with privacy policy");
       }
       }else{
-        CustomSnackBar.error("The password confirmation does not match.");
+        CustomSnackBar.error("The password confirmation does not match");
       }
     }
   }

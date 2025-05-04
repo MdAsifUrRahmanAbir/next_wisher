@@ -36,14 +36,14 @@ class TalentRegistrationController extends GetxController with AuthService{
               if (filePath.isNotEmpty) {
                 await registerProcess();
               } else {
-                CustomSnackBar.error("Select a video.");
+                CustomSnackBar.error("Select a video");
               }
             } else {
-              CustomSnackBar.error("Agree with privacy policy.");
+              CustomSnackBar.error("Agree with privacy policy");
             }
           }
           else {
-            CustomSnackBar.error("The password confirmation does not match.");
+            CustomSnackBar.error("The password confirmation does not match");
           }
         }else{
           CustomSnackBar.error("Category cannot be empty");

@@ -14,6 +14,10 @@ import '../bottom_nav/message_controller.dart';
 class BookNowController extends GetxController with WishService {
   final formKey = GlobalKey<FormState>();
 
+  RxBool alertEnable = false.obs;
+  RxBool occassion = false.obs;
+  RxBool gender = false.obs;
+
   RxString paymentType = 'credit-card'.obs;
   RxString selectedOption = "myself".obs;
   RxString selectedGender = "".obs;

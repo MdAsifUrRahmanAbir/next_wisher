@@ -24,8 +24,7 @@ class BookNowScreen extends StatelessWidget {
   }
 
   _bodyWidget() {
-    RxBool occassion = false.obs;
-    RxBool gender = false.obs;
+
     var data = controller.paymentInfoModel.data.talent;
     return SafeArea(
       child: Form(
@@ -116,7 +115,7 @@ class BookNowScreen extends StatelessWidget {
                           value: "Female",
                           groupValue: controller.selectedGender.value,
                           onChanged: (String? value) {
-                            gender.value = true;
+                            controller.gender.value = true;
                             controller.selectedGender.value = value!;
                           },
                         ),
@@ -131,7 +130,7 @@ class BookNowScreen extends StatelessWidget {
                           value: "Male",
                           groupValue: controller.selectedGender.value,
                           onChanged: (String? value) {
-                            gender.value = true;
+                            controller.gender.value = true;
                             controller.selectedGender.value = value!;
                           },
                         ),
@@ -141,8 +140,8 @@ class BookNowScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                gender.value ? SizedBox.shrink(): TitleHeading5Widget(text: "gender is required", color: Colors.red)
-              ],
+                // Obx(() => controller.gender.value ? SizedBox.shrink(): controller.alertEnable.value ? TitleHeading5Widget(text: "gender is required", color: Colors.red): SizedBox.shrink())
+                ],
             ),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
             TitleHeading3Widget(
@@ -155,13 +154,13 @@ class BookNowScreen extends StatelessWidget {
                       items: controller.paymentInfoModel.data.ocasions,
                       onChanged: (value) {
                         controller.isOccasionSelect.value = true;
-                        occassion.value = true;
+                        controller.occassion.value = true;
                         controller.selectedOcasion.value = value!;
                       },
                       hint: controller.isOccasionSelect.value ? controller.selectedOcasion.value.name : "Select Occasion",
                       title: "Select Occasion",
                     ),
-                occassion.value ? SizedBox.shrink(): TitleHeading5Widget(text: "occassion id is required", color: Colors.red)
+                // controller.occassion.value ? SizedBox.shrink(): TitleHeading5Widget(text: "occassion id is required", color: Colors.red)
               ],
             )),
             verticalSpace(Dimensions.paddingSizeVertical * .5),
@@ -182,17 +181,21 @@ class BookNowScreen extends StatelessWidget {
                 title: "Continue to payment",
                 backgroundColor: CustomColor.redColor,
                 onPressed: () {
-                  if (controller.selectedGender.value.isNotEmpty) {
-                    debugPrint(controller.isOccasionSelect.value.toString());
-                    if(controller.isOccasionSelect.value){
-                      controller.pay();
-                    }else{
-                      // CustomSnackBar.error("occassion id is required");
-                    }
-                  } else {
-                    // CustomSnackBar.error("gender is required");
+                  if(controller.formKey.currentState!.validate()){
+                    controller.alertEnable.value = true;
+                    if (controller.selectedGender.value.isNotEmpty) {
+                      debugPrint(controller.isOccasionSelect.value.toString());
+                      if(controller.isOccasionSelect.value){
+                        controller.pay();
+                      }else{
+                        CustomSnackBar.error("occassion id is required");
+                      }
+                    } else {
+                      CustomSnackBar.error("gender is required");
 
+                    }
                   }
+
                 }),
             verticalSpace(Dimensions.paddingSizeVertical * 1),
           ],
