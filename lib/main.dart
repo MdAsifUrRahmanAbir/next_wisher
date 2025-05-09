@@ -36,7 +36,7 @@ void main() async{
   );
 
   NotificationHelper.initialization();
-  NotificationService.init();
+  // NotificationService.init();
 
   NotificationHelper.getBackgroundNotification();
   debugPrint("MAIN >> 3");

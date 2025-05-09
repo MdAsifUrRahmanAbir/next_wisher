@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 
-import 'local_notification_helper.dart';
+import '../utils/basic_screen_imports.dart';
 import 'notification_model.dart';
 
 
@@ -59,15 +58,15 @@ class NotificationHelper{
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
 
-      NotificationService.showLocalNotification(
-        title: message.notification?.title ?? "",
-        body: message.notification?.body ?? "",
-      );
-
-      // Get.defaultDialog(
-      //     title: message.notification?.title ?? "",
-      //     content: Text(message.notification?.body ?? "")
+      // NotificationService.showLocalNotification(
+      //   title: message.notification?.title ?? "",
+      //   body: message.notification?.body ?? "",
       // );
+
+      Get.defaultDialog(
+          title: message.notification?.title ?? "",
+          content: Text(message.notification?.body ?? "")
+      );
 
     });
   }

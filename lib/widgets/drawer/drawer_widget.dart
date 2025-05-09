@@ -70,7 +70,14 @@ class DrawerWidget extends StatelessWidget {
           alignment: Alignment.center,
           height: Dimensions.buttonHeight * .7,
           color: Colors.black,
-          child: TitleHeading3Widget(text: Strings.menu, color: Colors.white),
+          child: Row(
+            mainAxisAlignment: mainSpaceBet,
+            children: [
+              SizedBox(width: 20,),
+              TitleHeading3Widget(text: Strings.menu, color: Colors.white),
+              IconButton(onPressed: (){}, icon: Icon(Icons.info_outline, color: Colors.white)),
+            ],
+          ),
         ),
         // SizedBox(
         //   height: MediaQuery.sizeOf(context).height * .07,

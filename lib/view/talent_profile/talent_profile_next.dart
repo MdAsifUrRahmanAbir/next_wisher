@@ -14,6 +14,7 @@ import '../../backend/services/dashboard/talents_model.dart';
 import '../../controller/book_now/book_now_controller.dart';
 import '../../controller/bottom_nav/bottom_nav_controller.dart';
 import '../../controller/bottom_nav/dashboard_controller.dart';
+import '../../language/language_controller.dart';
 import '../../routes/routes.dart';
 import '../../utils/strings.dart';
 import '../../widgets/drawer/drawer_widget.dart';
@@ -82,7 +83,7 @@ class TalentProfileNext extends StatelessWidget {
           verticalSpace(Dimensions.paddingSizeVertical * .2),
           TitleHeading3Widget(
             text:
-                "${data.talent.category.name} / ${data.talent.subcategory.name}",
+            "${languageSettingController.getTranslation(data.talent.category.name)} / ${languageSettingController.getTranslation(data.talent.subcategory.name)}",
             opacity: .5,
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .5),

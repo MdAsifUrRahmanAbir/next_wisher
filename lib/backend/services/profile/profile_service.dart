@@ -66,7 +66,7 @@ mixin ProfileService {
       );
       if (mapResponse != null) {
         CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
-        CustomSnackBar.success(result.message.success.first.toString());
+        CustomSnackBar.success("Password changed successfully");
         return result;
       }
     } catch (e) {
@@ -113,7 +113,7 @@ mixin ProfileService {
       );
       if (mapResponse != null) {
         CommonSuccessModel result = CommonSuccessModel.fromJson(mapResponse);
-        CustomSnackBar.success(result.message.success.first.toString());
+        CustomSnackBar.success("Profile successfully updated");
         return result;
       }
     } catch (e) {
