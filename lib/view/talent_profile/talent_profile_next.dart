@@ -34,19 +34,24 @@ class TalentProfileNext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async{
-        // controller.chewieController.pause();
+      onWillPop: () async {
+        // Pause video before navigating back
+        TikTokStyleVideoWidget.pauseAllVideos();
+
         Get.find<BottomNavController>().selectedIndex.value = showBTM ? 0 : 4;
         Navigator.pop(context);
         return true;
       },
       child: Scaffold(
         // appBar: const PrimaryAppBar(),
-      
+
         //    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
         key: _scaffoldKey,
         drawer: DrawerWidget(),
         appBar: PrimaryAppBar(onTap: () {
+          // Pause video before navigating back
+          TikTokStyleVideoWidget.pauseAllVideos();
+
           Get.find<BottomNavController>().selectedIndex.value = showBTM ? 0 : 4;
           Navigator.pop(context);
         }),
@@ -88,13 +93,19 @@ class TalentProfileNext extends StatelessWidget {
                 rating: controller.talentsModel.data.talent.ratingPercent,
                 allowHalfRating: false,
                 onRatingChanged: (rating) {
-                  showRatingsDialog(context, controller.talentsModel.data.talent.rating);
+                  showRatingsDialog(
+                      context, controller.talentsModel.data.talent.rating);
                 },
               ),
               TitleHeading3Widget(
-                  text: " ${controller.talentsModel.data.talent.ratingPercent.toStringAsFixed(1)} ", fontWeight: FontWeight.bold),
+                  text:
+                      " ${controller.talentsModel.data.talent.ratingPercent.toStringAsFixed(1)} ",
+                  fontWeight: FontWeight.bold),
               TitleHeading5Widget(
-                  text: "(${controller.talentsModel.data.talent.totalRating})", fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor,),
+                text: "(${controller.talentsModel.data.talent.totalRating})",
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
             ],
           ),
           verticalSpace(Dimensions.paddingSizeVertical * .2),
@@ -131,11 +142,14 @@ class TalentProfileNext extends StatelessWidget {
                 // No need for navigation with TikTokStyleVideoWidget
               },
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.7, // 70% of screen width
-                height: MediaQuery.of(context).size.width * 1.3, // 16:9 portrait aspect ratio
+                width: MediaQuery.of(context).size.width *
+                    0.7, // 70% of screen width
+                height: MediaQuery.of(context).size.width *
+                    1.3, // 16:9 portrait aspect ratio
                 color: Colors.transparent,
                 child: Center(
                   child: TikTokStyleVideoWidget(
+                    key: TikTokStyleVideoWidget.globalKey,
                     videoUrl: controller.talentsModel.data.talent.videoPathWeb,
                     thumbnailUrl: data.talent.profileImage,
                     width: MediaQuery.of(context).size.width * 0.7,
@@ -143,17 +157,20 @@ class TalentProfileNext extends StatelessWidget {
                     borderRadius: BorderRadius.zero,
                   ),
                 ),
-              )
-          ),
+              )),
 
           verticalSpace(Dimensions.paddingSizeVertical * .5),
-          data.talent.supportedLanguages.isEmpty ? SizedBox.shrink() : Row(
-            children: [
-              TitleHeading4Widget(text: Strings.spokenLanguage),
-              horizontalSpace(2),
-              TitleHeading4Widget(text: jsonDecode(data.talent.supportedLanguages).join(", ")),
-            ],
-          ),
+          data.talent.supportedLanguages.isEmpty
+              ? SizedBox.shrink()
+              : Row(
+                  children: [
+                    TitleHeading4Widget(text: Strings.spokenLanguage),
+                    horizontalSpace(2),
+                    TitleHeading4Widget(
+                        text: jsonDecode(data.talent.supportedLanguages)
+                            .join(", ")),
+                  ],
+                ),
           verticalSpace(Dimensions.paddingSizeVertical * .3),
           TitleHeading3Widget(text: Strings.personalizedVideo),
           verticalSpace(Dimensions.paddingSizeVertical * .5),
@@ -192,11 +209,13 @@ class TalentProfileNext extends StatelessWidget {
                 child: PrimaryButton(
                     title: Strings.book,
                     onPressed: () {
-                      // controller.chewieController.pause();
+                      // Pause video before navigating
+                      TikTokStyleVideoWidget.pauseAllVideos();
+
                       if (LocalStorage.isUser()) {
                         bookNowController.paymentInfoProcess(data.talent.id);
                         Get.toNamed(Routes.bookNowScreen);
-                      }else{
+                      } else {
                         CustomSnackBar.error(Strings.errorTalentUser);
                       }
                     }),
@@ -208,11 +227,13 @@ class TalentProfileNext extends StatelessWidget {
                     title: Strings.sendTip,
                     backgroundColor: CustomColor.secondaryLightColor,
                     onPressed: () {
-                      // controller.chewieController.pause();
+                      // Pause video before navigating
+                      TikTokStyleVideoWidget.pauseAllVideos();
+
                       if (LocalStorage.isUser()) {
                         bookNowController.paymentInfoProcess(data.talent.id);
                         Get.to(PayScreen(isBook: false));
-                      }else{
+                      } else {
                         CustomSnackBar.error(Strings.errorTalentUser);
                       }
                     }),
@@ -221,7 +242,7 @@ class TalentProfileNext extends StatelessWidget {
             ],
           ),
           Card(
-            color: Get.isDarkMode ? Colors.black: CustomColor.whiteColor,
+            color: Get.isDarkMode ? Colors.black : CustomColor.whiteColor,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -258,7 +279,6 @@ class TalentProfileNext extends StatelessWidget {
     );
   }
 
-
   // Dialog Widget
   void showRatingsDialog(BuildContext context, List<Rating> ratings) {
     double averageRating = ratings.isNotEmpty
@@ -288,7 +308,8 @@ class TalentProfileNext extends StatelessWidget {
                       color: Colors.yellow,
                       child: Text(
                         averageRating.toStringAsFixed(1),
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(width: 8),
@@ -304,19 +325,25 @@ class TalentProfileNext extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: LinearProgressIndicator(
-                          value: ratings.isNotEmpty ? entry.value / ratings.length : 0,
+                          value: ratings.isNotEmpty
+                              ? entry.value / ratings.length
+                              : 0,
                           backgroundColor: Colors.grey.shade300,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.yellow),
                         ),
                       ),
                       SizedBox(width: 8),
-                      Text(entry.value.toString(), style: TextStyle(fontSize: 16)),
+                      Text(entry.value.toString(),
+                          style: TextStyle(fontSize: 16)),
                     ],
                   );
                 }),
                 SizedBox(height: 16),
                 // Individual Ratings
-                Text("User Reviews", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text("User Reviews",
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
                 ...ratings.map((r) {
                   return Column(
@@ -327,9 +354,11 @@ class TalentProfileNext extends StatelessWidget {
                           Row(
                             children: List.generate(
                               5,
-                                  (index) => Icon(
+                              (index) => Icon(
                                 Icons.star,
-                                color: index < r.rating ? Colors.yellow : Colors.grey,
+                                color: index < r.rating
+                                    ? Colors.yellow
+                                    : Colors.grey,
                                 size: 20,
                               ),
                             ),

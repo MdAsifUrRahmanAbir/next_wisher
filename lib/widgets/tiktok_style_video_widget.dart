@@ -25,11 +25,23 @@ class TikTokStyleVideoWidget extends StatefulWidget {
     this.showFullscreenOption = true,
   }) : super(key: key);
 
+  // Create a global key to access the state
+  static final GlobalKey<_TikTokStyleVideoWidgetState> globalKey =
+      GlobalKey<_TikTokStyleVideoWidgetState>();
+
+  // Static method to pause all videos
+  static void pauseAllVideos() {
+    if (globalKey.currentState != null) {
+      globalKey.currentState!.pauseVideo();
+    }
+  }
+
   @override
   State<TikTokStyleVideoWidget> createState() => _TikTokStyleVideoWidgetState();
 }
 
-class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
+class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget>
+    with WidgetsBindingObserver {
   bool _isPlaying = false;
   bool _isLoading = false;
   late InAppWebViewController? _webViewController;
@@ -39,23 +51,54 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
   void initState() {
     super.initState();
     _webViewController = null;
-    
+
+    // Register as an observer to detect app lifecycle changes
+    WidgetsBinding.instance.addObserver(this);
+
     // Load video immediately but don't autoplay
     setState(() {
-      _isPlaying = true;  // Show video instead of thumbnail
+      _isPlaying = true; // Show video instead of thumbnail
       _isLoading = true;
     });
   }
 
   @override
   void dispose() {
+    // Remove observer when widget is disposed
+    WidgetsBinding.instance.removeObserver(this);
+
+    // Ensure video is paused when widget is disposed
+    pauseVideo();
     _webViewController = null;
     super.dispose();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Pause video when app goes to background
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      pauseVideo();
+    }
+  }
+
+  // Method to pause the video
+  void pauseVideo() {
+    if (_webViewController != null && _isPlaying) {
+      _webViewController?.evaluateJavascript(source: """
+        (function() {
+          var video = document.querySelector('video');
+          if (video && !video.paused) {
+            video.pause();
+          }
+        })();
+      """);
+    }
+  }
+
   void _playVideo() {
     if (_isPlaying) return;
-    
+
     setState(() {
       _isPlaying = true;
       _isLoading = true;
@@ -95,7 +138,7 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
                 ),
               ),
             ),
-            
+
           // WebView (only shown when playing)
           if (_isPlaying)
             InAppWebView(
@@ -135,7 +178,7 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
                     document.body.style.right = '0';
                     document.body.style.bottom = '0';
                     document.body.style.overflow = 'hidden';
-                    
+
                     // Strong CSS to control all elements
                     var style = document.createElement('style');
                     style.textContent = `
@@ -168,7 +211,7 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
                       }
                     `;
                     document.head.appendChild(style);
-                    
+
                     // Create and set up video element
                     var video = document.querySelector('video');
                     if (!video) {
@@ -176,7 +219,7 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
                       video.src = "${widget.videoUrl}";
                       document.body.appendChild(video);
                     }
-                    
+
                     // Configure video element
                     video.controls = true;
                     video.style.width = '100%';
@@ -193,22 +236,22 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
                     video.loop = true;
                     video.muted = false; // Muted for preload
                     video.preload = 'auto';
-                    
+
                     // Force center the video
                     video.parentElement.style.display = 'flex';
                     video.parentElement.style.alignItems = 'center';
                     video.parentElement.style.justifyContent = 'center';
                     video.parentElement.style.width = '100%';
                     video.parentElement.style.height = '100%';
-                    
+
                     // Load video to display first frame
                     video.load();
-                    
+
                     // Seek to first frame to ensure thumbnail shows
                     video.addEventListener('loadeddata', function() {
                       // Seek to 0.1 seconds to show a frame, but not play
                       video.currentTime = 0.1;
-                      
+
                       // Add click event to play/pause video
                       video.addEventListener('click', function() {
                         if (video.paused) {
@@ -222,7 +265,7 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
                     });
                   })();
                 """);
-                
+
                 setState(() {
                   _isLoading = false;
                 });
@@ -233,7 +276,7 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
                 });
               },
             ),
-            
+
           // Loading indicator
           if (_isPlaying && _isLoading)
             Container(
@@ -242,7 +285,7 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
                 child: CustomLoadingAPI(),
               ),
             ),
-            
+
           // Fullscreen button
           if (_isPlaying && widget.showFullscreenOption)
             Positioned(
@@ -277,11 +320,59 @@ class _TikTokStyleVideoWidgetState extends State<TikTokStyleVideoWidget> {
 }
 
 /// A fullscreen page for video viewing
-class FullscreenVideoPage extends StatelessWidget {
+class FullscreenVideoPage extends StatefulWidget {
   final String videoUrl;
-  
-  const FullscreenVideoPage({Key? key, required this.videoUrl}) : super(key: key);
-  
+
+  const FullscreenVideoPage({Key? key, required this.videoUrl})
+      : super(key: key);
+
+  @override
+  State<FullscreenVideoPage> createState() => _FullscreenVideoPageState();
+}
+
+class _FullscreenVideoPageState extends State<FullscreenVideoPage>
+    with WidgetsBindingObserver {
+  InAppWebViewController? _webViewController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Register as an observer to detect app lifecycle changes
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    // Remove observer when widget is disposed
+    WidgetsBinding.instance.removeObserver(this);
+    // Ensure video is paused when widget is disposed
+    pauseVideo();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Pause video when app goes to background
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      pauseVideo();
+    }
+  }
+
+  // Method to pause the video
+  void pauseVideo() {
+    if (_webViewController != null) {
+      _webViewController?.evaluateJavascript(source: """
+        (function() {
+          var video = document.querySelector('video');
+          if (video && !video.paused) {
+            video.pause();
+          }
+        })();
+      """);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -291,18 +382,24 @@ class FullscreenVideoPage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            pauseVideo();
+            Navigator.pop(context);
+          },
         ),
       ),
       body: Center(
         child: InAppWebView(
-          initialUrlRequest: URLRequest(url: WebUri(videoUrl)),
+          initialUrlRequest: URLRequest(url: WebUri(widget.videoUrl)),
           initialSettings: InAppWebViewSettings(
             javaScriptEnabled: true,
             mediaPlaybackRequiresUserGesture: false,
             useHybridComposition: true,
             allowsInlineMediaPlayback: true,
           ),
+          onWebViewCreated: (controller) {
+            _webViewController = controller;
+          },
           onLoadStop: (controller, url) async {
             await controller.evaluateJavascript(source: """
               (function() {
@@ -321,7 +418,7 @@ class FullscreenVideoPage extends StatelessWidget {
                 document.body.style.right = '0';
                 document.body.style.bottom = '0';
                 document.body.style.overflow = 'hidden';
-                
+
                 // Strong CSS to control all elements
                 var style = document.createElement('style');
                 style.textContent = `
@@ -354,7 +451,7 @@ class FullscreenVideoPage extends StatelessWidget {
                   }
                 `;
                 document.head.appendChild(style);
-                
+
                 var video = document.querySelector('video');
                 if (video) {
                   video.controls = true;
@@ -370,18 +467,18 @@ class FullscreenVideoPage extends StatelessWidget {
                   video.style.margin = 'auto';
                   video.autoplay = true;
                   video.loop = true;
-                  
+
                   // Force center the video
                   video.parentElement.style.display = 'flex';
                   video.parentElement.style.alignItems = 'center';
                   video.parentElement.style.justifyContent = 'center';
                   video.parentElement.style.width = '100%';
                   video.parentElement.style.height = '100%';
-                  
+
                   video.play().catch(console.error);
                 } else {
                   var newVideo = document.createElement('video');
-                  newVideo.src = "$videoUrl";
+                  newVideo.src = "${widget.videoUrl}";
                   newVideo.controls = true;
                   newVideo.autoplay = true;
                   newVideo.loop = true;
@@ -395,7 +492,7 @@ class FullscreenVideoPage extends StatelessWidget {
                   newVideo.style.right = '0';
                   newVideo.style.bottom = '0';
                   newVideo.style.margin = 'auto';
-                  
+
                   var wrapper = document.createElement('div');
                   wrapper.style.display = 'flex';
                   wrapper.style.alignItems = 'center';
@@ -407,7 +504,7 @@ class FullscreenVideoPage extends StatelessWidget {
                   wrapper.style.left = '0';
                   wrapper.style.right = '0';
                   wrapper.style.bottom = '0';
-                  
+
                   document.body.appendChild(wrapper);
                   wrapper.appendChild(newVideo);
                   newVideo.play().catch(console.error);
@@ -419,4 +516,4 @@ class FullscreenVideoPage extends StatelessWidget {
       ),
     );
   }
-} 
+}
