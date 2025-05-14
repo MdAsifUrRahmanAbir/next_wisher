@@ -76,7 +76,7 @@ class PayScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radius),
-                  color: Theme.of(Get.context!).primaryColor.withOpacity(.2)),
+                  color: Theme.of(Get.context!).primaryColor.withValues(alpha: .2)),
               child: Column(
                 children: [
                   Row(
