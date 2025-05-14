@@ -12,7 +12,7 @@ class LanguageSettingController extends GetxController {
 
   @override
   void onInit() {
-    fetchLanguages().then((value) => getDefaultKey());
+    fetchLanguages().then((value) {});
     super.onInit();
   }
 
@@ -27,6 +27,7 @@ class LanguageSettingController extends GetxController {
     try {
       final languageService = LanguageService();
       languages = await languageService.fetchLanguages();
+      getDefaultKey();
       isLoadingValue.value = false;
     } catch (e) {
       debugPrint('Error fetching language data: $e');

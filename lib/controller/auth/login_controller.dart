@@ -26,7 +26,6 @@ class LoginController extends GetxController with AuthService {
     super.dispose();
   }
 
-
   RxString deviceToken = "".obs;
 
   @override

@@ -36,7 +36,7 @@ class TalentRegistrationController extends GetxController with AuthService{
               if (filePath.isNotEmpty) {
                 await registerProcess();
               } else {
-                CustomSnackBar.error("Select a video");
+                CustomSnackBar.error("Video cannot be empty");
               }
             } else {
               CustomSnackBar.error("Agree with privacy policy");
@@ -84,7 +84,7 @@ class TalentRegistrationController extends GetxController with AuthService{
 
   late Rx<Country> selectedCountry;
   RxBool firstCountry = true.obs;
-  String filePath = "";
+  RxString filePath = "".obs;
 
   List<Category> categoryList = [];
   RxBool firstCategory = true.obs;
@@ -158,7 +158,7 @@ class TalentRegistrationController extends GetxController with AuthService{
       'link': linkController.text,
     };
 
-    await registerProcessWithVideoApi(body: inputBody, filePath: filePath).then((value) {
+    await registerProcessWithVideoApi(body: inputBody, filePath: filePath.value).then((value) {
       _registerModel = value!;
       Get.offAllNamed(Routes.welcomeScreen);
       _isRegisterLoading.value = false;

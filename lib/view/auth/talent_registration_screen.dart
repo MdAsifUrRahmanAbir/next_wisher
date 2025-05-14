@@ -111,11 +111,11 @@ class TalentRegistrationScreen extends StatelessWidget {
               ),
               TitleHeading5Widget(
                   text: Strings.enterSocialLinkHint,
-                  color: CustomColor.redColor),
+                  color: Colors.orange),
               verticalSpace(Dimensions.marginBetweenInputBox),
               CustomVideoPicketWidget(
                 onPicked: (value) {
-                  controller.filePath = value;
+                  controller.filePath.value = value;
                 },
               ),
               verticalSpace(Dimensions.marginBetweenInputBox),

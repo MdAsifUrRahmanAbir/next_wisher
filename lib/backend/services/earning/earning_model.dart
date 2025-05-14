@@ -69,12 +69,16 @@ class BankInfo {
   final String area;
   final String fullName;
   final String swift;
+  final String email;
+  final String iban;
   final String accountNumber;
 
   BankInfo({
     required this.area,
     required this.fullName,
     required this.swift,
+    required this.email,
+    required this.iban,
     required this.accountNumber,
   });
 
@@ -82,6 +86,8 @@ class BankInfo {
     area: json["area"] ?? "",
     fullName: json["full_name"] ?? "",
     swift: json["swift"] ?? "",
+    email: json["email"] ?? "API",
+    iban: json["iban"] ?? "API",
     accountNumber: json["account_number"] ?? "",
   );
 }

@@ -26,11 +26,21 @@ class PaymentController extends GetxController with EarningService{
   final TextEditingController accountHolderController = TextEditingController();
   final TextEditingController swiftController = TextEditingController();
 
-  /// ------------------------------------- >>
-  final _isLoading = false.obs;
-  bool get isLoading => _isLoading.value;
+
+  @override
+  void dispose() {
+    textClear();
+    super.dispose();
+  }
 
 
+  textClear(){
+    swiftController.clear();
+    accountHolderController.clear();
+    payoutAmountController.clear();
+    confirmEmailController.clear();
+    emailController.clear();
+  }
 
   /// ------------------------------------- >>
   final _isSubmitLoading = false.obs;

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:intl/intl.dart';
 import 'package:next_wisher/backend/local_storage/local_storage.dart';
@@ -8,7 +7,6 @@ import 'package:next_wisher/backend/utils/custom_loading_api.dart';
 import 'package:next_wisher/backend/utils/custom_snackbar.dart';
 import 'package:next_wisher/language/language_controller.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../backend/services/dashboard/talents_model.dart';
 import '../../controller/book_now/book_now_controller.dart';
@@ -20,9 +18,6 @@ import '../../widgets/drawer/drawer_widget.dart';
 import '../../widgets/text_labels/title_heading5_widget.dart';
 import '../book_now/pay_screen.dart';
 import '../bottom_nav/custom_bottom_nav_bar.dart';
-import '../web_video_widget.dart';
-import '../../widgets/inline_video_player.dart';
-import '../nav_pages/video_show_screen.dart';
 import '../../widgets/tiktok_style_video_widget.dart';
 
 class TalentProfile extends StatelessWidget {

@@ -260,7 +260,7 @@ class PayScreen extends StatelessWidget {
                   style: TextStyle(
                       fontSize: Dimensions.headingTextSize3,
                       fontWeight: FontWeight.w700,
-                      color: CustomColor.primaryLightTextColor),
+                      color: Get.isDarkMode ? Colors.white: CustomColor.primaryLightTextColor),
                   children: [
                     TextSpan(
                       text: languageSettingController.getTranslation(
@@ -268,7 +268,7 @@ class PayScreen extends StatelessWidget {
                       style: TextStyle(
                           fontSize: Dimensions.headingTextSize3,
                           fontWeight: FontWeight.w700,
-                          color: CustomColor.primaryLightTextColor),
+                          color:  Get.isDarkMode ? Colors.white: CustomColor.primaryLightTextColor),
                     ),
                     TextSpan(
                       text: languageSettingController
@@ -276,7 +276,7 @@ class PayScreen extends StatelessWidget {
                       style: TextStyle(
                           fontSize: Dimensions.headingTextSize3,
                           fontWeight: FontWeight.w700,
-                          color: CustomColor.primaryLightTextColor),
+                          color:  Get.isDarkMode ? Colors.white: CustomColor.primaryLightTextColor),
                     ),
                     TextSpan(
                       text: languageSettingController
@@ -284,7 +284,7 @@ class PayScreen extends StatelessWidget {
                       style: TextStyle(
                           fontSize: Dimensions.headingTextSize3,
                           fontWeight: FontWeight.w700,
-                          color: CustomColor.primaryLightTextColor),
+                          color:  Get.isDarkMode ? Colors.white:  CustomColor.primaryLightTextColor),
                     ),
                   ],
                 ),
@@ -331,7 +331,7 @@ class PayScreen extends StatelessWidget {
                   text:
                       "${convertedAmount.toStringAsFixed(2)} + ${conversionFee.toStringAsFixed(2)} conversion fee",
                   fontSize: 14,
-                  color: Colors.black54),
+                  color:  Get.isDarkMode ? Colors.white54: Colors.black54),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {

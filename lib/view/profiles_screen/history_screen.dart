@@ -85,15 +85,16 @@ class HistoryScreenState extends State<HistoryScreen> {
                               Row(
                                 children: [
                                   TitleHeading5Widget(text: data.bankType),
-                                  TitleHeading5Widget(text: " / "),
-                                  TitleHeading5Widget(text: data.bankType),
+                                  // TitleHeading5Widget(text: " / "),
+                                  // TitleHeading5Widget(text: data.bankType),
                                 ],
                               ),
                             ],
                           ),
                         ),
                         data.stripeEmail.isEmpty
-                            ? InkWell(
+                            ?
+                        InkWell(
                                 borderRadius: BorderRadius.circular(
                                     Dimensions.radius * 4),
                                 onTap: () {
@@ -167,7 +168,7 @@ class BankInfoDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InfoRow(label: "Area:", value: data.bankInfo.area),
+          InfoRow(label: "Area:", value: capitalize(data.bankInfo.area)),
           const SizedBox(height: 8),
           InfoRow(label: "Account holder name:", value: data.bankInfo.fullName),
           const SizedBox(height: 8),
@@ -175,7 +176,7 @@ class BankInfoDialog extends StatelessWidget {
               ? Column(
                   children: [
                     InfoRow(
-                        label: "SWIFT / BIC CODE:", value: data.bankInfo.swift),
+                        label: "SWIFT / BIC code:", value: data.bankInfo.swift),
                     const SizedBox(height: 8),
                     InfoRow(
                         label: "Account number:", value: data.bankInfo.swift),
@@ -187,7 +188,7 @@ class BankInfoDialog extends StatelessWidget {
               ? Column(
             children: [
               InfoRow(
-                  label: "IBAN:", value: "NEED API"),
+                  label: "IBAN:", value: data.bankInfo.iban),
             ],
           )
               : SizedBox.shrink(),
@@ -196,7 +197,7 @@ class BankInfoDialog extends StatelessWidget {
               ? Column(
             children: [
               InfoRow(
-                  label: "Email:", value: "NEED API"),
+                  label: "Email:", value: data.bankInfo.email),
 
             ],
           )
@@ -205,6 +206,11 @@ class BankInfoDialog extends StatelessWidget {
       ),
     );
   }
+}
+
+String capitalize(String text) {
+  if (text.isEmpty) return text;
+  return text[0].toUpperCase() + text.substring(1);
 }
 
 class InfoRow extends StatelessWidget {
