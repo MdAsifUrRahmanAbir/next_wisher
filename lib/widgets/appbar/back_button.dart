@@ -13,7 +13,7 @@ class BackButtonWidget extends StatelessWidget {
     return IconButton(
       onPressed: onTap,
       icon: CircleAvatar(
-        backgroundColor: color ?? Theme.of(context).primaryColor.withOpacity(.3),
+        backgroundColor: color ?? Theme.of(context).primaryColor.withValues(alpha: .3),
         child: Animate(
             effects: const [FadeEffect(), ScaleEffect()],
             child: Padding(

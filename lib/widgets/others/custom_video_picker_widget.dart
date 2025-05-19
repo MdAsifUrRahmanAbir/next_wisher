@@ -1,5 +1,5 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 import '../../language/language_controller.dart';
 import '../../utils/basic_screen_imports.dart';
@@ -17,17 +17,17 @@ class CustomVideoPicketWidgetState extends State<CustomVideoPicketWidget> {
   String? _fileName;
 
   // Request permission for file picking
-  Future<bool> _requestPermission() async {
-    PermissionStatus status = await Permission.storage.request();
-    if (status == PermissionStatus.granted) {
-      return true;
-    } else {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-         SnackBar(content: Text(languageSettingController.getTranslation('Storage permission is required to upload a video.'))),
-      );
-      return false;
-    }
-  }
+  // Future<bool> _requestPermission() async {
+  //   PermissionStatus status = await Permission.storage.request();
+  //   if (status == PermissionStatus.granted) {
+  //     return true;
+  //   } else {
+  //     ScaffoldMessenger.of(Get.context!).showSnackBar(
+  //        SnackBar(content: Text(languageSettingController.getTranslation('Storage permission is required to upload a video.'))),
+  //     );
+  //     return false;
+  //   }
+  // }
 
   // Pick video file
   Future<void> _pickFile() async {

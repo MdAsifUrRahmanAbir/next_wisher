@@ -6,7 +6,7 @@ import '../../../utils/strings.dart';
 import '../../../widgets/text_labels/title_heading5_widget.dart';
 import '../reload_action.dart';
 import 'categories_widget.dart';
-import 'featured_videos_widget.dart';
+// import 'featured_videos_widget.dart';
 import 'featured_celebrities_widget.dart';
 
 class DashboardPage extends StatelessWidget {

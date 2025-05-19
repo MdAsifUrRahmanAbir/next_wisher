@@ -31,12 +31,13 @@ dependencies:
   flutter_inappwebview: 6.1.5
   flutter_rating: ^2.0.2
   flutter_widget_from_html: 0.16.0
-  file_picker: 10.1.8
+  file_picker:
   image_picker: 1.1.2
   permission_handler: 12.0.0+1
-  video_player: ^2.9.2
+  video_player:
+#  video_player_android: ^2.8.3
   chewie: 1.11.3
-  appinio_video_player: 
+#  appinio_video_player:
   badges: ^3.1.2
   path_provider: ^2.1.5
   device_info_plus:
@@ -85,13 +86,5 @@ flutter:
 
   assets:
     - assets/
-    - assets/andriodappicon.jpg
-    - assets/bg.png
-    - assets/bg_search.png
     - assets/categories/
     - assets/country/
-    - assets/country/paypal.png
-    - assets/email_verification.png
-    - assets/iosappicon.jpg
-    - assets/playstore.png
-

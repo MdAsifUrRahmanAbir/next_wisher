@@ -43,7 +43,7 @@ class BottomNavItem extends StatelessWidget {
                             .textTheme
                             .bodySmall!
                             .color!
-                            .withOpacity(.5),
+                            .withValues(alpha: .5),
                   )
                 : Icon(
                     icon,
@@ -53,7 +53,7 @@ class BottomNavItem extends StatelessWidget {
                             .textTheme
                             .bodySmall!
                             .color!
-                            .withOpacity(.5),
+                            .withValues(alpha: .5),
                   ),
             if (isSelected)
               Container(

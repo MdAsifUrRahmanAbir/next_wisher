@@ -95,7 +95,7 @@ class _CustomDropDownState<T extends DropdownModel>
                   color: widget.borderColor ??
                       (_selectedItem != null
                           ? Theme.of(context).primaryColor
-                          : Theme.of(context).primaryColor.withOpacity(0.15)),
+                          : Theme.of(context).primaryColor.withValues(alpha: 0.15)),
                   width: 1.5,
                 )
             : null,

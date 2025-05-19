@@ -11,7 +11,7 @@ import '../../backend/services/dashboard/category_model.dart';
 import '../../backend/services/dashboard/dashboard_service.dart';
 import '../../backend/services/dashboard/home_model.dart';
 import '../../backend/services/dashboard/talents_model.dart';
-import '../../backend/utils/custom_loading_api.dart';
+// import '../../backend/utils/custom_loading_api.dart';
 import '../../view/nav_pages/dashboard/featured_celebrities_screen.dart';
 import 'bottom_nav_controller.dart';
 

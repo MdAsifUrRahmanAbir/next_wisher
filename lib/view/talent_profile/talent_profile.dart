@@ -193,7 +193,7 @@ class TalentProfile extends StatelessWidget {
                     vertical: Dimensions.paddingSizeVertical,
                   ),
                   decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(.1),
+                      color: Theme.of(context).primaryColor.withValues(alpha: .1),
                       borderRadius: BorderRadius.circular(Dimensions.radius)),
                   child: Column(
                     children: [

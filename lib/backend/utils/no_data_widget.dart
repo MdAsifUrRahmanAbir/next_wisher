@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:next_wisher/utils/basic_screen_imports.dart';
 
-import '../../utils/dimensions.dart';
-import '../../utils/size.dart';
 
 class NoDataWidget extends StatelessWidget {
   const NoDataWidget({super.key});

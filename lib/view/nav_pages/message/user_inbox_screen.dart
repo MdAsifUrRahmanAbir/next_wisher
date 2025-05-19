@@ -1,7 +1,5 @@
-import 'package:chewie/chewie.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
-import 'package:video_player/video_player.dart';
 import 'package:next_wisher/widgets/tiktok_style_video_widget.dart';
 
 import '../../../backend/download_file.dart';
@@ -58,7 +56,7 @@ class _UserInboxScreenState extends State<UserInboxScreen> {
               Container(
                 height: MediaQuery.sizeOf(context).height * .6,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(.6),
+                  color: Theme.of(context).primaryColor.withValues(alpha: .6),
                   borderRadius: BorderRadius.circular(Dimensions.radius * .5),
                 ),
                 child: !widget.data.downloadStatus && LocalStorage.isUser()

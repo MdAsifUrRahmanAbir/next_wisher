@@ -61,7 +61,7 @@
 //             )
 //                 : Container(
 //                     decoration: BoxDecoration(
-//                         color: CustomColor.primaryBGLightColor.withOpacity(.3),
+//                         color: CustomColor.primaryBGLightColor.withValues(alpha: .3),
 //                         shape: widget.isCircle
 //                             ? BoxShape.circle
 //                             : BoxShape.rectangle,
@@ -74,7 +74,7 @@
 //                 child: Container(
 //                   alignment: Alignment.center,
 //                   decoration: BoxDecoration(
-//                     color: CustomColor.primaryBGLightColor.withOpacity(.3),
+//                     color: CustomColor.primaryBGLightColor.withValues(alpha: .3),
 //                     borderRadius: widget.isCircle
 //                         ? null
 //                         : BorderRadius.circular(Dimensions.radius * 1),

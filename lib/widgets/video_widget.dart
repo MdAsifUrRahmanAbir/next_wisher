@@ -1,8 +1,9 @@
 // For File handling
 import 'package:flutter/material.dart';
 import 'package:next_wisher/backend/utils/custom_loading_api.dart';
-import 'package:video_player/video_player.dart';
+// import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoWidget extends StatefulWidget {
   final dynamic videoUrl; // URL of the network video (nullable)

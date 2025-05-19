@@ -80,7 +80,7 @@ class PrimaryTextInputWidget extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimensions.radius * 0.5),
               borderSide: BorderSide(
-                  color: Theme.of(context).primaryColor.withOpacity(0.2),
+                  color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
                   width: enabledBorderWidth),
             ),
             focusedBorder: OutlineInputBorder(
@@ -110,12 +110,12 @@ class PrimaryTextInputWidget extends StatelessWidget {
             alignLabelWithHint: false,
             hintStyle: Get.isDarkMode
                 ? CustomStyle.darkHeading3TextStyle.copyWith(
-                    color: CustomColor.primaryDarkTextColor.withOpacity(0.2),
+                    color: CustomColor.primaryDarkTextColor.withValues(alpha: 0.2),
                     fontWeight: FontWeight.w500,
                     fontSize: Dimensions.headingTextSize3,
                   )
                 : CustomStyle.lightHeading3TextStyle.copyWith(
-                    color: CustomColor.primaryLightTextColor.withOpacity(0.2),
+                    color: CustomColor.primaryLightTextColor.withValues(alpha: 0.2),
                     fontWeight: FontWeight.w500,
                     fontSize: Dimensions.headingTextSize3,
                   ),

@@ -78,16 +78,16 @@ class MessageTileWidgetState extends State<MessageTileWidget> {
     return ListTile(
       tileColor: !LocalStorage.isUser()
           ? (widget.data.role == "user" && widget.data.seen == 0)
-              ? CustomColor.redColor.withOpacity(.2)
+              ? CustomColor.redColor.withValues(alpha: .2)
               : null
           : (widget.data.role == "talent" && widget.data.seen == 0)
-              ? CustomColor.redColor.withOpacity(.2)
+              ? CustomColor.redColor.withValues(alpha: .2)
               : null,
       shape: Border.all(
-        color: Theme.of(context).primaryColor.withOpacity(.2),
+        color: Theme.of(context).primaryColor.withValues(alpha: .2),
         // width: .3,
       ),
-      // tileColor: data.seen == 0 ? Colors.red.withOpacity(.1) : Colors.transparent,
+      // tileColor: data.seen == 0 ? Colors.red.withValues(alpha: .1) : Colors.transparent,
       leading: CircleAvatar(
         backgroundColor: Theme.of(context).primaryColor,
         child: TitleHeading2Widget(

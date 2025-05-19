@@ -22,7 +22,7 @@
 //                 horizontal: Dimensions.paddingSizeHorizontal * 0.5,
 //               ),
 //               decoration: BoxDecoration(
-//                 color: CustomColor.whiteColor.withOpacity(0.1),
+//                 color: CustomColor.whiteColor.withValues(alpha: 0.1),
 //                 borderRadius: BorderRadius.circular(Dimensions.radius * 0.6),
 //               ),
 //               child: _dropDown(context),

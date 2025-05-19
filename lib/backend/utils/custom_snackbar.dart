@@ -51,7 +51,7 @@ class CustomSnackBar {
         margin: EdgeInsets.symmetric(
             horizontal: Dimensions.paddingSizeHorizontal * 0.5,
             vertical: Dimensions.paddingSizeVertical * 0.5),
-        backgroundColor: Colors.red.withOpacity(0.8),
+        backgroundColor: Colors.red.withValues(alpha: 0.8), // withOpacity(
         colorText: CustomColor.whiteColor,
         leftBarIndicatorColor: Colors.red,
         progressIndicatorBackgroundColor: Colors.red,
